@@ -5,12 +5,36 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --white: 0 0% 100%;
+  --black: 0 0% 0%;
+
+  --gray-100: 0 0% 83%;
+  --gray-700: 0 0% 18%;
+  --gray-800: 0 0% 16%;
+
+  --red-100: 2 29% 53%;
+
+  --background: var(--white);
+  --foreground: var(--black);
+
+  --text-bg: var(--gray-100);
+  --header-bg: var(--gray-800);
+
+  --point-color: var(--red-100);
+}
+
+.dark {
+  --background: var(--black);
+  --foreground: var(--white);
+
+  --text-bg: var(--gray-700);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: "Pretendard Variable", sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
 }
