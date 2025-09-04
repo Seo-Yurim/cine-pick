@@ -1,11 +1,12 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
-    <div className="flex flex-col gap-16 h-screen">
-      <div className="p-10 bg-header-bg">
-        <p className="text-3xl font-extrabold text-point-color">Cine Pick</p>
+    <div className="flex h-screen flex-col gap-16">
+      <div className="h-[100px] bg-header-bg">
+        <Image src="/logo.svg" width={200} height={80} alt="logo" />
       </div>
-      <p className="p-4 bg-text-bg w-fit text-xl">test</p>
-      <div className="p-16 bg-header-bg" />
+      <p className="w-fit bg-text-bg p-4 text-xl">test</p>
     </div>
   );
 }
