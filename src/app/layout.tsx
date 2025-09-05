@@ -1,3 +1,4 @@
+import Providers from "@/queries/query-client";
 import type { Metadata } from "next";
 import Header from "@/components/header";
 import "./globals.css";
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="ko" className="dark">
       <body className="font-sans">
-        <Header />
-        <main className="mx-auto w-full max-w-[1920px] px-8 py-16">{children}</main>
+        <Providers>
+          <Header />
+          <main className="mx-auto w-full max-w-[1920px] px-8 py-16">{children}</main>
+        </Providers>
       </body>
     </html>
   );
