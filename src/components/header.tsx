@@ -6,9 +6,9 @@ export default function Header() {
   return (
     <header className="bg-header-bg p-8">
       <div className="mx-auto flex w-full max-w-[1920px] items-center gap-8">
-        <div className="relative aspect-[3/1] w-48">
+        <Link href="/" className="relative aspect-[3/1] w-48">
           <Image src="/logo.svg" className="object-contain" fill priority alt="logo" />
-        </div>
+        </Link>
         <nav className="flex w-full items-center justify-between">
           <Link href="/movies">
             <ButtonComponent>찾아보기</ButtonComponent>
