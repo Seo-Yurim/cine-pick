@@ -20,7 +20,7 @@ export default function MovieListComponent({ title, bgColor, data }: MovieListPr
         </div>
 
         <div className="flex items-center overflow-x-auto">
-          <div className="mb-4 flex w-full items-center gap-4 px-4">
+          <div className="mb-4 grid w-full auto-cols-auto grid-flow-col items-stretch gap-4 p-4">
             {data.map((item: MovieItem) => (
               <MovieCardComponent key={item.id} data={item} />
             ))}
