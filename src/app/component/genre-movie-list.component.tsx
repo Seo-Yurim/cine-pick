@@ -4,6 +4,8 @@ import ButtonComponent from "@/components/button/button.component";
 import MovieCardComponent from "@/components/movie-card/movie-card.component";
 import ToggleButtonComponent from "@/components/toggle-button/toggle-button.component";
 
+const toggleMenus = ["전체", "로맨스", "코미디", "액션", "스릴러", "공포"];
+
 export function GenreMovieListComponent() {
   const {
     data: genresData,
@@ -22,7 +24,7 @@ export function GenreMovieListComponent() {
         <div className="flex items-center justify-between text-nowrap">
           <div className="flex items-center gap-8">
             <h2 className="text-3xl font-bold">장르별 추천 영화</h2>
-            <ToggleButtonComponent />
+            <ToggleButtonComponent toggleMenus={toggleMenus} />
           </div>
           <ButtonComponent>전체보기</ButtonComponent>
         </div>
