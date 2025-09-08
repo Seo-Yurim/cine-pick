@@ -1,5 +1,6 @@
 import { useGenres, useMovies } from "@/queries/movie.query";
-import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MovieItem } from "@/types/movie.type";
 import ButtonComponent from "@/components/button/button.component";
 import MovieCardComponent from "@/components/movie-card/movie-card.component";
@@ -8,6 +9,7 @@ import ToggleButtonComponent from "@/components/toggle-button/toggle-button.comp
 export function GenreMovieListComponent() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<string>("");
+  const [showLoading, setShowLoading] = useState<boolean>(true);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -21,7 +23,7 @@ export function GenreMovieListComponent() {
     scrollRef.current?.scrollBy({ left: 150, behavior: "smooth" });
   };
 
-  const { data: genres, isLoading: isGenresLoading, isError: isGenresErr } = useGenres();
+  const { data: genres, isLoading: genresLoading, isError: genresErr } = useGenres();
 
   const toggleMenus = useMemo(() => {
     if (!genres) return [];
@@ -36,16 +38,29 @@ export function GenreMovieListComponent() {
   }, [genres]);
 
   const {
-    data: genresData,
-    isLoading: genresLoading,
-    isError: genresErr,
+    data: popularData,
+    isLoading: popularLoading,
+    isError: popularErr,
   } = useMovies({
     sort_by: "popularity.desc",
     with_genres: activeTab,
   });
 
-  if (genresLoading) return <div>loading .. </div>;
-  if (genresErr) return <div>error .. </div>;
+  const isLoading = popularLoading || genresLoading;
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (isLoading) {
+      setShowLoading(true);
+    } else {
+      timeout = setTimeout(() => setShowLoading(false), 500);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
+
+  if (genresErr || popularErr) return <div>error .. </div>;
 
   return (
     <section className="flex p-6">
@@ -67,18 +82,28 @@ export function GenreMovieListComponent() {
               </div>
 
               <button onClick={scrollRight} className="px-2 text-2xl">
-                ▶
+                `` ▶
               </button>
             </div>
           </div>
-          <ButtonComponent>전체보기</ButtonComponent>
+          <Link href="/movies">
+            <ButtonComponent>전체보기</ButtonComponent>
+          </Link>
         </div>
 
         <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground flex items-center overflow-x-auto">
-          <div className="mb-4 grid auto-cols-auto grid-flow-col items-stretch gap-4 p-4">
-            {genresData.results.map((item: MovieItem) => (
-              <MovieCardComponent key={item.id} data={item} />
-            ))}
+          <div
+            className={`mb-4 grid auto-cols-auto grid-flow-col items-stretch gap-4 p-4 transition-opacity duration-300 ${
+              showLoading ? "pointer-events-none opacity-50" : "opacity-100"
+            }`}
+          >
+            {showLoading
+              ? Array.from({ length: 5 }).map((_, idx) => (
+                  <div key={idx} className="h-[480px] w-80 animate-pulse rounded-xl bg-text-bg" />
+                ))
+              : popularData?.results.map((item: MovieItem) => (
+                  <MovieCardComponent key={item.id} data={item} />
+                ))}
           </div>
         </div>
       </div>

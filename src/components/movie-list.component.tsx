@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MovieItem } from "@/types/movie.type";
 import ButtonComponent from "./button/button.component";
 import MovieCardComponent from "./movie-card/movie-card.component";
@@ -16,7 +17,9 @@ export default function MovieListComponent({ title, bgColor, data }: MovieListPr
       <div className="mx-auto flex w-full max-w-[1920px] flex-col justify-center gap-4">
         <div className="flex items-center justify-between text-nowrap">
           <h2 className="text-3xl font-bold">{title}</h2>
-          <ButtonComponent>전체보기</ButtonComponent>
+          <Link href="/movies">
+            <ButtonComponent>전체보기</ButtonComponent>
+          </Link>
         </div>
 
         <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground flex items-center overflow-x-auto">

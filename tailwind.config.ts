@@ -30,6 +30,16 @@ const config = {
         "header-bg": "hsl(var(--header-bg))",
         "point-color": "hsl(var(--point-color))",
       },
+      animation: {
+        slide: "slide 1.5s ease-in-out infinite",
+      },
+      keyframes: {
+        slide: {
+          "0%": { left: "-33%" },
+          "50%": { left: "100%" },
+          "100%": { left: "100%" },
+        },
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMovies } from "@/queries/movie.query";
+import LoadingComponent from "@/components/loading.component";
 import MovieListComponent from "@/components/movie-list.component";
 import { GenreMovieListComponent } from "./component/genre-movie-list.component";
 
@@ -25,7 +26,8 @@ export default function Home() {
     "primary_release_date.lte": formatted,
   });
 
-  if (popularLoading || newLoading) return <div>loading .. </div>;
+  if (popularLoading || newLoading)
+    return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
   if (popularErr || newErr) return <div>error .. </div>;
 
   return (
