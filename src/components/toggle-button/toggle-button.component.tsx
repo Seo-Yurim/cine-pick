@@ -1,11 +1,32 @@
 import { ToggleButton, ToggleButtonGroup } from "react-aria-components";
 import "./toggle-button.component.scss";
 
-export default function ToggleButtonComponent({ toggleMenus = [] }: { toggleMenus: string[] }) {
+type ToggleMenu = {
+  label: string;
+  value: string;
+};
+
+interface ToggleButtonProps {
+  toggleMenus: ToggleMenu[];
+  activeTab: string;
+  onChange: (value: string) => void;
+}
+
+export default function ToggleButtonComponent({
+  toggleMenus,
+  activeTab,
+  onChange,
+}: ToggleButtonProps) {
   return (
-    <ToggleButtonGroup>
-      {toggleMenus.map((menu, idx) => (
-        <ToggleButton key={idx}>{menu}</ToggleButton>
+    <ToggleButtonGroup selectionMode="single">
+      {toggleMenus.map((menu) => (
+        <ToggleButton
+          key={menu.value}
+          isSelected={activeTab === menu.value}
+          onPress={() => onChange(menu.value)}
+        >
+          {menu.label}
+        </ToggleButton>
       ))}
     </ToggleButtonGroup>
   );

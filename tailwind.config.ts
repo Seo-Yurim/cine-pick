@@ -32,7 +32,7 @@ const config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 } satisfies Config;
 
 export default config;

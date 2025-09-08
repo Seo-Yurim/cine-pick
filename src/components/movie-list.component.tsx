@@ -19,7 +19,7 @@ export default function MovieListComponent({ title, bgColor, data }: MovieListPr
           <ButtonComponent>전체보기</ButtonComponent>
         </div>
 
-        <div className="flex items-center overflow-x-auto">
+        <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground flex items-center overflow-x-auto">
           <div className="mb-4 grid w-full auto-cols-auto grid-flow-col items-stretch gap-4 p-4">
             {data.map((item: MovieItem) => (
               <MovieCardComponent key={item.id} data={item} />

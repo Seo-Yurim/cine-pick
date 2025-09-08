@@ -38,24 +38,3 @@ body {
     background-color 0.5s ease,
     color 0.5s ease;
 }
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-  border: 1px solid hsl(var(--foreground));
-  border-radius: 1rem;
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--foreground));
-  border: 1px solid hsl(var(--background));
-  border-radius: 1rem;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--point-color));
-}
