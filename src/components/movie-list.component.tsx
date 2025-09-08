@@ -1,8 +1,8 @@
 "use client";
 
 import { MovieItem } from "@/types/movie.type";
-import ButtonComponent from "../button/button.component";
-import MovieCardComponent from "../movie-card/movie-card.component";
+import ButtonComponent from "./button/button.component";
+import MovieCardComponent from "./movie-card/movie-card.component";
 
 interface MovieListProps {
   title: string;

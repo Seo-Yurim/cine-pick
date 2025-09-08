@@ -1,0 +1,25 @@
+.react-aria-ToggleButtonGroup {
+  @apply flex w-full items-center;
+}
+
+.react-aria-ToggleButton {
+  @apply border px-8 py-4 text-lg font-medium;
+
+  &:first-child {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
+
+  &:last-child {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+
+  &:hover {
+    background-color: hsl(var(--point-color));
+  }
+
+  &[data-selected] {
+    background-color: hsl(var(--point-color));
+  }
+}

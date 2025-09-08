@@ -1,11 +1,13 @@
 "use client";
 
 import { useMovies } from "@/queries/movie.query";
-import MovieListComponent from "@/components/movie-list/movie-list.component";
+import MovieListComponent from "@/components/movie-list.component";
+import { GenreMovieListComponent } from "./component/genre-movie-list.component";
 
 export default function Home() {
   const today = new Date();
   const formatted = today.toISOString().split("T")[0];
+
   const {
     data: popularData,
     isLoading: popularLoading,
@@ -23,16 +25,8 @@ export default function Home() {
     "primary_release_date.lte": formatted,
   });
 
-  const {
-    data: genresData,
-    isLoading: genresLoading,
-    isError: genresErr,
-  } = useMovies({
-    sort_by: "popularity.desc",
-  });
-
-  if (popularLoading || newLoading || genresLoading) return <div>loading .. </div>;
-  if (popularErr || newErr || genresErr) return <div>error .. </div>;
+  if (popularLoading || newLoading) return <div>loading .. </div>;
+  if (popularErr || newErr) return <div>error .. </div>;
 
   return (
     <main className="flex flex-col gap-16 pb-40">
@@ -42,7 +36,7 @@ export default function Home() {
         data={popularData.results}
       />
       <MovieListComponent title="최신 개봉작" data={newData.results} />
-      <MovieListComponent title="장르별 추천 영화" data={genresData.results} />
+      <GenreMovieListComponent />
     </main>
   );
 }
