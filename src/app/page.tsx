@@ -1,9 +1,9 @@
-import Image from "next/image";
+import PopularSectionComponent from "./components/popular-section.component";
 
 export default function Home() {
   return (
-    <div className="flex h-screen flex-col gap-16">
-      <p className="w-fit bg-text-bg p-4 text-xl">test</p>
-    </div>
+    <>
+      <PopularSectionComponent />
+    </>
   );
 }

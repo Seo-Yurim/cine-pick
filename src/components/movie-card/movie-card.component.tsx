@@ -11,14 +11,16 @@ export default function MovieCardComponent({ data }: { data: MovieItem }) {
   return (
     <div
       onClick={() => router.push(`/movies/${data.id}`)}
-      className="flex cursor-pointer flex-col gap-4 rounded-xl bg-white p-4 transition-all duration-300 hover:scale-105"
+      className="flex cursor-pointer flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105"
     >
-      <div className="relative h-[400px] w-[300px]">
+      <div className="relative aspect-[3/5] w-64">
         <Image
           src={posterUrl}
-          className="absolute rounded-xl object-cover"
+          className="rounded-xl object-cover"
           fill
+          priority
           alt={`${data.title} 포스터`}
+          sizes="256px"
         />
       </div>
 
