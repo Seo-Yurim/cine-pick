@@ -45,15 +45,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: white;
-  border-radius: 6px;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--foreground));
+  border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: black;
-  border-radius: 6px;
+  background: hsl(var(--foreground));
+  border: 1px solid hsl(var(--background));
+  border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: gray;
+  background: hsl(var(--point-color));
 }
