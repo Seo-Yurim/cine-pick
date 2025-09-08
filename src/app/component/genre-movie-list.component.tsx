@@ -1,6 +1,7 @@
 import { useGenres, useMovies } from "@/queries/movie.query";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
 import ButtonComponent from "@/components/button/button.component";
 import MovieCardComponent from "@/components/movie-card/movie-card.component";
@@ -47,6 +48,7 @@ export function GenreMovieListComponent() {
   });
 
   const isLoading = popularLoading || genresLoading;
+  const isError = genresErr || popularErr;
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -60,7 +62,7 @@ export function GenreMovieListComponent() {
     return () => clearTimeout(timeout);
   }, [isLoading]);
 
-  if (genresErr || popularErr) return <div>error .. </div>;
+  if (isError) toast.error("데이터를 불러오는 중 오류가 발생하였습니다.");
 
   return (
     <section className="flex p-6">
@@ -82,7 +84,7 @@ export function GenreMovieListComponent() {
               </div>
 
               <button onClick={scrollRight} className="px-2 text-2xl">
-                `` ▶
+                ▶
               </button>
             </div>
           </div>

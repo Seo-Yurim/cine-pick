@@ -1,6 +1,8 @@
 "use client";
 
 import { useMovies } from "@/queries/movie.query";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import LoadingComponent from "@/components/loading.component";
 import MovieListComponent from "@/components/movie-list.component";
 import { GenreMovieListComponent } from "./component/genre-movie-list.component";
@@ -8,6 +10,7 @@ import { GenreMovieListComponent } from "./component/genre-movie-list.component"
 export default function Home() {
   const today = new Date();
   const formatted = today.toISOString().split("T")[0];
+  const [showLoading, setShowLoading] = useState<boolean>(true);
 
   const {
     data: popularData,
@@ -26,9 +29,23 @@ export default function Home() {
     "primary_release_date.lte": formatted,
   });
 
-  if (popularLoading || newLoading)
-    return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
-  if (popularErr || newErr) return <div>error .. </div>;
+  const isLoading = popularLoading || newLoading;
+  const isError = popularErr || newErr;
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (isLoading) {
+      setShowLoading(true);
+    } else {
+      timeout = setTimeout(() => setShowLoading(false), 800);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
+
+  if (showLoading) return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
+  if (isError) toast.error("데이터를 불러오는 중 오류가 발생하였습니다.", { duration: 3000 });
 
   return (
     <main className="flex flex-col gap-16 pb-40">
