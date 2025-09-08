@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
 import { ToggleButton, ToggleButtonGroup } from "react-aria-components";
 import "./toggle-button.component.scss";
 
 type ToggleMenu = {
-  label: string;
+  label: string | ReactNode;
   value: string;
 };
 
