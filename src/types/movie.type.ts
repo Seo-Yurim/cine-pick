@@ -4,6 +4,7 @@ export interface MovieParams {
   with_genres?: string;
   with_people?: string;
   primary_release_year?: string;
+  "primary_release_date.gte"?: string;
   "primary_release_date.lte"?: string;
 }
 

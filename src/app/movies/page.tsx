@@ -4,13 +4,27 @@ import { LoadingComponent, MovieCardComponent } from "@/components";
 import { useMovies } from "@/queries/movie.query";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { MovieItem } from "@/types/movie.type";
+import { MovieItem, MovieParams } from "@/types/movie.type";
 import MoviesHeaderComponent from "./components/movies-header.component";
 
 export default function MoviesPage() {
   const [activeTab, setActiveTab] = useState<string>("grid");
+  const [params, setParams] = useState<MovieParams>({
+    sort_by: "popularity.desc",
+    with_genres: "",
+    with_people: "",
+    primary_release_year: "",
+    "primary_release_date.gte": "",
+    "primary_release_date.lte": "",
+  });
 
-  const { data, isLoading, isError } = useMovies();
+  const { data, isLoading, isError } = useMovies({
+    sort_by: params.sort_by,
+    with_genres: params.with_genres,
+    with_people: params.with_people,
+    "primary_release_date.gte": params["primary_release_date.gte"],
+    "primary_release_date.lte": params["primary_release_date.lte"],
+  });
 
   if (isError) toast.error("데이터를 불러오는 중 에러가 발생했어요.", { duration: 3000 });
 
