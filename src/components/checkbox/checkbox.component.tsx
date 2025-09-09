@@ -7,7 +7,7 @@ export default function CheckboxComponent({ list, ...props }: { list: MovieGenre
     <CheckboxGroup {...props}>
       {list.genres.map((item) => (
         <Checkbox key={item.id} value={item.id}>
-          <div className="h-4 w-4 border" aria-hidden="true">
+          <div className="h-4 w-4 rounded-md border" aria-hidden="true">
             <svg viewBox="0 0 18 18">
               <polyline points="1 9 7 14 15 4" />
             </svg>

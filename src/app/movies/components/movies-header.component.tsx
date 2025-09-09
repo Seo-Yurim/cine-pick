@@ -1,6 +1,7 @@
 import { useGenres } from "@/queries/movie.query";
 import toast from "react-hot-toast";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
+import { RiFilterFill } from "react-icons/ri";
 import CheckboxComponent from "@/components/checkbox/checkbox.component";
 import LoadingComponent from "@/components/loading.component";
 import SearchComponent from "@/components/search/search.component";
@@ -32,18 +33,33 @@ export default function MoviesHeaderComponent({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex w-full items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">영화 찾아보기</h1>
+      <div className="flex w-full items-center justify-between gap-8">
+        <h1 className="text-nowrap text-2xl font-bold">영화 찾아보기</h1>
+        <SearchComponent placeholder="원하는 영화를 찾아보세요!" />
         <ToggleButtonComponent
           toggleMenus={toggleMenus}
           activeTab={tab}
           onChange={handleTabClick}
         />
+        <div className="rounded-xl border p-2">
+          <RiFilterFill className="h-8 w-8" />
+        </div>
       </div>
-      <div className="flex flex-col items-center justify-between gap-4">
-        <SearchComponent placeholder="원하는 영화를 찾아보세요!" />
-        <CheckboxComponent list={data} />
-        <TagComponent tags={tags} />
+
+      <div className="flex gap-4 rounded-xl bg-point-color p-4">
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <h3 className="text-xl font-medium">장르별 필터링</h3>
+          <div className="rounded-xl border p-4">
+            <CheckboxComponent list={data} />
+          </div>
+        </div>
+
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <h3 className="text-xl font-medium">인물 필터링</h3>
+          <div className="rounded-xl border p-4">
+            <TagComponent tags={tags} />
+          </div>
+        </div>
       </div>
     </div>
   );
