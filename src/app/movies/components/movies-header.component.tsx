@@ -10,6 +10,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
+import { DatePickerComponent } from "@/components/date-picker/date-picker.component";
 
 const toggleMenus = [
   { label: <CiGrid41 className="h-8 w-8" />, value: "grid" },
@@ -55,10 +56,19 @@ export default function MoviesHeaderComponent({
 
       {isOpen && (
         <div className="grid grid-cols-2 gap-4 rounded-xl bg-point-color p-4">
-          <div className="flex flex-1 flex-col gap-4 p-4">
-            <h3 className="text-xl font-medium">장르별 필터링</h3>
-            <div className="rounded-xl border p-4">
-              <CheckboxComponent list={data} />
+          <div className="flex flex-col">
+            <div className="flex flex-1 flex-col gap-4 p-4">
+              <h3 className="text-xl font-medium">장르별 필터링</h3>
+              <div className="rounded-xl border p-4">
+                <CheckboxComponent list={data} />
+              </div>
+            </div>
+
+            <div className="flex flex-1 flex-col gap-4 p-4">
+              <h3 className="text-xl font-medium">개봉일 필터링</h3>
+              <div className="rounded-xl border p-4">
+                <DatePickerComponent />
+              </div>
             </div>
           </div>
 

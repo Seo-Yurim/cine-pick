@@ -1,0 +1,39 @@
+.react-aria-DateRangePicker {
+  .react-aria-Group {
+    @apply relative flex w-full min-w-[320px] items-center whitespace-nowrap;
+
+    &[data-selected] {
+      background-color: #6a9e9c;
+    }
+  }
+
+  .react-aria-DateInput {
+    @apply text-lg;
+  }
+}
+
+.react-aria-Popover[data-trigger="DateRangePicker"] {
+  @apply rounded-xl border bg-point-color p-4;
+}
+
+.react-aria-CalendarCell {
+  @apply flex items-center justify-center p-2 transition-colors duration-200;
+
+  &[data-selected] {
+    background-color: #6a9e9c;
+  }
+
+  &[data-hovered] {
+    background-color: #6a9e9c;
+  }
+
+  &[data-in-range] {
+    background-color: #6a9e9c;
+  }
+
+  &[data-range-start],
+  &[data-range-end] {
+    background-color: #6a9e9c;
+    font-weight: 700;
+  }
+}
