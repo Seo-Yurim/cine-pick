@@ -1,11 +1,9 @@
+import { ButtonComponent, MovieCardComponent, ToggleButtonComponent } from "@/components";
 import { useGenres, useMovies } from "@/queries/movie.query";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
-import ButtonComponent from "@/components/button/button.component";
-import MovieCardComponent from "@/components/movie-card/movie-card.component";
-import ToggleButtonComponent from "@/components/toggle-button/toggle-button.component";
 
 export function GenreMovieListComponent() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -93,7 +91,7 @@ export function GenreMovieListComponent() {
           </Link>
         </div>
 
-        <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground flex items-center overflow-x-auto">
+        <div className="flex items-center overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
           <div
             className={`mb-4 grid auto-cols-auto grid-flow-col items-stretch gap-4 p-4 transition-opacity duration-300 ${
               showLoading ? "pointer-events-none opacity-50" : "opacity-100"

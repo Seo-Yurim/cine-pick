@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import ButtonComponent from "./button/button.component";
+import { ButtonComponent } from "./button/button.component";
 
-export default function Header() {
+export function Header() {
   return (
     <header className="bg-header-bg p-8">
       <div className="mx-auto flex w-full max-w-[1920px] items-center gap-8">

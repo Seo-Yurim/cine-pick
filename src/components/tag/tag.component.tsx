@@ -1,7 +1,9 @@
+"use client";
+
 import { Button, Tag, TagGroup, TagList } from "react-aria-components";
 import { MdCancel } from "react-icons/md";
 
-export default function TagComponent({ tags, ...props }: { tags: string[] }) {
+export function TagComponent({ tags, ...props }: { tags: string[] }) {
   return (
     <TagGroup {...props}>
       <TagList className="flex items-center gap-2">

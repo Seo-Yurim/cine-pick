@@ -1,13 +1,15 @@
+import {
+  CheckboxComponent,
+  LoadingComponent,
+  SearchComponent,
+  TagComponent,
+  ToggleButtonComponent,
+} from "@/components";
 import { useGenres } from "@/queries/movie.query";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
-import CheckboxComponent from "@/components/checkbox/checkbox.component";
-import LoadingComponent from "@/components/loading.component";
-import SearchComponent from "@/components/search/search.component";
-import TagComponent from "@/components/tag/tag.component";
-import ToggleButtonComponent from "@/components/toggle-button/toggle-button.component";
 
 const toggleMenus = [
   { label: <CiGrid41 className="h-8 w-8" />, value: "grid" },

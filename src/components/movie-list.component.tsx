@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { MovieItem } from "@/types/movie.type";
-import ButtonComponent from "./button/button.component";
-import MovieCardComponent from "./movie-card/movie-card.component";
+import { ButtonComponent } from "./button/button.component";
+import { MovieCardComponent } from "./movie-card/movie-card.component";
 
 interface MovieListProps {
   title: string;
@@ -11,7 +11,7 @@ interface MovieListProps {
   data: MovieItem[];
 }
 
-export default function MovieListComponent({ title, bgColor, data }: MovieListProps) {
+export function MovieListComponent({ title, bgColor, data }: MovieListProps) {
   return (
     <section style={{ backgroundColor: bgColor }} className="flex p-6">
       <div className="mx-auto flex w-full max-w-[1920px] flex-col justify-center gap-4">
@@ -22,7 +22,7 @@ export default function MovieListComponent({ title, bgColor, data }: MovieListPr
           </Link>
         </div>
 
-        <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground flex items-center overflow-x-auto">
+        <div className="flex items-center overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
           <div className="mb-4 grid w-full auto-cols-auto grid-flow-col items-stretch gap-4 p-4">
             {data.map((item: MovieItem) => (
               <MovieCardComponent key={item.id} data={item} />

@@ -1,8 +1,10 @@
+"use client";
+
 import { Checkbox, CheckboxGroup } from "react-aria-components";
 import { MovieGenres } from "@/types/movie.type";
 import "./checkbox.component.scss";
 
-export default function CheckboxComponent({ list, ...props }: { list: MovieGenres }) {
+export function CheckboxComponent({ list, ...props }: { list: MovieGenres }) {
   return (
     <CheckboxGroup {...props}>
       {list.genres.map((item) => (

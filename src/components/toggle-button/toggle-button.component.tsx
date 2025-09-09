@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import { ToggleButton, ToggleButtonGroup } from "react-aria-components";
 import "./toggle-button.component.scss";
@@ -13,11 +15,7 @@ interface ToggleButtonProps {
   onChange: (value: string) => void;
 }
 
-export default function ToggleButtonComponent({
-  toggleMenus,
-  activeTab,
-  onChange,
-}: ToggleButtonProps) {
+export function ToggleButtonComponent({ toggleMenus, activeTab, onChange }: ToggleButtonProps) {
   return (
     <ToggleButtonGroup selectionMode="single">
       {toggleMenus.map((menu) => (

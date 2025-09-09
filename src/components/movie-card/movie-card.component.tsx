@@ -1,15 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
 
-export default function MovieCardComponent({
-  data,
-  type = "grid",
-}: {
-  data: MovieItem;
-  type?: string;
-}) {
+export function MovieCardComponent({ data, type = "grid" }: { data: MovieItem; type?: string }) {
   const router = useRouter();
   const posterUrl = data.poster_path
     ? `https://image.tmdb.org/t/p/w500${data.poster_path}`

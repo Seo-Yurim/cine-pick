@@ -1,10 +1,12 @@
+"use client";
+
 import { Label, ProgressBar, ProgressBarProps } from "react-aria-components";
 
 interface MyProgressBarProps extends ProgressBarProps {
   label?: string;
 }
 
-export default function LoadingComponent({ label, ...props }: MyProgressBarProps) {
+export function LoadingComponent({ label, ...props }: MyProgressBarProps) {
   return (
     <ProgressBar
       className="mx-auto flex h-screen w-full max-w-96 flex-col items-center gap-8 py-96"
@@ -14,7 +16,7 @@ export default function LoadingComponent({ label, ...props }: MyProgressBarProps
         <>
           {isIndeterminate ? (
             <div className="relative h-4 w-full overflow-hidden rounded-full bg-foreground">
-              <div className="animate-slide absolute h-full w-1/3 rounded-full bg-point-color" />
+              <div className="absolute h-full w-1/3 animate-slide rounded-full bg-point-color" />
             </div>
           ) : (
             <>

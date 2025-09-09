@@ -1,7 +1,7 @@
+import { Header } from "@/components";
 import Providers from "@/queries/query-client";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
-import Header from "@/components/header";
 import "./globals.css";
 
 export const metadata: Metadata = {
