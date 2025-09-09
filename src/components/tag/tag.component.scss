@@ -1,0 +1,11 @@
+.react-aria-TagList {
+  @apply flex items-center gap-2;
+
+  .react-aria-Tag {
+    @apply flex items-center gap-2 rounded-full border bg-foreground px-4 py-1 text-lg font-semibold leading-tight text-background;
+
+    .react-aria-Button {
+      @apply p-0 text-background;
+    }
+  }
+}

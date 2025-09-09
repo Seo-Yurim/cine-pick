@@ -4,6 +4,7 @@ import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import CheckboxComponent from "@/components/checkbox/checkbox.component";
 import LoadingComponent from "@/components/loading.component";
 import SearchComponent from "@/components/search/search.component";
+import TagComponent from "@/components/tag/tag.component";
 import ToggleButtonComponent from "@/components/toggle-button/toggle-button.component";
 
 const toggleMenus = [
@@ -27,8 +28,10 @@ export default function MoviesHeaderComponent({
   if (isLoading) return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
   if (isError) toast.error("데이터를 불러오는 중 오류가 발생했습니다.");
 
+  const tags = ["test1", "test2", "test3"];
+
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="flex w-full items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">영화 찾아보기</h1>
         <ToggleButtonComponent
@@ -40,6 +43,7 @@ export default function MoviesHeaderComponent({
       <div className="flex flex-col items-center justify-between gap-4">
         <SearchComponent placeholder="원하는 영화를 찾아보세요!" />
         <CheckboxComponent list={data} />
+        <TagComponent tags={tags} />
       </div>
     </div>
   );
