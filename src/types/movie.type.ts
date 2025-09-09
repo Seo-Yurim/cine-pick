@@ -30,3 +30,10 @@ export interface MovieResponse {
   total_pages: number;
   total_results: number;
 }
+
+export interface MovieGenres {
+  genres: {
+    id: string;
+    name: string;
+  }[];
+}
