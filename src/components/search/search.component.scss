@@ -1,0 +1,15 @@
+.react-aria-SearchField {
+  @apply flex w-fit items-center gap-4 rounded-xl bg-white px-2 py-1;
+}
+
+.react-aria-Input {
+  @apply h-8 text-background;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-weight: 600;
+  }
+}
