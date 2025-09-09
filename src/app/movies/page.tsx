@@ -27,7 +27,7 @@ export default function MoviesPage() {
   };
 
   return (
-    <main className="flex w-full flex-col gap-8 px-20 py-8">
+    <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
       <div className="flex w-full items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">영화 찾아보기</h1>
         <ToggleButtonComponent
@@ -37,10 +37,14 @@ export default function MoviesPage() {
         />
       </div>
       <div
-        className={`${activeTab === "grid" ? "grid grid-cols-4 gap-x-12 gap-y-8" : "flex flex-col gap-4"}`}
+        className={
+          activeTab === "grid"
+            ? "grid grid-cols-4 gap-4 xl:gap-x-12 xl:gap-y-8"
+            : "flex flex-col gap-4"
+        }
       >
         {data.results.map((result: MovieItem) => (
-          <MovieCardComponent data={result} showImg={activeTab === "grid" ? true : false} />
+          <MovieCardComponent key={result.id} data={result} type={activeTab} />
         ))}
       </div>
     </main>
