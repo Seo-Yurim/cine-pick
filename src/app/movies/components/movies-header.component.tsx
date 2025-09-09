@@ -1,4 +1,5 @@
 import { useGenres } from "@/queries/movie.query";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
@@ -20,6 +21,7 @@ export default function MoviesHeaderComponent({
   tab: string;
   onTab: React.Dispatch<React.SetStateAction<string>>;
 }) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { data, isLoading, isError } = useGenres();
 
   const handleTabClick = (tab: string) => {
@@ -41,26 +43,32 @@ export default function MoviesHeaderComponent({
           activeTab={tab}
           onChange={handleTabClick}
         />
-        <div className="rounded-xl border p-2">
+        <div
+          onClick={() => setIsOpen(!isOpen)}
+          className="cursor-pointer rounded-xl border p-2 hover:bg-point-color"
+        >
           <RiFilterFill className="h-8 w-8" />
         </div>
       </div>
 
-      <div className="flex gap-4 rounded-xl bg-point-color p-4">
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <h3 className="text-xl font-medium">장르별 필터링</h3>
-          <div className="rounded-xl border p-4">
-            <CheckboxComponent list={data} />
+      {isOpen && (
+        <div className="grid grid-cols-2 gap-4 rounded-xl bg-point-color p-4">
+          <div className="flex flex-1 flex-col gap-4 p-4">
+            <h3 className="text-xl font-medium">장르별 필터링</h3>
+            <div className="rounded-xl border p-4">
+              <CheckboxComponent list={data} />
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <h3 className="text-xl font-medium">인물 필터링</h3>
-          <div className="rounded-xl border p-4">
-            <TagComponent tags={tags} />
+          <div className="flex flex-1 flex-col gap-4 p-4">
+            <h3 className="text-xl font-medium">인물 필터링</h3>
+            <div className="flex h-full flex-col flex-wrap items-stretch gap-4 rounded-xl border p-4">
+              <SearchComponent placeholder="인물을 입력해주세요." />
+              <TagComponent tags={tags} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
