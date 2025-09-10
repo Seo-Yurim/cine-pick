@@ -21,7 +21,7 @@ export function MovieCardComponent({ data, type = "grid" }: { data: MovieItem; t
       className={`${type === "grid" ? "max-w-xs sm:max-w-sm md:max-w-md" : "cursor-pointer"} group relative flex w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105`}
     >
       {type === "grid" && (
-        <div className="relative aspect-[3/4] w-full">
+        <div className="relative aspect-[3/4] w-full min-w-[288px]">
           <Image
             src={posterUrl}
             className="absolute h-full w-full rounded-xl object-cover"

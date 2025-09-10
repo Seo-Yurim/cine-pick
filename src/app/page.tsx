@@ -1,10 +1,9 @@
 "use client";
 
+import { LoadingComponent, MovieListComponent } from "@/components";
 import { useMovies } from "@/queries/movie.query";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import LoadingComponent from "@/components/loading.component";
-import MovieListComponent from "@/components/movie-list.component";
 import { GenreMovieListComponent } from "./component/genre-movie-list.component";
 
 export default function Home() {
