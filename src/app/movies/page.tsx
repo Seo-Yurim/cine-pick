@@ -9,7 +9,7 @@ import MoviesHeaderComponent from "./components/movies-header.component";
 
 export default function MoviesPage() {
   const [activeTab, setActiveTab] = useState<string>("grid");
-  const [params, setParams] = useState<MovieParams>({
+  const [tempParams, setTempParams] = useState<MovieParams>({
     sort_by: "popularity.desc",
     with_genres: "",
     with_people: "",
@@ -18,6 +18,8 @@ export default function MoviesPage() {
     "primary_release_date.lte": "",
   });
 
+  const [params, setParams] = useState<MovieParams>(tempParams);
+
   const { data, isLoading, isError } = useMovies({
     sort_by: params.sort_by,
     with_genres: params.with_genres,
@@ -25,12 +27,20 @@ export default function MoviesPage() {
     "primary_release_date.gte": params["primary_release_date.gte"],
     "primary_release_date.lte": params["primary_release_date.lte"],
   });
-
   if (isError) toast.error("데이터를 불러오는 중 에러가 발생했어요.", { duration: 3000 });
+
+  const handleApplyFilters = () => {
+    setParams(tempParams);
+  };
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
-      <MoviesHeaderComponent tab={activeTab} onTab={setActiveTab} />
+      <MoviesHeaderComponent
+        tab={activeTab}
+        onTab={setActiveTab}
+        onParams={setTempParams}
+        onSubmit={handleApplyFilters}
+      />
       <div
         className={
           activeTab === "grid"
