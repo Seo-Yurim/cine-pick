@@ -34,8 +34,61 @@ export interface MovieResponse {
 }
 
 export interface MovieGenres {
-  genres: {
-    id: string;
+  id: string;
+  name: string;
+}
+
+export interface MovieDetailItem extends MovieItem {
+  belongs_to_collection: string;
+  genres: { id: number; name: string }[];
+  budget: number;
+  revenue: number;
+  runtime: number | null;
+  status: string;
+  tagline: string;
+  homepage: string | null;
+  imdb_id: string | null;
+  production_companies: {
+    id: number;
+    name: string;
+    logo_path: string | null;
+    origin_country: string;
+  }[];
+  production_countries: {
+    iso_3166_1: string;
     name: string;
   }[];
+  spoken_languages: {
+    iso_639_1: string;
+    name: string;
+  }[];
+}
+
+export interface MovieCreditResponse {
+  id: number;
+  cast: MovieCast[];
+  crew: MovieCrew[];
+}
+
+export interface MovieCreditItem {
+  adult: boolean;
+  gender: 0 | 1;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  credit_id: string;
+}
+
+export interface MovieCast extends MovieCreditItem {
+  cast_id: number;
+  character: string;
+  order: number;
+}
+
+export interface MovieCrew extends MovieCreditItem {
+  department: string;
+  job: string;
 }

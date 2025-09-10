@@ -6,8 +6,18 @@ export async function getMovies(params?: MovieParams) {
   return res.data;
 }
 
+export async function getMovieDetail(movieId: string) {
+  const res = await get(`/movie/${movieId}`);
+  return res.data;
+}
+
 export async function getGenres() {
   const res = await get("/genre/movie/list");
+  return res.data;
+}
+
+export async function getMovieCredits(movieId: string) {
+  const res = await get(`/movie/${movieId}/credits`);
   return res.data;
 }
 
