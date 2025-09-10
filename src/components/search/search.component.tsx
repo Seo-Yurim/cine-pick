@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Input, SearchField, Text } from "react-aria-components";
 import { BsSearch } from "react-icons/bs";
 import { PiArrowBendDownLeftFill } from "react-icons/pi";

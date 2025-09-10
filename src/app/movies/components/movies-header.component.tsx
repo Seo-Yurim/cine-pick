@@ -42,8 +42,7 @@ export default function MoviesHeaderComponent({
     start: null,
     end: null,
   });
-
-  console.log(selectedDate.start?.toString());
+  const [tagList, setTagList] = useState<string[]>([]);
 
   const { data, isLoading, isError } = useGenres();
 
@@ -54,8 +53,6 @@ export default function MoviesHeaderComponent({
   // 제거 예정
   if (isLoading) return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
   if (isError) toast.error("데이터를 불러오는 중 오류가 발생했습니다.");
-
-  const tags = ["test1", "test2", "test3"];
 
   const handlefilterSubmit = () => {
     onParams((prevState) => {
@@ -111,8 +108,7 @@ export default function MoviesHeaderComponent({
             <div className="flex flex-1 flex-col gap-4 p-4">
               <h3 className="text-xl font-medium">인물 필터링</h3>
               <div className="flex h-full flex-col flex-wrap items-stretch gap-4 rounded-xl border p-4">
-                <SearchComponent placeholder="인물을 입력해주세요." />
-                <TagComponent tags={tags} />
+                <TagComponent tagList={tagList} setTagList={setTagList} />
               </div>
             </div>
           </div>
