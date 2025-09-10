@@ -8,6 +8,7 @@ import {
 } from "@/components";
 import { useGenres } from "@/queries/movie.query";
 import { useState } from "react";
+import { DateValue } from "react-aria-components";
 import toast from "react-hot-toast";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
@@ -18,6 +19,11 @@ const toggleMenus = [
   { label: <CiGrid41 className="h-8 w-8" />, value: "grid" },
   { label: <CiBoxList className="h-8 w-8" />, value: "list" },
 ];
+
+export type DatePickerType = {
+  start: DateValue | null;
+  end: DateValue | null;
+};
 
 export default function MoviesHeaderComponent({
   tab,
@@ -31,8 +37,13 @@ export default function MoviesHeaderComponent({
   onSubmit: () => void;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string[]>([]);
-  console.log(selected);
+  const [genreSelected, setGenreSelected] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState<DatePickerType>({
+    start: null,
+    end: null,
+  });
+
+  console.log(selectedDate.start?.toString());
 
   const { data, isLoading, isError } = useGenres();
 
@@ -81,14 +92,18 @@ export default function MoviesHeaderComponent({
               <div className="flex flex-1 flex-col gap-4 p-4">
                 <h3 className="text-xl font-medium">장르별 필터링</h3>
                 <div className="rounded-xl border p-4">
-                  <CheckboxComponent list={data} selected={selected} onSelected={setSelected} />
+                  <CheckboxComponent
+                    list={data}
+                    selected={genreSelected}
+                    onSelected={setGenreSelected}
+                  />
                 </div>
               </div>
 
               <div className="flex flex-1 flex-col gap-4 p-4">
                 <h3 className="text-xl font-medium">개봉일 필터링</h3>
                 <div className="rounded-xl border p-4">
-                  <DatePickerComponent />
+                  <DatePickerComponent onSelectedDate={setSelectedDate} />
                 </div>
               </div>
             </div>

@@ -1,3 +1,4 @@
+import { DatePickerType } from "@/app/movies/components/movies-header.component";
 import {
   Button,
   CalendarCell,
@@ -14,13 +15,30 @@ import {
 import { FaArrowAltCircleDown, FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import "./date-picker.component.scss";
 
-export function DatePickerComponent() {
+export function DatePickerComponent({
+  onSelectedDate,
+  ...props
+}: {
+  onSelectedDate: React.Dispatch<React.SetStateAction<DatePickerType>>;
+}) {
+  const handleChange = (range: DatePickerType | null) => {
+    if (range) {
+      onSelectedDate({ start: range.start, end: range.end });
+    } else {
+      onSelectedDate({ start: null, end: null });
+    }
+  };
+
   return (
-    <DateRangePicker>
+    <DateRangePicker aria-label="날짜 선택" onChange={handleChange} {...props}>
       <Group>
-        <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
+        <DateInput aria-label="시작 날짜" slot="start">
+          {(segment) => <DateSegment segment={segment} />}
+        </DateInput>
         <span aria-hidden="true">–</span>
-        <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
+        <DateInput aria-label="종료 날짜" slot="end">
+          {(segment) => <DateSegment segment={segment} />}
+        </DateInput>
         <Button>
           <FaArrowAltCircleDown className="h-6 w-6" />
         </Button>
