@@ -1,15 +1,14 @@
 import {
   ButtonComponent,
   CheckboxComponent,
-  LoadingComponent,
   SearchComponent,
   TagComponent,
   ToggleButtonComponent,
 } from "@/components";
 import { useGenres } from "@/queries/movie.query";
+import { getPersonIds } from "@/services/movie.service";
 import { useState } from "react";
 import { DateValue } from "react-aria-components";
-import toast from "react-hot-toast";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
 import { MovieParams } from "@/types/movie.type";
@@ -29,12 +28,10 @@ export default function MoviesHeaderComponent({
   tab,
   onTab,
   onParams,
-  onSubmit,
 }: {
   tab: string;
   onTab: React.Dispatch<React.SetStateAction<string>>;
   onParams: React.Dispatch<React.SetStateAction<MovieParams>>;
-  onSubmit: () => void;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [genreSelected, setGenreSelected] = useState<string[]>([]);
@@ -46,19 +43,15 @@ export default function MoviesHeaderComponent({
 
   const { data, isLoading, isError } = useGenres();
 
-  const handleTabClick = (tab: string) => {
-    onTab(tab);
-  };
+  const handlefilterSubmit = async () => {
+    const personIds = await getPersonIds(tagList);
 
-  // 제거 예정
-  if (isLoading) return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
-  if (isError) toast.error("데이터를 불러오는 중 오류가 발생했습니다.");
-
-  const handlefilterSubmit = () => {
-    onParams((prevState) => {
-      let newParams = { ...prevState };
-
-      return newParams;
+    onParams({
+      sort_by: "popularity.desc",
+      with_genres: genreSelected.toString(),
+      with_people: personIds.toString(),
+      "primary_release_date.gte": selectedDate.start?.toString(),
+      "primary_release_date.lte": selectedDate.end?.toString(),
     });
   };
 
@@ -70,7 +63,7 @@ export default function MoviesHeaderComponent({
         <ToggleButtonComponent
           toggleMenus={toggleMenus}
           activeTab={tab}
-          onChange={handleTabClick}
+          onChange={(tab) => onTab(tab)}
         />
         <div
           onClick={() => setIsOpen(!isOpen)}
@@ -112,7 +105,7 @@ export default function MoviesHeaderComponent({
               </div>
             </div>
           </div>
-          <ButtonComponent>필터링 적용</ButtonComponent>
+          <ButtonComponent onPress={handlefilterSubmit}>필터링 적용</ButtonComponent>
         </div>
       )}
     </div>
