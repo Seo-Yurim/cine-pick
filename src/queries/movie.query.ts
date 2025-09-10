@@ -1,6 +1,6 @@
 "use client";
 
-import { getGenres, getMovies } from "@/services/movie.service";
+import { getGenres, getMovies, getSearchResult } from "@/services/movie.service";
 import { useQuery } from "@tanstack/react-query";
 import { MovieParams } from "@/types/movie.type";
 
@@ -15,5 +15,13 @@ export function useGenres() {
   return useQuery({
     queryKey: ["genres"],
     queryFn: () => getGenres(),
+  });
+}
+
+export function useSearchResult(query: string) {
+  return useQuery({
+    queryKey: ["search", query],
+    queryFn: () => getSearchResult(query),
+    enabled: Boolean(query),
   });
 }

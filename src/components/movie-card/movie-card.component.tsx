@@ -5,7 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
 
-export function MovieCardComponent({ data, type = "grid" }: { data: MovieItem; type?: string }) {
+export function MovieCardComponent({
+  minWidth = "312px",
+  data,
+  type = "grid",
+}: {
+  minWidth?: string;
+  data: MovieItem;
+  type?: string;
+}) {
   const router = useRouter();
   const posterUrl = data.poster_path
     ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
@@ -18,10 +26,11 @@ export function MovieCardComponent({ data, type = "grid" }: { data: MovieItem; t
   return (
     <div
       onClick={handleClick}
-      className={`${type === "grid" ? "max-w-xs sm:max-w-sm md:max-w-md" : "cursor-pointer"} group relative flex w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105`}
+      style={{ minWidth: minWidth }}
+      className={`${type === "grid" ? "" : "cursor-pointer"} group relative flex w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105`}
     >
       {type === "grid" && (
-        <div className="relative aspect-[3/4] w-full min-w-[288px]">
+        <div className="relative aspect-[3/4] w-full min-w-[200px]">
           <Image
             src={posterUrl}
             className="absolute h-full w-full rounded-xl object-cover"

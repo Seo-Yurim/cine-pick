@@ -34,7 +34,7 @@ export default function MoviesPage() {
       <div
         className={
           activeTab === "grid"
-            ? "grid grid-cols-4 gap-4 xl:gap-x-12 xl:gap-y-8"
+            ? "grid grid-cols-1 justify-items-center gap-2 md:grid-cols-2 md:justify-between lg:grid-cols-4"
             : "flex flex-col gap-4"
         }
       >
@@ -42,7 +42,7 @@ export default function MoviesPage() {
           <LoadingComponent label="로딩 중 ... " isIndeterminate />
         ) : (
           data.results.map((result: MovieItem) => (
-            <MovieCardComponent key={result.id} data={result} type={activeTab} />
+            <MovieCardComponent key={result.id} data={result} type={activeTab} minWidth="240px" />
           ))
         )}
       </div>

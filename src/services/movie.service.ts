@@ -10,3 +10,8 @@ export async function getGenres() {
   const res = await get("/genre/movie/list");
   return res.data;
 }
+
+export async function getSearchResult(query: string) {
+  const res = await get("/search/multi", { query });
+  return res.data;
+}
