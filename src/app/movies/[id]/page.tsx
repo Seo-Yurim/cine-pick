@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
+import { RatingComponent } from "./components/rating.component";
 import { ReviewListComponent } from "./components/review-list.component";
 
 const statusMapping: Record<string, string> = {
@@ -152,7 +153,7 @@ export default function MoviesDetailPage() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-8 rounded-xl bg-white/30 p-8">
+      <section className="flex flex-col gap-8 rounded-xl bg-text-bg p-8">
         <div className="flex items-center justify-between">
           <div className="flex gap-3">
             <MdOutlineRateReview className="h-8 w-8" />
