@@ -7,8 +7,6 @@ import {
   getMovieCredits,
   getMovieDetail,
   getMovies,
-  getPersonDetail,
-  getPersonMovies,
   getReivews,
   getReviewDetail,
   postRating,
@@ -35,20 +33,6 @@ export function useMovieCredits(movieId: string) {
   return useQuery({
     queryKey: ["movie-credit", movieId],
     queryFn: () => getMovieCredits(movieId),
-  });
-}
-
-export function usePersonDetail(personId: string) {
-  return useQuery({
-    queryKey: ["person-detail", personId],
-    queryFn: () => getPersonDetail(personId),
-  });
-}
-
-export function usePersonMovies(personId: string) {
-  return useQuery({
-    queryKey: ["person-movies", personId],
-    queryFn: () => getPersonMovies(personId),
   });
 }
 

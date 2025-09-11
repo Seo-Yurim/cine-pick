@@ -1,8 +1,9 @@
 "use client";
 
-import { ButtonComponent, LoadingComponent } from "@/components";
+import { LoadingComponent } from "@/components";
 import { useMovieAccountStates, useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { MdOutlineRateReview } from "react-icons/md";
@@ -61,7 +62,7 @@ export default function MoviesDetailPage() {
         </div>
 
         <div className="flex min-w-0 justify-between gap-8 max-lg:flex-col max-lg:items-center">
-          <div className="relative aspect-[3/4] w-full min-w-[500px] max-w-[624px] shrink-0">
+          <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[624px] shrink-0">
             <Image
               src={moviePosterUrl}
               className="absolute h-full w-full rounded-xl object-contain"
@@ -96,11 +97,12 @@ export default function MoviesDetailPage() {
                   <div className="w-full border-b" />
                 </div>
                 <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
-                  <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8">
+                  <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
                     {creditData.cast.slice(0, 7).map((credit: MovieCast) => (
-                      <div
+                      <Link
+                        href={`/person/${credit.id}`}
                         key={credit.cast_id}
-                        className="flex flex-col items-center gap-2 text-nowrap text-center"
+                        className="flex flex-col items-center gap-2 text-nowrap text-center transition-all duration-300 hover:scale-105"
                       >
                         <div className="relative aspect-[3/4] w-[100px] xl:w-[120px] 2xl:w-[200px]">
                           <Image
@@ -118,7 +120,7 @@ export default function MoviesDetailPage() {
                         </div>
                         <p className="text-sm">{credit.name}</p>
                         <p className="text-xs">{credit.character} 역</p>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -130,11 +132,12 @@ export default function MoviesDetailPage() {
                   <div className="w-full border-b" />
                 </div>
                 <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
-                  <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8">
+                  <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
                     {creditData.crew.slice(0, 7).map((credit: MovieCrew) => (
-                      <div
+                      <Link
+                        href={`/person/${credit.id}`}
                         key={`${credit.id} ${credit.name} ${credit.job}`}
-                        className="flex flex-col items-center gap-2 text-center"
+                        className="flex flex-col items-center gap-2 text-center transition-all duration-300 hover:scale-105"
                       >
                         <div className="relative aspect-[3/4] w-[100px] xl:w-[120px] 2xl:w-[200px]">
                           <Image
@@ -152,7 +155,7 @@ export default function MoviesDetailPage() {
                         </div>
                         <p className="text-nowrap text-sm">{credit.name}</p>
                         <p className="text-xs">{credit.job}</p>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
