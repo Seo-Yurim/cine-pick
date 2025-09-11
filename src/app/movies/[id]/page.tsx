@@ -4,9 +4,9 @@ import { ButtonComponent, LoadingComponent } from "@/components";
 import { useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import toast from "react-hot-toast";
 import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
-import { ReviewFormComponent } from "./components/review-form.component";
 import { ReviewListComponent } from "./components/review-list.component";
 
 const statusMapping: Record<string, string> = {
@@ -27,6 +27,7 @@ export default function MoviesDetailPage() {
     isLoading: isMovieLoading,
     isError: isMovieError,
   } = useMovieDetail(movieId as string);
+
   const {
     data: creditData,
     isLoading: isCreditLoading,
@@ -36,11 +37,12 @@ export default function MoviesDetailPage() {
   if (isMovieLoading || isCreditLoading)
     return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
 
+  if (isMovieError || isCreditError)
+    toast.error("데이터를 불러오는 중 오류가 발생했습니다!", { duration: 3000 });
+
   const moviePosterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : "/default.svg";
-
-  console.log(creditData);
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-8">
@@ -162,7 +164,7 @@ export default function MoviesDetailPage() {
         <div className="flex gap-8">
           {/* 리뷰 작성은 모달로 */}
           {/* <ReviewFormComponent /> */}
-          <ReviewListComponent />
+          <ReviewListComponent reviewData={[]} />
         </div>
       </section>
     </main>
