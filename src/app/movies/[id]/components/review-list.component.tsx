@@ -1,3 +1,5 @@
+import { IoPersonCircleSharp } from "react-icons/io5";
+
 const dummyData = [
   {
     author: "movieFan123",
@@ -39,11 +41,13 @@ const dummyData = [
 export function ReviewListComponent() {
   return (
     <div className="flex w-full flex-col">
-      <h2 className="my-4">리뷰 목록</h2>
       {dummyData.map((data, idx) => (
         <div key={idx} className="flex flex-col gap-4 border-t p-4 last:border-y">
           <div className="flex items-center justify-between">
-            <p>{data.author}</p>
+            <div className="flex items-center gap-2 rounded-full bg-white px-4 py-1 text-background">
+              <IoPersonCircleSharp className="h-8 w-8" />
+              <p>{data.author}</p>
+            </div>
             <p>{data.author_details.rating}</p>
           </div>
           <p>{data.content}</p>

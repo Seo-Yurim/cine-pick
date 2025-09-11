@@ -6,7 +6,7 @@ import {
   ToggleButtonComponent,
 } from "@/components";
 import { useGenres } from "@/queries/movie.query";
-import { getPersonIds } from "@/services/movie.service";
+import { getPersonIds } from "@/services/search.service";
 import { useState } from "react";
 import { DateValue } from "react-aria-components";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
@@ -75,7 +75,7 @@ export default function MoviesHeaderComponent({
 
       {isOpen && (
         <div
-          className={`flex flex-col items-center rounded-xl bg-point-color p-4 ${isOpen ? "animate-slide-down scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
+          className={`flex flex-col items-center rounded-xl bg-point-color p-4 ${isOpen ? "scale-100 animate-slide-down opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
         >
           <div className={`grid grid-cols-2 gap-4`}>
             <div className="flex flex-col">

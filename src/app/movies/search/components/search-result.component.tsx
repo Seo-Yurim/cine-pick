@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingComponent, MovieCardComponent, SearchComponent } from "@/components";
-import { useSearchResult } from "@/queries/movie.query";
+import { useSearchResult } from "@/queries/search.query";
 import { useSearchParams } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
 

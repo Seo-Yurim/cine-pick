@@ -4,6 +4,7 @@ import { ButtonComponent, LoadingComponent } from "@/components";
 import { useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
 import { ReviewFormComponent } from "./components/review-form.component";
 import { ReviewListComponent } from "./components/review-list.component";
@@ -151,7 +152,10 @@ export default function MoviesDetailPage() {
 
       <section className="flex flex-col gap-8 rounded-xl bg-white/30 p-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">리뷰 (0)</h2>
+          <div className="flex gap-3">
+            <MdOutlineRateReview className="h-8 w-8" />
+            <h2 className="text-xl font-semibold">리뷰 (0)</h2>
+          </div>
           <ButtonComponent>리뷰 작성하기</ButtonComponent>
         </div>
 
