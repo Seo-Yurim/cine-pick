@@ -59,8 +59,8 @@ export function ReviewFormComponent({ movieId }: { movieId: string }) {
   console.log(reviewText, rating.toFixed(1));
 
   return (
-    <div className="flex h-fit flex-1 flex-col gap-4 rounded-xl bg-white p-4 shadow-lg">
-      <h3 className="text-background">리뷰 작성하기</h3>
+    <div className="flex h-fit w-[600px] flex-col gap-4 rounded-xl bg-white p-4 shadow-lg">
+      <h3 className="text-lg font-medium text-background">리뷰 작성하기</h3>
       <RatingComponent type="select" rating={rating} setRating={setRating} />
       <div className="flex flex-col gap-4">
         <textarea

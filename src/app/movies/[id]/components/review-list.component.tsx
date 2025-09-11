@@ -23,7 +23,7 @@ export function ReviewListComponent({ movieId }: { movieId: string }) {
               </div>
               <RatingComponent type="show" defaultValue={Number(review.rating)} />
             </div>
-            <p>{review.content}</p>
+            <p className="text-lg">{review.content}</p>
           </div>
         ))
       )}

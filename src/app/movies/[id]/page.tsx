@@ -163,16 +163,12 @@ export default function MoviesDetailPage() {
       </section>
 
       <section className="flex flex-col gap-8 rounded-xl bg-text-bg p-8">
-        <div className="flex items-center justify-between">
-          <div className="flex gap-3">
-            <MdOutlineRateReview className="h-8 w-8" />
-            <h2 className="text-xl font-semibold">리뷰 (0)</h2>
-          </div>
-          <ButtonComponent>리뷰 작성하기</ButtonComponent>
+        <div className="flex items-center gap-2">
+          <MdOutlineRateReview className="h-8 w-8" />
+          <h2 className="text-xl font-semibold">리뷰</h2>
         </div>
 
         <div className="flex gap-8">
-          {/* 리뷰 작성은 모달로 */}
           <ReviewFormComponent movieId={movieId} />
           <ReviewListComponent movieId={movieId} />
         </div>
