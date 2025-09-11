@@ -19,12 +19,15 @@ export default function MoviesPage() {
   });
 
   const { data, isLoading, isError } = useMovies(params);
+
   if (isError) toast.error("데이터를 불러오는 중 에러가 발생했어요.", { duration: 3000 });
 
-  console.log(params);
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
       <MoviesHeaderComponent tab={activeTab} onTab={setActiveTab} onParams={setParams} />
+
+      {isLoading && <LoadingComponent label="로딩 중 ... " isIndeterminate />}
+
       <div
         className={
           activeTab === "grid"
@@ -32,13 +35,9 @@ export default function MoviesPage() {
             : "flex flex-col gap-4"
         }
       >
-        {isLoading ? (
-          <LoadingComponent label="로딩 중 ... " isIndeterminate />
-        ) : (
-          data.results.map((result: MovieItem) => (
-            <MovieCardComponent key={result.id} data={result} type={activeTab} minWidth="240px" />
-          ))
-        )}
+        {data?.results.map((result: MovieItem) => (
+          <MovieCardComponent key={result.id} data={result} type={activeTab} minWidth="240px" />
+        ))}
       </div>
     </main>
   );
