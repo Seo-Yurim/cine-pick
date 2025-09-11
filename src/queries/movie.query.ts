@@ -3,11 +3,13 @@
 import {
   deleteRating,
   getGenres,
+  getMovieAccountState,
   getMovieCredits,
   getMovieDetail,
   getMovies,
   getPersonDetail,
   getPersonMovies,
+  getReivews,
   getReviewDetail,
   postRating,
 } from "@/services/movie.service";
@@ -50,10 +52,24 @@ export function usePersonMovies(personId: string) {
   });
 }
 
+export function useReviews(movieId: string) {
+  return useQuery({
+    queryKey: ["reviews", movieId],
+    queryFn: () => getReivews(movieId),
+  });
+}
+
 export function useReviewDeatil(reviewId: string) {
   return useQuery({
     queryKey: ["review", reviewId],
     queryFn: () => getReviewDetail(reviewId),
+  });
+}
+
+export function useMovieAccountStates(movieId: string) {
+  return useQuery({
+    queryKey: ["movie-account-states", movieId],
+    queryFn: () => getMovieAccountState(movieId),
   });
 }
 
@@ -69,8 +85,8 @@ export function usePostRating() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ movieId, rating }: { movieId: string; rating: number }) =>
-      postRating(movieId, rating),
+    mutationFn: ({ movieId, value }: { movieId: string; value: string }) =>
+      postRating(movieId, value),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["movie"] });
       toast.success("작성을 완료했습니다!");

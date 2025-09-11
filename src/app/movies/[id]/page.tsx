@@ -1,13 +1,14 @@
 "use client";
 
 import { ButtonComponent, LoadingComponent } from "@/components";
-import { useMovieCredits, useMovieDetail } from "@/queries/movie.query";
+import { useMovieAccountStates, useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
 import { RatingComponent } from "./components/rating.component";
+import { ReviewFormComponent } from "./components/review-form.component";
 import { ReviewListComponent } from "./components/review-list.component";
 
 const statusMapping: Record<string, string> = {
@@ -21,7 +22,7 @@ const statusMapping: Record<string, string> = {
 
 export default function MoviesDetailPage() {
   const params = useParams();
-  const movieId = params.id;
+  const movieId = params.id as string;
 
   const {
     data: movieData,
@@ -35,10 +36,16 @@ export default function MoviesDetailPage() {
     isError: isCreditError,
   } = useMovieCredits(movieId as string);
 
-  if (isMovieLoading || isCreditLoading)
+  const {
+    data: movieAccountStates,
+    isLoading: isMovieAccountStatesLoading,
+    isError: isMovieAccountStatesError,
+  } = useMovieAccountStates(movieId);
+
+  if (isMovieLoading || isCreditLoading || isMovieAccountStatesLoading)
     return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
 
-  if (isMovieError || isCreditError)
+  if (isMovieError || isCreditError || isMovieAccountStatesError)
     toast.error("데이터를 불러오는 중 오류가 발생했습니다!", { duration: 3000 });
 
   const moviePosterUrl = movieData.poster_path
@@ -76,8 +83,10 @@ export default function MoviesDetailPage() {
               </div>
               <p>{movieData.runtime}</p>
               <p>{statusMapping[movieData.status]}</p>
-              {/* 평점 별로 변환해서 반환 */}
-              <p>{movieData.vote_average}</p>
+              <div className="flex items-center gap-4">
+                <p>내가 준 평점</p>
+                <RatingComponent type="show" defaultValue={movieAccountStates.rated.value} />
+              </div>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -164,8 +173,8 @@ export default function MoviesDetailPage() {
 
         <div className="flex gap-8">
           {/* 리뷰 작성은 모달로 */}
-          {/* <ReviewFormComponent /> */}
-          <ReviewListComponent reviewData={[]} />
+          <ReviewFormComponent movieId={movieId} />
+          <ReviewListComponent movieId={movieId} />
         </div>
       </section>
     </main>

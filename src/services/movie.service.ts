@@ -38,8 +38,8 @@ export async function getPersonMovies(personId: string) {
 }
 
 // 평점 추가
-export async function postRating(movieId: string, rating: number) {
-  const res = await post(`/movie/${movieId}}/rating`, rating);
+export async function postRating(movieId: string, value: string) {
+  const res = await post(`/movie/${movieId}}/rating`, { value });
   return res.data;
 }
 
@@ -49,8 +49,20 @@ export async function deleteRating(movieId: string) {
   return res.data;
 }
 
+// 리뷰 목록
+export async function getReivews(movieId: string) {
+  const res = await get(`/movie/${movieId}}/reviews`);
+  return res.data;
+}
+
 // 리뷰 상세 정보
 export async function getReviewDetail(reviewId: string) {
   const res = await get(`/review/${reviewId}`);
+  return res.data;
+}
+
+// 특정 영화에 관한 사용자 상태
+export async function getMovieAccountState(movieId: string) {
+  const res = await get(`/movie/${movieId}}/account_states`);
   return res.data;
 }
