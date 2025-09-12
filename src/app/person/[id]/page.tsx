@@ -57,7 +57,7 @@ export default function PersonDetailPage() {
             sizes="624px"
           />
         </div>
-        <div className="flex w-full flex-col gap-8 text-xl font-semibold">
+        <div className="flex w-full flex-col gap-10 text-2xl font-semibold">
           <div className="flex h-fit items-center gap-2">
             <p>이름: {personInfo.name}</p> {genderMapping[personInfo.gender]}
           </div>

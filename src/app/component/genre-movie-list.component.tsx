@@ -65,15 +65,16 @@ export function GenreMovieListComponent() {
   return (
     <section className="flex p-6">
       <div className="mx-auto flex w-full max-w-[1920px] flex-col justify-center gap-4">
-        <div className="flex items-center justify-between text-nowrap">
-          <div className="flex items-center gap-8">
-            <h2 className="text-3xl font-bold">장르별 추천 영화</h2>
-            <div className="flex items-center gap-2">
-              <button onClick={scrollLeft} className="px-2 text-2xl">
+        <div className="flex w-full items-center justify-between gap-4 text-nowrap">
+          <div className="flex min-w-0 flex-1 items-center gap-4">
+            <h2 className="whitespace-nowrap text-3xl font-bold">장르별 추천 영화</h2>
+
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <button onClick={scrollLeft} className="shrink-0 px-2 text-2xl">
                 ◀
               </button>
 
-              <div className="w-full max-w-[600px] overflow-x-hidden" ref={scrollRef}>
+              <div className="min-w-0 flex-1 overflow-x-auto scrollbar-none" ref={scrollRef}>
                 <ToggleButtonComponent
                   toggleMenus={toggleMenus}
                   activeTab={activeTab}
@@ -81,12 +82,13 @@ export function GenreMovieListComponent() {
                 />
               </div>
 
-              <button onClick={scrollRight} className="px-2 text-2xl">
+              <button onClick={scrollRight} className="shrink-0 px-2 text-2xl">
                 ▶
               </button>
             </div>
           </div>
-          <Link href="/movies">
+
+          <Link href="/movies" className="shrink-0">
             <ButtonComponent>전체보기</ButtonComponent>
           </Link>
         </div>

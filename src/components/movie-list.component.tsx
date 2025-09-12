@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FaCircleArrowRight } from "react-icons/fa6";
 import { MovieItem } from "@/types/movie.type";
 import { ButtonComponent } from "./button/button.component";
 import { MovieCardComponent } from "./movie-card/movie-card.component";
@@ -41,6 +42,9 @@ export function MovieListComponent({
             {data.map((item) => (
               <MovieCardComponent key={item.id} data={item} />
             ))}
+            <div className="my-auto">
+              <FaCircleArrowRight className="h-16 w-16" />
+            </div>
           </div>
         </div>
       </div>
