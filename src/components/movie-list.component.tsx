@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { FaCircleArrowRight } from "react-icons/fa6";
 import { MovieItem } from "@/types/movie.type";
 import { ButtonComponent } from "./button/button.component";
 import { MovieCardComponent } from "./movie-card/movie-card.component";
@@ -22,7 +21,7 @@ export function MovieListComponent({
   data,
 }: MovieListProps) {
   return (
-    <section style={{ backgroundColor: bgColor }} className="flex p-6">
+    <div style={{ backgroundColor: bgColor }} className="flex p-6">
       <div className="mx-auto flex w-full max-w-[1920px] flex-col justify-center gap-4">
         <div className="flex items-center justify-between gap-8 text-nowrap">
           <h2 className="text-3xl font-bold">{title}</h2>
@@ -38,14 +37,17 @@ export function MovieListComponent({
         </div>
 
         <div className="flex items-center overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
-          <div className="mb-4 grid w-full auto-cols-auto grid-flow-col items-stretch gap-4 p-4">
+          <div
+            className={`mb-4 gap-4 p-4 ${
+              data.length <= 4 ? "flex" : "grid auto-cols-auto grid-flow-col"
+            }`}
+          >
             {data.map((item) => (
               <MovieCardComponent key={item.id} data={item} />
             ))}
-            <FaCircleArrowRight className="my-auto h-16 w-16" />
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

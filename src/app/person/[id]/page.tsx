@@ -39,8 +39,6 @@ export default function PersonDetailPage() {
     ? `https://image.tmdb.org/t/p/w500${personInfo.profile_path}`
     : "/default.svg";
 
-  console.log(personMovies.cast);
-
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-12">
       <h1 className="text-2xl font-bold">인물 상세 정보</h1>
@@ -67,7 +65,8 @@ export default function PersonDetailPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <MovieListComponent title="필모그래피" data={personMovies.cast} btnShow={false} />
+        <MovieListComponent title="연기 활동" data={personMovies.cast} btnShow={false} />
+        <MovieListComponent title="제작 참여 작품" data={personMovies.crew} btnShow={false} />
       </section>
     </main>
   );
