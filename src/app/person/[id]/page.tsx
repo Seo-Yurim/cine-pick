@@ -3,7 +3,6 @@
 import { LoadingComponent, MovieListComponent } from "@/components";
 import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ReactNode } from "react";
 import toast from "react-hot-toast";

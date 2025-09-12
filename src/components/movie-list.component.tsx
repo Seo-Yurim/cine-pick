@@ -42,9 +42,7 @@ export function MovieListComponent({
             {data.map((item) => (
               <MovieCardComponent key={item.id} data={item} />
             ))}
-            <div className="my-auto">
-              <FaCircleArrowRight className="h-16 w-16" />
-            </div>
+            <FaCircleArrowRight className="my-auto h-16 w-16" />
           </div>
         </div>
       </div>

@@ -5,7 +5,9 @@ import { useMovieAccountStates, useMovieCredits, useMovieDetail } from "@/querie
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
 import { RatingComponent } from "./components/rating.component";
@@ -24,6 +26,10 @@ const statusMapping: Record<string, string> = {
 export default function MoviesDetailPage() {
   const params = useParams();
   const movieId = params.id as string;
+  const DATA_SIZE = 7;
+
+  const [visibleCastCount, setVisibleCastCount] = useState<number>(DATA_SIZE);
+  const [visibleCrewCount, setVisibleCrewCount] = useState<number>(DATA_SIZE);
 
   const {
     data: movieData,
@@ -52,6 +58,14 @@ export default function MoviesDetailPage() {
   const moviePosterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : "/default.svg";
+
+  const handleLoadCastData = () => {
+    setVisibleCastCount((prev) => prev + DATA_SIZE);
+  };
+
+  const handleLoadCrewData = () => {
+    setVisibleCrewCount((prev) => prev + DATA_SIZE);
+  };
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-8">
@@ -98,7 +112,7 @@ export default function MoviesDetailPage() {
                 </div>
                 <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
                   <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
-                    {creditData.cast.slice(0, 7).map((credit: MovieCast) => (
+                    {creditData.cast.slice(0, visibleCastCount).map((credit: MovieCast) => (
                       <Link
                         href={`/person/${credit.id}`}
                         key={credit.cast_id}
@@ -122,6 +136,12 @@ export default function MoviesDetailPage() {
                         <p className="text-xs">{credit.character} 역</p>
                       </Link>
                     ))}
+                    {visibleCastCount < creditData.cast.length && (
+                      <FaCircleArrowRight
+                        onClick={handleLoadCastData}
+                        className="my-auto h-16 w-16 cursor-pointer"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -133,7 +153,7 @@ export default function MoviesDetailPage() {
                 </div>
                 <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
                   <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
-                    {creditData.crew.slice(0, 7).map((credit: MovieCrew) => (
+                    {creditData.crew.slice(0, visibleCrewCount).map((credit: MovieCrew) => (
                       <Link
                         href={`/person/${credit.id}`}
                         key={`${credit.id} ${credit.name} ${credit.job}`}
@@ -157,6 +177,12 @@ export default function MoviesDetailPage() {
                         <p className="text-xs">{credit.job}</p>
                       </Link>
                     ))}
+                    {visibleCrewCount < creditData.crew.length && (
+                      <FaCircleArrowRight
+                        onClick={handleLoadCrewData}
+                        className="my-auto h-16 w-16 cursor-pointer"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
