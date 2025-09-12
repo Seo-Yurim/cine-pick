@@ -5,7 +5,7 @@ import { useAccount, useFavoriteMovies } from "@/queries/account.query";
 import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
 
-export default function FavoritePage() {
+export default function MyFavoritePage() {
   const {
     data: accountInfo,
     isLoading: isAccountInfoLoading,
