@@ -31,7 +31,7 @@ export default function MoviesPage() {
       <div
         className={
           activeTab === "grid"
-            ? "grid grid-cols-1 justify-items-center gap-2 md:grid-cols-2 md:justify-between lg:grid-cols-4"
+            ? "grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 md:justify-between lg:grid-cols-4"
             : "flex flex-col gap-4"
         }
       >

@@ -27,7 +27,7 @@ export function MovieCardComponent({
     <div
       onClick={handleClick}
       style={{ minWidth: minWidth }}
-      className={`${type === "grid" ? "" : "cursor-pointer"} group relative flex w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105`}
+      className={`${type === "grid" ? "" : "cursor-pointer"} group relative flex w-full flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105`}
     >
       {type === "grid" && (
         <div className="relative aspect-[3/4] w-full min-w-[200px]">
@@ -50,15 +50,17 @@ export function MovieCardComponent({
       </div>
 
       {type === "grid" && (
-        <div className="absolute left-0 top-0 flex h-full w-full flex-col gap-4 overflow-y-scroll rounded-xl border bg-text-bg p-4 opacity-0 transition-opacity duration-300 scrollbar-none group-hover:opacity-100">
-          <div className="flex items-center gap-4">
-            <h3 className="text-nowrap text-xl font-bold">줄거리</h3>
-            <div className="w-full border-b" />
+        <div className="absolute left-0 top-0 flex h-full w-full flex-col rounded-xl border bg-text-bg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="flex-1 overflow-y-auto p-4 scrollbar-none">
+            <div className="flex items-center gap-4 pb-4">
+              <h3 className="text-nowrap text-xl font-bold">줄거리</h3>
+              <div className="w-full border-b" />
+            </div>
+
+            <p className="text-lg">{data.overview || "요약된 줄거리가 없습니다."}</p>
           </div>
 
-          <p className="text-lg">{data.overview || "요약된 줄거리가 없습니다."}</p>
-
-          <div className="fixed bottom-0 left-1/2 w-full -translate-x-1/2 rounded-b-lg border bg-text-bg p-8">
+          <div className="border-t bg-text-bg p-4">
             <Link
               href={`/movies/${data.id}`}
               className="flex w-full cursor-pointer justify-center rounded-lg border bg-text-bg p-4 text-lg font-semibold hover:bg-point-color"
