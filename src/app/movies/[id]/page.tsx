@@ -207,14 +207,12 @@ export default function MoviesDetailPage() {
             리뷰 작성하기
           </ButtonComponent>
         </div>
-
-        <div className="flex gap-8">
-          <ModalComponent isOpen={isReviewFormOpen} onClose={() => setIsReviewFormOpen(false)}>
-            <ReviewFormComponent movieId={movieId} />
-          </ModalComponent>
-          <ReviewListComponent movieId={movieId} />
-        </div>
+        <ReviewListComponent movieId={movieId} />
       </section>
+
+      <ModalComponent isOpen={isReviewFormOpen} onClose={() => setIsReviewFormOpen(false)}>
+        <ReviewFormComponent movieId={movieId} />
+      </ModalComponent>
       <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </main>
   );

@@ -18,13 +18,9 @@ export function ModalComponent({ children, title, isOpen, onClose, ...props }: M
         if (!open) onClose();
       }}
     >
-      <Dialog {...props}>
+      <Dialog {...(!title ? { "aria-label": "모달" } : {})} {...props}>
         <div className="flex items-center justify-between gap-4">
-          {title && (
-            <Heading aria-label={title} slot="title">
-              {title}
-            </Heading>
-          )}
+          {title && <Heading slot="title">{title}</Heading>}
           <ImCancelCircle
             onClick={onClose}
             className="ml-auto h-8 w-8 cursor-pointer text-point-color"
