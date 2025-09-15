@@ -1,6 +1,7 @@
 "use client";
 
-import { LoadingComponent } from "@/components";
+import { ButtonComponent, LoadingComponent } from "@/components";
+import { useAuth } from "@/hooks/useAuth";
 import { useMovieAccountStates, useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,8 @@ import toast from "react-hot-toast";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
+import { ModalComponent } from "@/components/modal/modal.component";
+import { LoginRequiredModalComponent } from "@/components/require-login.component";
 import { RatingComponent } from "./components/rating.component";
 import { ReviewFormComponent } from "./components/review-form.component";
 import { ReviewListComponent } from "./components/review-list.component";
@@ -24,12 +27,15 @@ const statusMapping: Record<string, string> = {
 };
 
 export default function MoviesDetailPage() {
+  const { sessionId, requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
+
   const params = useParams();
   const movieId = params.id as string;
   const DATA_SIZE = 7;
 
   const [visibleCastCount, setVisibleCastCount] = useState<number>(DATA_SIZE);
   const [visibleCrewCount, setVisibleCrewCount] = useState<number>(DATA_SIZE);
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState<boolean>(false);
 
   const {
     data: movieData,
@@ -192,15 +198,24 @@ export default function MoviesDetailPage() {
       </section>
 
       <section className="flex flex-col gap-8 rounded-xl bg-text-bg p-8">
-        <div className="flex items-center gap-2">
-          <MdOutlineRateReview className="h-8 w-8" />
-          <h2 className="text-xl font-semibold">리뷰</h2>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <MdOutlineRateReview className="h-8 w-8" />
+            <h2 className="text-xl font-semibold">리뷰</h2>
+          </div>
+          <ButtonComponent onClick={() => requireLogin(() => setIsReviewFormOpen(true))}>
+            리뷰 작성하기
+          </ButtonComponent>
         </div>
 
         <div className="flex gap-8">
-          <ReviewFormComponent movieId={movieId} />
+          <ModalComponent isOpen={isReviewFormOpen} onClose={() => setIsReviewFormOpen(false)}>
+            <ReviewFormComponent movieId={movieId} />
+          </ModalComponent>
           <ReviewListComponent movieId={movieId} />
         </div>
+
+        <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
       </section>
     </main>
   );

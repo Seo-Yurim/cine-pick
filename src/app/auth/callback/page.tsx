@@ -3,7 +3,6 @@
 import { LoadingComponent } from "@/components";
 import { getAccount } from "@/services/account.service";
 import { postSession } from "@/services/authenticate.service";
-import { useAuthStore } from "@/stores/auth.store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -12,9 +11,6 @@ export default function TmdbCallbackPage() {
   const searchParams = useSearchParams();
   const requestToken = searchParams.get("request_token");
   const approved = searchParams.get("approved");
-
-  const setSessionId = useAuthStore.getState().setSessionId;
-  const setAccountId = useAuthStore.getState().setAccountId;
 
   useEffect(() => {
     const completeLogin = async () => {
@@ -28,9 +24,6 @@ export default function TmdbCallbackPage() {
 
       const account = await getAccount(sessionId);
 
-      setSessionId(sessionId);
-      setAccountId(account.id);
-
       localStorage.setItem("session_id", sessionId);
       localStorage.setItem("account_id", account.id);
 
@@ -38,7 +31,7 @@ export default function TmdbCallbackPage() {
     };
 
     completeLogin();
-  }, [requestToken, approved, router, setSessionId, setAccountId]);
+  }, [requestToken, approved, router]);
 
   return <LoadingComponent label="현재 로그인 진행 중 ..." isIndeterminate />;
 }

@@ -1,36 +1,14 @@
 "use client";
 
-import { getRequestToken } from "@/services/authenticate.service";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuth } from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/useLogin";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonComponent } from "./button/button.component";
 
 export function Header() {
-  const { sessionId } = useAuthStore();
-
-  const handleLogin = async () => {
-    const res = await getRequestToken();
-    const requestToken = res.request_token;
-
-    const redirectUrl = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=${encodeURIComponent(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
-    )}`;
-
-    window.location.href = redirectUrl;
-  };
-
-  const handleLogout = () => {
-    const { clearAuth } = useAuthStore.getState();
-
-    clearAuth();
-    localStorage.removeItem("session_id");
-    localStorage.removeItem("account_id");
-
-    window.location.href = "/";
-  };
-
-  console.log(sessionId);
+  const { sessionId } = useAuth();
+  const { handleLogin } = useLogin();
 
   return (
     <header className="bg-header-bg p-8">
@@ -45,10 +23,10 @@ export function Header() {
           <div className="flex items-center gap-4">
             {sessionId ? (
               <>
-                <Link href="/profile">
+                <Link href="/">
                   <ButtonComponent>마이페이지</ButtonComponent>
                 </Link>
-                <ButtonComponent onClick={handleLogout}>로그아웃</ButtonComponent>
+                <ButtonComponent>로그아웃</ButtonComponent>
               </>
             ) : (
               <>

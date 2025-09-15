@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
 const instance = axios.create({
@@ -12,7 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const sessionId = useAuthStore.getState().sessionId;
+    const sessionId = localStorage.getItem("session_id");
 
     if (sessionId) {
       config.params = {
