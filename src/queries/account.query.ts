@@ -11,10 +11,10 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-export function useAccount() {
+export function useAccount(sessionId?: string) {
   return useQuery({
-    queryKey: ["account-data"],
-    queryFn: () => getAccount(),
+    queryKey: ["account-data", sessionId],
+    queryFn: () => getAccount(sessionId),
   });
 }
 

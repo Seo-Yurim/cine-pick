@@ -7,8 +7,8 @@ export interface PostFavoriteMovie {
 }
 
 // 로그인 정보 조회
-export async function getAccount() {
-  const res = await get("/account");
+export async function getAccount(sessionId?: string) {
+  const res = await get("/account", { sessionId });
   return res.data;
 }
 
