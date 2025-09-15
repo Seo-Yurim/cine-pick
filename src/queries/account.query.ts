@@ -4,6 +4,7 @@ import {
   PostFavoriteMovie,
   getAccount,
   getAccountDetail,
+  getCollectionList,
   getFavoriteMovies,
   postFavoriteMovie,
 } from "@/services/account.service";
@@ -32,15 +33,22 @@ export function useFavoriteMovies(accountId: string) {
   });
 }
 
-export function usePostFavoriteMovie(accountId: string) {
+export function useCollectionList(accountId: string) {
+  return useQuery({
+    queryKey: ["collection-list", accountId],
+    queryFn: () => getCollectionList(accountId),
+  });
+}
+
+export function usePostFavoriteMovie() {
   const queryclient = useQueryClient();
 
   return useMutation({
     mutationFn: ({
-      movieId,
+      accountId,
       favoriteMovie,
     }: {
-      movieId: string;
+      accountId: string;
       favoriteMovie: PostFavoriteMovie;
     }) => postFavoriteMovie(accountId, favoriteMovie),
     onSuccess: () => {

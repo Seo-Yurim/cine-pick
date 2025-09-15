@@ -29,3 +29,9 @@ export async function postFavoriteMovie(accountId: string, movie: PostFavoriteMo
   const res = await post(`/account/${accountId}/favorite`, { movie });
   return res.data;
 }
+
+// 컬렉션 목록 조회
+export async function getCollectionList(accountId: string) {
+  const res = await get(`/account/${accountId}/lists`);
+  return res.data;
+}
