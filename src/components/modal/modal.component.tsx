@@ -18,19 +18,20 @@ export function ModalComponent({ children, title, isOpen, onClose, ...props }: M
         if (!open) onClose();
       }}
     >
-      <Dialog {...props} className="flex w-[90vw] max-w-xl flex-col gap-4 rounded-md bg-white p-8">
+      <Dialog {...props}>
         <div className="flex items-center justify-between gap-4">
           {title && (
-            <Heading slot="title" className="text-xl font-bold text-background">
+            <Heading aria-label={title} slot="title">
               {title}
             </Heading>
           )}
           <ImCancelCircle
             onClick={onClose}
-            className="ml-auto h-8 w-8 cursor-pointer text-background"
+            className="ml-auto h-8 w-8 cursor-pointer text-point-color"
           />
         </div>
-        <div className="flex flex-col items-center gap-4">{children}</div>
+
+        {children}
       </Dialog>
     </Modal>
   );

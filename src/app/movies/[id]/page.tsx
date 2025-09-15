@@ -214,9 +214,8 @@ export default function MoviesDetailPage() {
           </ModalComponent>
           <ReviewListComponent movieId={movieId} />
         </div>
-
-        <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
       </section>
+      <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </main>
   );
 }
