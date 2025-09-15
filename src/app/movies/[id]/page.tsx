@@ -27,7 +27,7 @@ const statusMapping: Record<string, string> = {
 };
 
 export default function MoviesDetailPage() {
-  const { sessionId, requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
+  const { requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
 
   const params = useParams();
   const movieId = params.id as string;
@@ -211,7 +211,7 @@ export default function MoviesDetailPage() {
       </section>
 
       <ModalComponent isOpen={isReviewFormOpen} onClose={() => setIsReviewFormOpen(false)}>
-        <ReviewFormComponent movieId={movieId} />
+        <ReviewFormComponent movieId={movieId} onClose={() => setIsReviewFormOpen(false)} />
       </ModalComponent>
       <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </main>

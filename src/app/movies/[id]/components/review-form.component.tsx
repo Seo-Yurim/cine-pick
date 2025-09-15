@@ -3,9 +3,16 @@ import { useAccount } from "@/queries/account.query";
 import { usePostRating } from "@/queries/movie.query";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ReviewItem } from "@/types/movie.type";
 import { RatingComponent } from "./rating.component";
 
-export function ReviewFormComponent({ movieId }: { movieId: string }) {
+export function ReviewFormComponent({
+  movieId,
+  onClose,
+}: {
+  movieId: string;
+  onClose: () => void;
+}) {
   const [reviewText, setReviewText] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
 
@@ -20,7 +27,7 @@ export function ReviewFormComponent({ movieId }: { movieId: string }) {
     const stored = JSON.parse(localStorage.getItem("allReviews") || "{}");
 
     const alreadyReviewed = stored[movieId]?.some(
-      (review: any) => review.author === accountData.username,
+      (review: ReviewItem) => review.author === accountData.username,
     );
 
     if (alreadyReviewed) {
@@ -53,10 +60,17 @@ export function ReviewFormComponent({ movieId }: { movieId: string }) {
 
     localStorage.setItem("allReviews", JSON.stringify(updatedReviews));
 
-    sendRating.mutate({ movieId, value: rating.toFixed(1) });
+    // 임시로 리뷰 작성 성공 시 새로고침 처리
+    sendRating.mutate(
+      { movieId, value: rating.toFixed(1) },
+      {
+        onSuccess: () => {
+          onClose();
+          window.location.reload();
+        },
+      },
+    );
   };
-
-  console.log(reviewText, rating.toFixed(1));
 
   return (
     <div className="flex flex-col gap-4">
