@@ -12,7 +12,7 @@ import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdOutlineRateReview } from "react-icons/md";
 import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
 import { ModalComponent } from "@/components/modal/modal.component";
-import { LoginRequiredModalComponent } from "@/components/require-login.component";
+import { LoginRequiredModalComponent } from "@/components/require-login-modal.component";
 import { RatingComponent } from "./components/rating.component";
 import { ReviewFormComponent } from "./components/review-form.component";
 import { ReviewListComponent } from "./components/review-list.component";
