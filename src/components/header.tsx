@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ButtonComponent } from "./button/button.component";
 
 export function Header() {
-  const { sessionId } = useAuth();
+  const { sessionId, logout } = useAuth();
   const { handleLogin } = useLogin();
 
   return (
@@ -26,7 +26,7 @@ export function Header() {
                 <Link href="/">
                   <ButtonComponent>마이페이지</ButtonComponent>
                 </Link>
-                <ButtonComponent>로그아웃</ButtonComponent>
+                <ButtonComponent onClick={logout}>로그아웃</ButtonComponent>
               </>
             ) : (
               <>

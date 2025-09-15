@@ -1,6 +1,8 @@
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function useAuth() {
+  const router = useRouter();
   const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [accountId, setAccountId] = useState<string | null>(null);
@@ -32,6 +34,14 @@ export function useAuth() {
 
   const closeLoginModal = () => setLoginModalOpen(false);
 
+  const logout = () => {
+    localStorage.removeItem("session_id");
+    localStorage.removeItem("account_id");
+    setSessionId(null);
+    setAccountId(null);
+    router.push("/");
+  };
+
   return {
     sessionId,
     accountId,
@@ -39,5 +49,6 @@ export function useAuth() {
     isLoginModalOpen,
     requireLogin,
     closeLoginModal,
+    logout,
   };
 }
