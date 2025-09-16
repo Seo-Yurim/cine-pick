@@ -10,7 +10,7 @@ import { useLocalReviews } from "@/hooks/useLocalReview";
 import { useDeleteRating } from "@/queries/movie.query";
 import { ReviewFormComponent } from "./review-form.component";
 
-export function ReviewListComponent({ movieId }: { movieId: string }) {
+export function ReviewListComponent({ movieId }: { movieId: number }) {
   const { accountId } = useAuth();
   const { getAllReviews, deleteReview } = useLocalReviews(movieId);
 

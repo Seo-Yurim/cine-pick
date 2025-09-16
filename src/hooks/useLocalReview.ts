@@ -1,7 +1,7 @@
 import { LocalReview } from "@/types/movie.type";
 import { useAuth } from "./useAuth";
 
-export function useLocalReviews(movieId: string) {
+export function useLocalReviews(movieId: number) {
   const { accountId } = useAuth();
   const key = "allReviews";
 
@@ -14,8 +14,22 @@ export function useLocalReviews(movieId: string) {
     return parsed[movieId] || [];
   };
 
-  const getMyReview = (): LocalReview | undefined => {
-    return getAllReviews().find((review) => review.account_id === accountId);
+  const getAllMyReviews = (): LocalReview[] => {
+    const raw = localStorage.getItem(key);
+    if (!raw) return [];
+
+    const parsed = raw ? (JSON.parse(raw) as { [movieId: string]: LocalReview[] }) : {};
+    const allReviews: LocalReview[] = [];
+
+    Object.values(parsed).forEach((reviews: LocalReview[]) => {
+      reviews.forEach((review) => {
+        if (review.account_id === accountId) {
+          allReviews.push(review);
+        }
+      });
+    });
+
+    return allReviews;
   };
 
   const saveReviews = (reviews: LocalReview[]) => {
@@ -56,7 +70,7 @@ export function useLocalReviews(movieId: string) {
 
   return {
     getAllReviews,
-    getMyReview,
+    getAllMyReviews,
     addReview,
     updateReview,
     deleteReview,

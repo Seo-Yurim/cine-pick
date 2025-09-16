@@ -1,14 +1,14 @@
-import { MovieCardComponent } from "@/components";
-import { useMovieDetail } from "@/queries/movie.query";
-import { ReviewItem } from "@/types/movie.type";
+import { LocalReview } from "@/types/movie.type";
+import { LoadingComponent, MovieCardComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
+import { useMovieDetail } from "@/queries/movie.query";
 
 export function MyReviewCard({
   movieId,
   reviewList,
 }: {
-  movieId: string;
-  reviewList: ReviewItem[];
+  movieId: number;
+  reviewList: LocalReview[];
 }) {
   const {
     data: movieDetail,
@@ -16,12 +16,13 @@ export function MyReviewCard({
     isError: isMovieDetailError,
   } = useMovieDetail(movieId);
 
-  if (isMovieDetailLoading) return <p>로딩 중...</p>;
+  if (isMovieDetailLoading) return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
   if (isMovieDetailError || !movieDetail) return <p>에러 발생</p>;
 
   return (
     <div className="flex flex-col gap-8">
       <MovieCardComponent data={movieDetail} />
+
       {reviewList.map((review) => (
         <div key={review.id} className="flex flex-col gap-6 border-t p-4 last:border-y">
           <RatingComponent type="show" defaultValue={Number(review.rating)} />

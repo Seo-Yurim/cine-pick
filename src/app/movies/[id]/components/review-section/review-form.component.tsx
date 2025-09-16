@@ -1,14 +1,14 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { LocalReview, ReviewItem } from "@/types/movie.type";
-import { ButtonComponent, LoadingComponent, ModalComponent } from "@/components";
+import { LocalReview } from "@/types/movie.type";
+import { ButtonComponent, ModalComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
 import { useAccount } from "@/queries/account.query";
 import { usePostRating } from "@/queries/movie.query";
 
 interface ReviewFormProps {
   isOpen: boolean;
-  movieId: string;
+  movieId: number;
   onClose: () => void;
   defaultContent?: string;
   defaultRating?: number;
@@ -42,7 +42,7 @@ export function ReviewFormComponent({
     const movieReviews = allReviews[movieId] || [];
 
     if (isEditing) {
-      const updated = movieReviews.map((review: ReviewItem) =>
+      const updated = movieReviews.map((review: LocalReview) =>
         review.id === reviewId
           ? {
               ...review,
@@ -70,6 +70,7 @@ export function ReviewFormComponent({
       const newReview: LocalReview = {
         id: crypto.randomUUID(),
         account_id: localStorage.getItem("account_id")!,
+        movie_id: movieId,
         author: accountData.username,
         rating: rating.toFixed(1),
         content: reviewText,

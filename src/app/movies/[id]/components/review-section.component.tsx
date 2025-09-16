@@ -4,7 +4,7 @@ import { ButtonComponent, LoginRequiredModalComponent } from "@/components";
 import { useAuth } from "@/hooks/useAuth";
 import { ReviewFormComponent, ReviewListComponent } from "./index";
 
-export function ReviewSection({ movieId }: { movieId: string }) {
+export function ReviewSection({ movieId }: { movieId: number }) {
   const { requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
   const [isReviewFormOpen, setIsReviewFormOpen] = useState<boolean>(false);
 

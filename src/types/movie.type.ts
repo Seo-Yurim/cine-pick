@@ -97,24 +97,10 @@ export interface MovieCrew extends MovieCreditItem {
   job: string;
 }
 
-export interface ReviewsResponse {
-  id: string;
-  page: number;
-  results: ReviewItem[];
-  total_pages: number;
-  total_results: number;
-}
-export interface ReviewItem {
-  id: string;
-  author: string;
-  content: string;
-  created_at: string;
-  rating: number;
-}
-
 export interface LocalReview {
   id: string;
   account_id: string;
+  movie_id: number;
   author: string;
   rating: string;
   content: string;
