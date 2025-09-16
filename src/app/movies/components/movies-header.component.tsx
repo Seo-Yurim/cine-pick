@@ -41,7 +41,7 @@ export default function MoviesHeaderComponent({
   });
   const [tagList, setTagList] = useState<string[]>([]);
 
-  const { data } = useGenres();
+  const { data: genres } = useGenres();
 
   const handlefilterSubmit = async () => {
     const personIds = await getPersonIds(tagList);
@@ -83,7 +83,7 @@ export default function MoviesHeaderComponent({
                 <h3 className="text-xl font-medium">장르별 필터링</h3>
                 <div className="rounded-xl border p-4">
                   <CheckboxComponent
-                    list={data}
+                    list={genres}
                     selected={genreSelected}
                     onSelected={setGenreSelected}
                   />

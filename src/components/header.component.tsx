@@ -16,38 +16,43 @@ export function Header() {
         <Link href="/" className="relative aspect-[3/1] w-48">
           <Image src="/logo.svg" className="object-contain" fill priority alt="logo" />
         </Link>
-        <nav className="flex w-full items-center gap-4 text-nowrap">
-          <Link href="/movies">
-            <ButtonComponent>찾아보기</ButtonComponent>
-          </Link>
 
-          {sessionId ? (
-            <div className="flex w-full items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Link href="/mypage/favorites">
-                  <ButtonComponent>즐겨찾기</ButtonComponent>
-                </Link>
-                <Link href="/mypage/reviews">
-                  <ButtonComponent>리뷰 모아보기</ButtonComponent>
-                </Link>
-                <Link href="/mypage/collections">
-                  <ButtonComponent>내 컬렉션</ButtonComponent>
-                </Link>
-                <Link href="/mypage/watched">
-                  <ButtonComponent>시청기록</ButtonComponent>
-                </Link>
+        {sessionId ? (
+          <nav className="flex w-full items-center gap-4 text-nowrap">
+            <Link href="/movies">
+              <ButtonComponent>찾아보기</ButtonComponent>
+            </Link>
+
+            {sessionId ? (
+              <div className="flex w-full items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <Link href="/mypage/favorites">
+                    <ButtonComponent>즐겨찾기</ButtonComponent>
+                  </Link>
+                  <Link href="/mypage/reviews">
+                    <ButtonComponent>리뷰 모아보기</ButtonComponent>
+                  </Link>
+                  <Link href="/mypage/collections">
+                    <ButtonComponent>내 컬렉션</ButtonComponent>
+                  </Link>
+                  <Link href="/mypage/watched">
+                    <ButtonComponent>시청기록</ButtonComponent>
+                  </Link>
+                </div>
+                <ButtonComponent onClick={logout}>로그아웃</ButtonComponent>
               </div>
-              <ButtonComponent onClick={logout}>로그아웃</ButtonComponent>
-            </div>
-          ) : (
-            <>
-              <ButtonComponent onClick={handleLogin}>로그인</ButtonComponent>
-              <Link href="https://www.themoviedb.org/signup">
-                <ButtonComponent>회원가입</ButtonComponent>
-              </Link>
-            </>
-          )}
-        </nav>
+            ) : (
+              <>
+                <ButtonComponent onClick={handleLogin}>로그인</ButtonComponent>
+                <Link href="https://www.themoviedb.org/signup">
+                  <ButtonComponent>회원가입</ButtonComponent>
+                </Link>
+              </>
+            )}
+          </nav>
+        ) : (
+          <div className="h-12 w-full animate-pulse rounded bg-white/20" />
+        )}
       </div>
     </header>
   );

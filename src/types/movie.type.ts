@@ -38,6 +38,10 @@ export interface MovieGenres {
   name: string;
 }
 
+export interface GenresList {
+  genres: MovieGenres[];
+}
+
 export interface MovieDetailItem extends MovieItem {
   belongs_to_collection: string;
   genres: MovieGenres[];

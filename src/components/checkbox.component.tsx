@@ -1,10 +1,10 @@
 "use client";
 
 import { Checkbox, CheckboxGroup } from "react-aria-components";
-import { MovieGenres } from "@/types/movie.type";
+import { GenresList } from "@/types/movie.type";
 
 interface CheckboxProps {
-  list: MovieGenres[];
+  list: GenresList;
   selected: string[];
   onSelected: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -18,17 +18,17 @@ export function CheckboxComponent({ list, selected, onSelected, ...props }: Chec
       onChange={onSelected}
       {...props}
     >
-      {list.map((item) => (
+      {list.genres.map((item) => (
         <Checkbox
           className="flex items-center gap-2 text-nowrap text-lg"
           key={item.id}
-          value={item.name}
+          value={String(item.id)}
         >
           <div
             className="mr-2 flex h-4 w-4 items-center justify-center rounded-md border"
             aria-hidden="true"
           >
-            {selected.includes(item.name) && (
+            {selected.includes(String(item.id)) && (
               <svg viewBox="0 0 18 18" className="h-3 w-3 stroke-white">
                 <polyline
                   points="1 9 7 14 15 4"
