@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import { Dialog, Heading, Modal } from "react-aria-components";
 import { ImCancelCircle } from "react-icons/im";

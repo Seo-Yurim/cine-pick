@@ -7,3 +7,6 @@ export * from "./toggle-button/toggle-button.component";
 export * from "./loading.component";
 export * from "./header";
 export * from "./movie-list.component";
+export * from "./rating.component";
+export * from "./require-login-modal.component";
+export * from "./modal/modal.component";

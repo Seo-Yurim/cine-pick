@@ -1,7 +1,7 @@
-import { RatingComponent } from "@/app/movies/[id]/components/rating.component";
 import { MovieCardComponent } from "@/components";
 import { useMovieDetail } from "@/queries/movie.query";
 import { ReviewItem } from "@/types/movie.type";
+import { RatingComponent } from "@/components/rating.component";
 
 export function MyReviewCard({
   movieId,

@@ -4,7 +4,7 @@ import { usePostRating } from "@/queries/movie.query";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ReviewItem } from "@/types/movie.type";
-import { RatingComponent } from "./rating.component";
+import { RatingComponent } from "../../../../components/rating.component";
 
 export function ReviewFormComponent({
   movieId,

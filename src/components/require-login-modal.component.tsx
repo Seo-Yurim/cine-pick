@@ -1,3 +1,5 @@
+"use client";
+
 import { useLogin } from "@/hooks/useLogin";
 import { ButtonComponent } from "./button/button.component";
 import { ModalComponent } from "./modal/modal.component";

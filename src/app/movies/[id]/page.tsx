@@ -1,21 +1,21 @@
 "use client";
 
-import { ButtonComponent, LoadingComponent } from "@/components";
-import { useAuth } from "@/hooks/useAuth";
-import { useMovieAccountStates, useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdOutlineRateReview } from "react-icons/md";
-import { MovieCast, MovieCrew, MovieGenres } from "@/types/movie.type";
-import { ModalComponent } from "@/components/modal/modal.component";
-import { LoginRequiredModalComponent } from "@/components/require-login-modal.component";
-import { RatingComponent } from "./components/rating.component";
-import { ReviewFormComponent } from "./components/review-form.component";
-import { ReviewListComponent } from "./components/review-list.component";
+import { MovieGenres } from "@/types/movie.type";
+import {
+  ButtonComponent,
+  LoadingComponent,
+  LoginRequiredModalComponent,
+  ModalComponent,
+  RatingComponent,
+} from "@/components";
+import { useAuth } from "@/hooks/useAuth";
+import { useMovieAccountStates, useMovieCredits, useMovieDetail } from "@/queries/movie.query";
+import { PersonListComponent, ReviewFormComponent, ReviewListComponent } from "./components";
 
 const statusMapping: Record<string, string> = {
   Rumored: "제작 미정",
@@ -27,14 +27,10 @@ const statusMapping: Record<string, string> = {
 };
 
 export default function MoviesDetailPage() {
-  const { requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
-
   const params = useParams();
   const movieId = params.id as string;
-  const DATA_SIZE = 7;
 
-  const [visibleCastCount, setVisibleCastCount] = useState<number>(DATA_SIZE);
-  const [visibleCrewCount, setVisibleCrewCount] = useState<number>(DATA_SIZE);
+  const { requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
   const [isReviewFormOpen, setIsReviewFormOpen] = useState<boolean>(false);
 
   const {
@@ -64,14 +60,6 @@ export default function MoviesDetailPage() {
   const moviePosterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : "/default.svg";
-
-  const handleLoadCastData = () => {
-    setVisibleCastCount((prev) => prev + DATA_SIZE);
-  };
-
-  const handleLoadCrewData = () => {
-    setVisibleCrewCount((prev) => prev + DATA_SIZE);
-  };
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-8">
@@ -111,87 +99,8 @@ export default function MoviesDetailPage() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2 rounded-xl p-4">
-                <div className="flex items-center gap-4">
-                  <p className="text-nowrap text-lg font-medium">출연진</p>
-                  <div className="w-full border-b" />
-                </div>
-                <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
-                  <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
-                    {creditData.cast.slice(0, visibleCastCount).map((credit: MovieCast) => (
-                      <Link
-                        href={`/person/${credit.id}`}
-                        key={credit.cast_id}
-                        className="flex flex-col items-center gap-2 text-nowrap text-center transition-all duration-300 hover:scale-105"
-                      >
-                        <div className="relative aspect-[3/4] w-[100px] xl:w-[120px] 2xl:w-[200px]">
-                          <Image
-                            src={
-                              credit.profile_path
-                                ? `https://image.tmdb.org/t/p/w500${credit.profile_path}`
-                                : "/default.svg"
-                            }
-                            className="absolute h-full w-full rounded-xl object-cover"
-                            fill
-                            priority
-                            alt={`${credit.name} 출연진`}
-                            sizes="200px"
-                          />
-                        </div>
-                        <p className="text-sm">{credit.name}</p>
-                        <p className="text-xs">{credit.character} 역</p>
-                      </Link>
-                    ))}
-                    {visibleCastCount < creditData.cast.length && (
-                      <FaCircleArrowRight
-                        onClick={handleLoadCastData}
-                        className="my-auto h-16 w-16 cursor-pointer"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 rounded-xl p-4">
-                <div className="flex items-center gap-4">
-                  <p className="text-nowrap text-lg font-medium">제작진</p>
-                  <div className="w-full border-b" />
-                </div>
-                <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
-                  <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
-                    {creditData.crew.slice(0, visibleCrewCount).map((credit: MovieCrew) => (
-                      <Link
-                        href={`/person/${credit.id}`}
-                        key={`${credit.id} ${credit.name} ${credit.job}`}
-                        className="flex flex-col items-center gap-2 text-center transition-all duration-300 hover:scale-105"
-                      >
-                        <div className="relative aspect-[3/4] w-[100px] xl:w-[120px] 2xl:w-[200px]">
-                          <Image
-                            src={
-                              credit.profile_path
-                                ? `https://image.tmdb.org/t/p/w500${credit.profile_path}`
-                                : "/default.svg"
-                            }
-                            className="absolute h-full w-full rounded-xl object-cover"
-                            fill
-                            priority
-                            alt={`${credit.name} 제작진`}
-                            sizes="200px"
-                          />
-                        </div>
-                        <p className="text-nowrap text-sm">{credit.name}</p>
-                        <p className="text-xs">{credit.job}</p>
-                      </Link>
-                    ))}
-                    {visibleCrewCount < creditData.crew.length && (
-                      <FaCircleArrowRight
-                        onClick={handleLoadCrewData}
-                        className="my-auto h-16 w-16 cursor-pointer"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
+              <PersonListComponent type="cast" creditData={creditData.cast} />
+              <PersonListComponent type="crew" creditData={creditData.crew} />
             </div>
           </div>
         </div>

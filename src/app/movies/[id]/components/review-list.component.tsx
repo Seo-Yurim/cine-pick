@@ -2,7 +2,7 @@
 
 import { useLocalReviewList } from "@/hooks/useLocalReview";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { RatingComponent } from "./rating.component";
+import { RatingComponent } from "../../../../components/rating.component";
 
 export function ReviewListComponent({ movieId }: { movieId: string }) {
   const reviews = useLocalReviewList(movieId);
