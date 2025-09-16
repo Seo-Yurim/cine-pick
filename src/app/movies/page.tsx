@@ -1,11 +1,11 @@
 "use client";
 
-import { LoadingComponent, MovieCardComponent } from "@/components";
-import { useMovies } from "@/queries/movie.query";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MovieItem, MovieParams } from "@/types/movie.type";
-import Pagination from "@/components/pagination/pagination.component";
+import { LoadingComponent, MovieCardComponent } from "@/components";
+import Pagination from "@/components/pagination.component";
+import { useMovies } from "@/queries/movie.query";
 import MoviesHeaderComponent from "./components/movies-header.component";
 
 export default function MoviesPage() {

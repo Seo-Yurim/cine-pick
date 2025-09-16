@@ -1,13 +1,12 @@
 "use client";
 
-import { isError } from "postcss/lib/css-syntax-error";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
 import { useMovieAccountStates } from "@/queries/movie.query";
-import { FavoriteMovieComponent } from "../favorite-movie.component";
-import { LoadingComponent } from "../loading.component";
+import { FavoriteMovieComponent } from "./favorite-movie.component";
+import { LoadingComponent } from "./loading.component";
 
 export function MovieCardComponent({
   minWidth = "312px",

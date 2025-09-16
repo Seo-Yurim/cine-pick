@@ -40,7 +40,7 @@ export interface MovieGenres {
 
 export interface MovieDetailItem extends MovieItem {
   belongs_to_collection: string;
-  genres: { id: number; name: string }[];
+  genres: MovieGenres[];
   budget: number;
   revenue: number;
   runtime: number | null;

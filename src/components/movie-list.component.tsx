@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { MovieItem } from "@/types/movie.type";
 import { ButtonComponent } from "./button/button.component";
-import { MovieCardComponent } from "./movie-card/movie-card.component";
+import { MovieCardComponent } from "./movie-card.component";
 
 interface MovieListProps {
   title: string;

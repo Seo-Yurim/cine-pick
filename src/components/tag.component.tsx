@@ -40,12 +40,12 @@ export function TagComponent({
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <TagList className="flex flex-wrap items-center gap-2">
+      <TagList className="flex items-center gap-2">
         {tagList.map((tag, idx) => (
           <Tag
             key={idx}
             textValue={tag}
-            className="flex items-center gap-2 text-nowrap rounded-full border bg-foreground px-4 py-1 text-lg font-semibold leading-tight text-background"
+            className="flex items-center gap-2 rounded-full border bg-foreground px-4 py-1 text-lg font-semibold leading-tight text-background"
           >
             {tag}
             <Button

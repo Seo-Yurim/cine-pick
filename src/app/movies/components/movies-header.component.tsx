@@ -1,3 +1,9 @@
+import { getPersonIds } from "@/services/search.service";
+import { useState } from "react";
+import { DateValue } from "react-aria-components";
+import { CiBoxList, CiGrid41 } from "react-icons/ci";
+import { RiFilterFill } from "react-icons/ri";
+import { MovieParams } from "@/types/movie.type";
 import {
   ButtonComponent,
   CheckboxComponent,
@@ -5,14 +11,8 @@ import {
   TagComponent,
   ToggleButtonComponent,
 } from "@/components";
-import { useGenres } from "@/queries/movie.query";
-import { getPersonIds } from "@/services/search.service";
-import { useState } from "react";
-import { DateValue } from "react-aria-components";
-import { CiBoxList, CiGrid41 } from "react-icons/ci";
-import { RiFilterFill } from "react-icons/ri";
-import { MovieParams } from "@/types/movie.type";
 import { DatePickerComponent } from "@/components/date-picker/date-picker.component";
+import { useGenres } from "@/queries/movie.query";
 
 const toggleMenus = [
   { label: <CiGrid41 className="h-8 w-8" />, value: "grid" },
@@ -41,7 +41,7 @@ export default function MoviesHeaderComponent({
   });
   const [tagList, setTagList] = useState<string[]>([]);
 
-  const { data, isLoading, isError } = useGenres();
+  const { data } = useGenres();
 
   const handlefilterSubmit = async () => {
     const personIds = await getPersonIds(tagList);

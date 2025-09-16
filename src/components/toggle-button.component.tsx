@@ -2,7 +2,6 @@
 
 import { ReactNode } from "react";
 import { ToggleButton, ToggleButtonGroup } from "react-aria-components";
-import "./toggle-button.component.scss";
 
 type ToggleMenu = {
   label: string | ReactNode;
@@ -17,9 +16,10 @@ interface ToggleButtonProps {
 
 export function ToggleButtonComponent({ toggleMenus, activeTab, onChange }: ToggleButtonProps) {
   return (
-    <ToggleButtonGroup selectionMode="single">
+    <ToggleButtonGroup className="flex items-center" selectionMode="single">
       {toggleMenus.map((menu) => (
         <ToggleButton
+          className="border px-4 py-2 font-medium selection:bg-point-color first:rounded-l-2xl last:rounded-r-2xl hover:bg-point-color"
           key={menu.value}
           isSelected={activeTab === menu.value}
           onPress={() => onChange(menu.value)}
