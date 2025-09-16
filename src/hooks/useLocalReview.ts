@@ -1,8 +1,8 @@
+import { useAuthStore } from "@/stores/auth.store";
 import { LocalReview } from "@/types/movie.type";
-import { useAuth } from "./useAuth";
 
 export function useLocalReviews(movieId: number) {
-  const { accountId } = useAuth();
+  const { accountId } = useAuthStore();
   const key = "allReviews";
 
   const getAllReviews = (): LocalReview[] => {

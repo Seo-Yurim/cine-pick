@@ -1,11 +1,11 @@
 "use client";
 
+import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
 
 export default function MyPageLayout({ children }: { children: React.ReactNode }) {
-  const { sessionId } = useAuth();
+  const { sessionId } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {

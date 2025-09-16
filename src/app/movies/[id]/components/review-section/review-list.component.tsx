@@ -1,20 +1,22 @@
 "use client";
 
+import { useAuthStore } from "@/stores/auth.store";
+import { useModalStore } from "@/stores/modal.store";
 import { useState } from "react";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { LocalReview } from "@/types/movie.type";
 import { ButtonComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
-import { useAuth } from "@/hooks/useAuth";
 import { useLocalReviews } from "@/hooks/useLocalReview";
 import { useDeleteRating } from "@/queries/movie.query";
 import { ReviewFormComponent } from "./review-form.component";
 
 export function ReviewListComponent({ movieId }: { movieId: number }) {
-  const { accountId } = useAuth();
+  const { accountId } = useAuthStore();
+  const { modals, openModal, closeModal } = useModalStore();
+
   const { getAllReviews, deleteReview } = useLocalReviews(movieId);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingReview, setEditingReview] = useState<LocalReview | null>(null);
 
   const reviews = getAllReviews();
@@ -22,7 +24,7 @@ export function ReviewListComponent({ movieId }: { movieId: number }) {
 
   const handleEdit = (review: LocalReview) => {
     setEditingReview(review);
-    setIsFormOpen(true);
+    openModal("editReviewForm");
   };
 
   const handleDelete = (reviewId: string) => {
@@ -71,18 +73,18 @@ export function ReviewListComponent({ movieId }: { movieId: number }) {
         ))
       )}
 
-      {isFormOpen && editingReview && (
+      {editingReview && (
         <ReviewFormComponent
-          isOpen={isFormOpen}
+          isOpen={modals.editReviewForm}
           movieId={movieId}
           onClose={() => {
-            setIsFormOpen(false);
+            closeModal("editReviewForm");
             setEditingReview(null);
           }}
           isEditing={true}
           reviewId={editingReview.id}
           defaultContent={editingReview.content}
-          defaultRating={Number(editingReview.rating)}
+          defaultRating={editingReview ? Number(editingReview.rating) : 0}
         />
       )}
     </div>

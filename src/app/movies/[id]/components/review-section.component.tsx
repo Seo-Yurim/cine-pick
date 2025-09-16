@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useAuthStore } from "@/stores/auth.store";
+import { useModalStore } from "@/stores/modal.store";
 import { MdOutlineRateReview } from "react-icons/md";
 import { ButtonComponent, LoginRequiredModalComponent } from "@/components";
-import { useAuth } from "@/hooks/useAuth";
 import { ReviewFormComponent, ReviewListComponent } from "./index";
 
 export function ReviewSection({ movieId }: { movieId: number }) {
-  const { requireLogin, isLoginModalOpen, closeLoginModal } = useAuth();
-  const [isReviewFormOpen, setIsReviewFormOpen] = useState<boolean>(false);
+  const { sessionId } = useAuthStore();
+  const { modals, openModal, closeModal } = useModalStore();
+
+  const requireLogin = (callback: () => void) => {
+    if (!sessionId) {
+      openModal("loginRequire");
+    } else {
+      closeModal("loginRequire");
+      callback();
+    }
+  };
 
   return (
     <>
@@ -16,7 +25,7 @@ export function ReviewSection({ movieId }: { movieId: number }) {
             <MdOutlineRateReview className="h-8 w-8" />
             <h2 className="text-xl font-semibold">리뷰</h2>
           </div>
-          <ButtonComponent onClick={() => requireLogin(() => setIsReviewFormOpen(true))}>
+          <ButtonComponent onClick={() => requireLogin(() => openModal("reviewForm"))}>
             리뷰 작성하기
           </ButtonComponent>
         </div>
@@ -24,11 +33,14 @@ export function ReviewSection({ movieId }: { movieId: number }) {
       </section>
 
       <ReviewFormComponent
-        isOpen={isReviewFormOpen}
+        isOpen={modals.reviewForm}
         movieId={movieId}
-        onClose={() => setIsReviewFormOpen(false)}
+        onClose={() => closeModal("reviewForm")}
       />
-      <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <LoginRequiredModalComponent
+        isOpen={modals.loginRequire}
+        onClose={() => closeModal("loginRequire")}
+      />
     </>
   );
 }

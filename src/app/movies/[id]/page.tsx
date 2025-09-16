@@ -8,19 +8,19 @@ import { MovieInfoSection, ReviewSection } from "./components";
 
 export default function MoviesDetailPage() {
   const params = useParams();
-  const movieId = params.id as string;
+  const movieId = Number(params.id);
 
   const {
     data: movieData,
     isLoading: isMovieLoading,
     isError: isMovieError,
-  } = useMovieDetail(movieId as string);
+  } = useMovieDetail(movieId);
 
   const {
     data: creditData,
     isLoading: isCreditLoading,
     isError: isCreditError,
-  } = useMovieCredits(movieId as string);
+  } = useMovieCredits(movieId);
 
   const {
     data: movieAccountStates,

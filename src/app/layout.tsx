@@ -1,7 +1,8 @@
-import { Header } from "@/components";
-import Providers from "@/queries/query-client";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
+import { Header } from "@/components";
+import { AuthInitializer } from "@/components/auth-initializer.component";
+import Providers from "@/queries/query-client";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="ko" className="dark">
       <body className="font-sans">
         <Providers>
+          <AuthInitializer />
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
           {children}

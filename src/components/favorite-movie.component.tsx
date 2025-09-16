@@ -1,7 +1,7 @@
+import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
-import { useAuth } from "@/hooks/useAuth";
 import { usePostFavoriteMovie } from "@/queries/account.query";
 import { ButtonComponent } from "./button/button.component";
 
@@ -11,7 +11,7 @@ interface FavoriteMovieProps {
 }
 
 export function FavoriteMovieComponent({ defaultValue, movieId }: FavoriteMovieProps) {
-  const { accountId } = useAuth();
+  const { accountId } = useAuthStore();
 
   const [favorited, setFavorited] = useState<boolean>(defaultValue);
 
