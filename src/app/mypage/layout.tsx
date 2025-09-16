@@ -1,13 +1,22 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { redirect } from "next/navigation";
 
-export default async function MyPageLayout({ children }: { children: React.ReactNode }) {
+export default function MyPageLayout({ children }: { children: React.ReactNode }) {
   const { sessionId } = useAuth();
+  const router = useRouter();
 
-  if (!sessionId) {
-    redirect("/protected");
+  useEffect(() => {
+    if (sessionId === null) return;
+    if (!sessionId) {
+      router.replace("/protected");
+    }
+  }, [sessionId, router]);
+
+  if (sessionId === null) {
+    return null;
   }
 
   return <>{children}</>;

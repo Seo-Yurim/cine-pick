@@ -26,7 +26,7 @@ export async function getFavoriteMovies(accountId: string) {
 
 // 즐겨찾기 추가
 export async function postFavoriteMovie(accountId: string, movie: PostFavoriteMovie) {
-  const res = await post(`/account/${accountId}/favorite`, { movie });
+  const res = await post(`/account/${accountId}/favorite`, movie);
   return res.data;
 }
 

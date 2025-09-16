@@ -53,11 +53,10 @@ export function usePostFavoriteMovie() {
     }) => postFavoriteMovie(accountId, favoriteMovie),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["favorite-movie"] });
-      toast.success("해당 작품을 좋아요에 추가했어요!");
     },
     onError: (err) => {
-      console.error("좋아요 실패: ", err.message);
-      toast.error("좋아요 처리 중 문제가 발생하였습니다!");
+      console.error("즐겨찾기 실패: ", err.message);
+      toast.error("즐겨찾기 처리 중 문제가 발생하였습니다!");
     },
   });
 }

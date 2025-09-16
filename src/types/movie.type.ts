@@ -34,7 +34,7 @@ export interface MovieResponse {
 }
 
 export interface MovieGenres {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -132,4 +132,13 @@ export interface PersonItem {
   place_of_birth: string;
   popularity: number;
   profile_path: string;
+}
+
+export interface MovieAccountStates {
+  id: number;
+  favorite: boolean;
+  rated: {
+    value: number;
+  };
+  watchlist: boolean;
 }

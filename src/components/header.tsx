@@ -1,9 +1,9 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
-import { useLogin } from "@/hooks/useLogin";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/useLogin";
 import { ButtonComponent } from "./button/button.component";
 
 export function Header() {
@@ -23,7 +23,7 @@ export function Header() {
           <div className="flex items-center gap-4">
             {sessionId ? (
               <>
-                <Link href="/">
+                <Link href="/mypage/favorites">
                   <ButtonComponent>마이페이지</ButtonComponent>
                 </Link>
                 <ButtonComponent onClick={logout}>로그아웃</ButtonComponent>

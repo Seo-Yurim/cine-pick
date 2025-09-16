@@ -22,21 +22,21 @@ export function useMovies(params?: MovieParams) {
   });
 }
 
-export function useMovieDetail(movieId: string) {
+export function useMovieDetail(movieId: number) {
   return useQuery({
     queryKey: ["movie", movieId],
     queryFn: () => getMovieDetail(movieId),
   });
 }
 
-export function useMovieCredits(movieId: string) {
+export function useMovieCredits(movieId: number) {
   return useQuery({
     queryKey: ["movie-credit", movieId],
     queryFn: () => getMovieCredits(movieId),
   });
 }
 
-export function useReviews(movieId: string) {
+export function useReviews(movieId: number) {
   return useQuery({
     queryKey: ["reviews", movieId],
     queryFn: () => getReivews(movieId),
@@ -50,7 +50,7 @@ export function useReviewDeatil(reviewId: string) {
   });
 }
 
-export function useMovieAccountStates(movieId: string) {
+export function useMovieAccountStates(movieId: number) {
   return useQuery({
     queryKey: ["movie-account-states", movieId],
     queryFn: () => getMovieAccountState(movieId),
@@ -68,7 +68,7 @@ export function usePostRating() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ movieId, value }: { movieId: string; value: string }) =>
+    mutationFn: ({ movieId, value }: { movieId: number; value: string }) =>
       postRating(movieId, value),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["movie"] });
@@ -84,7 +84,7 @@ export function useDeleteRating() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ movieId }: { movieId: string }) => deleteRating(movieId),
+    mutationFn: ({ movieId }: { movieId: number }) => deleteRating(movieId),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["movie"] });
       toast.success("삭제 완료했습니다!");

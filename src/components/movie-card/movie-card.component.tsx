@@ -1,9 +1,13 @@
 "use client";
 
+import { isError } from "postcss/lib/css-syntax-error";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
+import { useMovieAccountStates } from "@/queries/movie.query";
+import { FavoriteMovieComponent } from "../favorite-movie.component";
+import { LoadingComponent } from "../loading.component";
 
 export function MovieCardComponent({
   minWidth = "312px",
@@ -18,6 +22,11 @@ export function MovieCardComponent({
   const posterUrl = data.poster_path
     ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
     : "/default.svg";
+
+  const { data: movieAccountStates, isLoading: isMovieAccountStatesLoading } =
+    useMovieAccountStates(data.id);
+
+  if (isMovieAccountStatesLoading) return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
 
   const handleClick = () => {
     if (type !== "grid") router.push(`/movies/${data.id}`);
@@ -60,7 +69,8 @@ export function MovieCardComponent({
             <p className="text-lg">{data.overview || "요약된 줄거리가 없습니다."}</p>
           </div>
 
-          <div className="border-t bg-text-bg p-4">
+          <div className="flex items-center gap-4 border-t bg-text-bg p-4">
+            <FavoriteMovieComponent movieId={data.id} defaultValue={movieAccountStates.favorite} />
             <Link
               href={`/movies/${data.id}`}
               className="flex w-full cursor-pointer justify-center rounded-lg border bg-text-bg p-4 text-lg font-semibold hover:bg-point-color"

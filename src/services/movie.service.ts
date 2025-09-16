@@ -8,7 +8,7 @@ export async function getMovies(params?: MovieParams) {
 }
 
 // 영화 상세 정보
-export async function getMovieDetail(movieId: string) {
+export async function getMovieDetail(movieId: number) {
   const res = await get(`/movie/${movieId}`);
   return res.data;
 }
@@ -20,25 +20,25 @@ export async function getGenres() {
 }
 
 // 출연진, 제작진 목록
-export async function getMovieCredits(movieId: string) {
+export async function getMovieCredits(movieId: number) {
   const res = await get(`/movie/${movieId}/credits`);
   return res.data;
 }
 
 // 평점 추가
-export async function postRating(movieId: string, value: string) {
+export async function postRating(movieId: number, value: string) {
   const res = await post(`/movie/${movieId}}/rating`, { value });
   return res.data;
 }
 
 // 평점 제거
-export async function deleteRating(movieId: string) {
+export async function deleteRating(movieId: number) {
   const res = await remove(`/movie/${movieId}}/rating`);
   return res.data;
 }
 
 // 리뷰 목록
-export async function getReivews(movieId: string) {
+export async function getReivews(movieId: number) {
   const res = await get(`/movie/${movieId}}/reviews`);
   return res.data;
 }
@@ -50,7 +50,7 @@ export async function getReviewDetail(reviewId: string) {
 }
 
 // 특정 영화에 관한 사용자 상태
-export async function getMovieAccountState(movieId: string) {
+export async function getMovieAccountState(movieId: number) {
   const res = await get(`/movie/${movieId}}/account_states`);
   return res.data;
 }
