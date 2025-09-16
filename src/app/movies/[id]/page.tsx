@@ -119,9 +119,11 @@ export default function MoviesDetailPage() {
         <ReviewListComponent movieId={movieId} />
       </section>
 
-      <ModalComponent isOpen={isReviewFormOpen} onClose={() => setIsReviewFormOpen(false)}>
-        <ReviewFormComponent movieId={movieId} onClose={() => setIsReviewFormOpen(false)} />
-      </ModalComponent>
+      <ReviewFormComponent
+        isOpen={isReviewFormOpen}
+        movieId={movieId}
+        onClose={() => setIsReviewFormOpen(false)}
+      />
       <LoginRequiredModalComponent isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </main>
   );

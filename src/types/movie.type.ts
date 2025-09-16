@@ -108,6 +108,15 @@ export interface ReviewItem {
   rating: number;
 }
 
+export interface LocalReview {
+  id: string;
+  account_id: string;
+  author: string;
+  rating: string;
+  content: string;
+  createdAt: string;
+}
+
 export interface PersonItem {
   adult: boolean;
   also_known_as: string[];

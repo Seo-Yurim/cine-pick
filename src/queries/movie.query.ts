@@ -64,7 +64,6 @@ export function useGenres() {
   });
 }
 
-// 영화 정보랑 로그인 정보 쿼리 키
 export function usePostRating() {
   const queryclient = useQueryClient();
 
@@ -73,7 +72,6 @@ export function usePostRating() {
       postRating(movieId, value),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["movie"] });
-      toast.success("작성을 완료했습니다!");
     },
     onError: (err) => {
       console.error("작성 실패: ", err.message);
