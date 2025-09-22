@@ -22,7 +22,8 @@ export function usePostCollection() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ collection }: { collection: CollectionData }) => postCollection(collection),
+    mutationFn: ({ sessionId, collection }: { sessionId: string; collection: CollectionData }) =>
+      postCollection(sessionId, collection),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["collection-list"] });
       toast.success("새 컬렉션 목록을 생성했어요!");

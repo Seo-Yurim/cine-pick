@@ -3,7 +3,6 @@ import { get, post, remove } from "./method";
 export interface CollectionData {
   name: string;
   description: string;
-  language: string;
 }
 
 // 컬렉션 상세
@@ -13,8 +12,8 @@ export async function getCollectionDetail(listId: number) {
 }
 
 // 컬렉션 목록 추가
-export async function postCollection(collection: CollectionData) {
-  const res = await post("/list", { collection });
+export async function postCollection(sessionId: string, collection: CollectionData) {
+  const res = await post(`/list?session_id=${sessionId}`, collection);
   return res.data;
 }
 

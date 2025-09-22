@@ -1,0 +1,17 @@
+.react-aria-TextField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  width: 100%;
+
+  .react-aria-Input {
+    padding: 1rem 1.5rem;
+    border: 1px solid hsl(var(--point-color));
+    border-radius: 1rem;
+
+    &:focus {
+      outline: 1px solid palevioletred;
+    }
+  }
+}
