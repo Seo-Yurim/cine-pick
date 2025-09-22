@@ -32,14 +32,7 @@ export function ReviewListComponent({ movieId }: { movieId: number }) {
 
     deleteReview(reviewId);
 
-    deleteRating.mutate(
-      { movieId },
-      {
-        onSuccess: () => {
-          window.location.reload();
-        },
-      },
-    );
+    deleteRating.mutate({ movieId });
   };
 
   return (

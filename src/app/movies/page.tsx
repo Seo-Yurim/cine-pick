@@ -29,7 +29,7 @@ export default function MoviesPage() {
 
   useEffect(() => {
     setPage(1);
-  }, [params.sort_by, params.with_genres, params.with_people, params.primary_release_year]);
+  }, [params]);
 
   if (isError) {
     toast.error("데이터를 불러오는 중 에러가 발생했어요.", { duration: 3000 });

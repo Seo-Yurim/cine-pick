@@ -86,7 +86,6 @@ export function ReviewFormComponent({
 
     onClose();
     onSubmitComplete?.();
-    window.location.reload();
   };
 
   return (

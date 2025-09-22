@@ -7,11 +7,11 @@ import { useLogin } from "@/hooks/useLogin";
 import { ButtonComponent } from "./button/button.component";
 
 export function Header() {
-  const { sessionId } = useAuthStore();
+  const { isAuthInitialized } = useAuthStore();
   const logout = useAuthStore((state) => state.logout);
   const { handleLogin } = useLogin();
 
-  if (!sessionId) {
+  if (!isAuthInitialized) {
     return (
       <header className="bg-header-bg p-8">
         <div className="mx-auto flex w-full max-w-[1920px] items-center justify-between gap-8">
@@ -36,7 +36,7 @@ export function Header() {
             <ButtonComponent>찾아보기</ButtonComponent>
           </Link>
 
-          {sessionId ? (
+          {isAuthInitialized ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
                 <Link href="/mypage/favorites">

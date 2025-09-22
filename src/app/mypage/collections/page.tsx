@@ -3,6 +3,7 @@
 import { CollectionData } from "@/services/collection.service";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
+import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { MovieCollectionItem } from "@/types/movie.type";
@@ -55,12 +56,13 @@ export default function MyCollectionPage() {
 
       <div className="grid grid-cols-2 gap-4">
         {data.results.map((item: MovieCollectionItem) => (
-          <div
+          <Link
             key={item.id}
+            href={`/mypage/collections/${item.id}`}
             className="flex h-8 items-center justify-center rounded-xl bg-point-color/50 p-16"
           >
             <p className="text-lg font-semibold">{item.name}</p>
-          </div>
+          </Link>
         ))}
       </div>
 
