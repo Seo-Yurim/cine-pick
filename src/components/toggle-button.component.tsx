@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, act } from "react";
+import { ReactNode } from "react";
 import { ToggleButton, ToggleButtonGroup } from "react-aria-components";
 
 type ToggleMenu = {

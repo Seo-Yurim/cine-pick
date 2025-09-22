@@ -7,11 +7,22 @@ import { useLogin } from "@/hooks/useLogin";
 import { ButtonComponent } from "./button/button.component";
 
 export function Header() {
-  const sessionId = useAuthStore((state) => state.sessionId);
+  const { sessionId } = useAuthStore();
   const logout = useAuthStore((state) => state.logout);
   const { handleLogin } = useLogin();
 
-  const isLoggedIn = !!sessionId;
+  if (!sessionId) {
+    return (
+      <header className="bg-header-bg p-8">
+        <div className="mx-auto flex w-full max-w-[1920px] items-center justify-between gap-8">
+          <Link href="/" className="relative aspect-[3/1] w-48">
+            <Image src="/logo.svg" className="object-contain" fill priority alt="logo" />
+          </Link>
+          <div className="w-full animate-pulse rounded-xl bg-white/30 p-8" />
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="bg-header-bg p-8">
@@ -25,7 +36,7 @@ export function Header() {
             <ButtonComponent>찾아보기</ButtonComponent>
           </Link>
 
-          {isLoggedIn ? (
+          {sessionId ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
                 <Link href="/mypage/favorites">
