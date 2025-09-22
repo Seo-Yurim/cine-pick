@@ -55,11 +55,11 @@ export function MovieControlComponent({ movieId }: { movieId: number }) {
         onSelectCollection={handleSelectCollection}
       />
 
-      <p className="rounded-xl bg-point-color px-4 py-1 font-medium">내가 준 평점</p>
+      <p className="text-nowrap rounded-xl bg-point-color px-4 py-1 font-medium">내가 준 평점</p>
       {movieAccountStates.rated.value > 0 ? (
         <RatingComponent type="show" defaultValue={movieAccountStates.rated.value} />
       ) : (
-        <p className="font-semibold">남긴 평점이 없습니다, 리뷰를 통해 이 영화를 평가해주세요!</p>
+        <p className="font-semibold">남긴 평점이 없습니다. 이 영화를 평가해주세요!</p>
       )}
     </div>
   );

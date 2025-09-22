@@ -18,11 +18,11 @@ export function MenuComponent({ menuList, btnIcon, onSelectCollection, ...props 
         {btnIcon}
       </ButtonComponent>
       <Popover>
-        <Menu>
+        <Menu className="rounded-xl border bg-black p-2">
           {menuList.map((menu) => (
             <MenuItem
               key={menu.id}
-              className="hover:bg-white/20"
+              className="cursor-pointer hover:bg-white/20"
               onClick={() => onSelectCollection?.(menu)}
             >
               {menu.name}

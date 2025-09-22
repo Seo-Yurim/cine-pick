@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, act } from "react";
 import { ToggleButton, ToggleButtonGroup } from "react-aria-components";
 
 type ToggleMenu = {
@@ -19,7 +19,7 @@ export function ToggleButtonComponent({ toggleMenus, activeTab, onChange }: Togg
     <ToggleButtonGroup className="flex items-center" selectionMode="single">
       {toggleMenus.map((menu) => (
         <ToggleButton
-          className="border px-4 py-2 font-medium selection:bg-point-color first:rounded-l-2xl last:rounded-r-2xl hover:bg-point-color"
+          className={`${activeTab === menu.value && "bg-point-color"} border px-4 py-2 font-medium selection:bg-point-color first:rounded-l-2xl last:rounded-r-2xl hover:bg-point-color`}
           key={menu.value}
           isSelected={activeTab === menu.value}
           onPress={() => onChange(menu.value)}
