@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 // 컬렉션 상세
-export function useCollectionDetail(listId: string) {
+export function useCollectionDetail(listId: number) {
   return useQuery({
     queryKey: ["collection-detail", listId],
     queryFn: () => getCollectionDetail(listId),
@@ -39,7 +39,7 @@ export function useDeleteCollection() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ listId }: { listId: string }) => deleteCollection(listId),
+    mutationFn: ({ listId }: { listId: number }) => deleteCollection(listId),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["collection-list"] });
       toast.success("컬렉션 목록을 삭제했어요!");
@@ -56,7 +56,7 @@ export function usePostAddMovie() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ listId, media_id }: { listId: string; media_id: number }) =>
+    mutationFn: ({ listId, media_id }: { listId: number; media_id: number }) =>
       postAddMovie(listId, media_id),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["collection-list"] });
@@ -74,7 +74,7 @@ export function useDeleteMovie() {
   const queryclient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ listId, media_id }: { listId: string; media_id: number }) =>
+    mutationFn: ({ listId, media_id }: { listId: number; media_id: number }) =>
       deleteMovie(listId, media_id),
     onSuccess: () => {
       queryclient.invalidateQueries({ queryKey: ["collection-list"] });

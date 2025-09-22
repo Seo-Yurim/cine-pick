@@ -7,7 +7,7 @@ export interface CollectionData {
 }
 
 // 컬렉션 상세
-export async function getCollectionDetail(listId: string) {
+export async function getCollectionDetail(listId: number) {
   const res = await get(`/list/${listId}`);
   return res.data;
 }
@@ -19,19 +19,19 @@ export async function postCollection(collection: CollectionData) {
 }
 
 // 컬렉션 목록 삭제
-export async function deleteCollection(listId: string) {
+export async function deleteCollection(listId: number) {
   const res = await remove(`/list/${listId}`);
   return res.data;
 }
 
 // 컬렉션에 영화 추가
-export async function postAddMovie(listId: string, media_id: number) {
+export async function postAddMovie(listId: number, media_id: number) {
   const res = await post(`/list/${listId}/add_item`, { media_id });
   return res.data;
 }
 
 // 컬렉션에 영화 삭제
-export async function deleteMovie(listId: string, media_id: number) {
+export async function deleteMovie(listId: number, media_id: number) {
   const res = await post(`/list/${listId}/add_item`, { media_id });
   return res.data;
 }

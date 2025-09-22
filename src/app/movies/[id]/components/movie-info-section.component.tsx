@@ -1,15 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import {
-  MovieAccountStates,
-  MovieCreditResponse,
-  MovieDetailItem,
-  MovieGenres,
-} from "@/types/movie.type";
-import { RatingComponent } from "@/components";
-import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
+import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { PersonListComponent } from "./index";
+import { MovieControlComponent } from "./movie-info-section/movie-control.component";
 
 const statusMapping: Record<string, string> = {
   Rumored: "제작 미정",
@@ -23,10 +17,9 @@ const statusMapping: Record<string, string> = {
 interface MovieInfoProps {
   movieData: MovieDetailItem;
   creditData: MovieCreditResponse;
-  movieAccountStates: MovieAccountStates;
 }
 
-export function MovieInfoSection({ movieData, creditData, movieAccountStates }: MovieInfoProps) {
+export function MovieInfoSection({ movieData, creditData }: MovieInfoProps) {
   const moviePosterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : "/default.svg";
@@ -54,10 +47,6 @@ export function MovieInfoSection({ movieData, creditData, movieAccountStates }: 
           <p>{movieData.overview}</p>
 
           <div className="flex items-center gap-4">
-            <FavoriteMovieComponent
-              defaultValue={movieAccountStates.favorite}
-              movieId={movieData.id}
-            />
             <p className="rounded-xl border px-4 py-1">{movieData.release_date}</p>
             <div className="flex items-center gap-2 rounded-xl border px-4 py-1">
               {movieData.genres.map((genre: MovieGenres) => (
@@ -68,16 +57,7 @@ export function MovieInfoSection({ movieData, creditData, movieAccountStates }: 
             <p className="rounded-xl border px-4 py-1">{statusMapping[movieData.status]}</p>
           </div>
 
-          <div className="flex items-center gap-4">
-            <p className="rounded-xl bg-point-color px-4 py-1 font-medium">내가 준 평점</p>
-            {movieAccountStates.rated.value > 0 ? (
-              <RatingComponent type="show" defaultValue={movieAccountStates.rated.value} />
-            ) : (
-              <p className="font-semibold">
-                남긴 평점이 없습니다, 리뷰를 통해 이 영화를 평가해주세요!
-              </p>
-            )}
-          </div>
+          <MovieControlComponent movieId={movieData.id} />
 
           <div className="flex flex-col gap-4">
             <PersonListComponent type="cast" creditData={creditData.cast} />
