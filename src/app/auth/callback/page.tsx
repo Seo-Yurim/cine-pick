@@ -17,7 +17,7 @@ export default function TmdbCallbackPage() {
 
   useEffect(() => {
     async function completeLogin() {
-      if (!requestToken || approved !== "true") {
+      if (!requestToken || !approved) {
         alert("로그인 실패 또는 사용자가 거부했습니다.");
         router.replace("/");
         return;

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { Header } from "@/components";
 import { AuthInitializer } from "@/components/auth-initializer.component";
-import Providers from "@/queries/query-client";
+import { QueryClientProvider } from "@/queries/query-client";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,12 +18,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className="dark">
       <body className="font-sans">
-        <Providers>
+        <QueryClientProvider>
           <AuthInitializer />
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
           {children}
-        </Providers>
+        </QueryClientProvider>
       </body>
     </html>
   );
