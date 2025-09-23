@@ -1,9 +1,9 @@
 import { deleteUser, getLogin, getUser, patchUser, postUser } from "@/services/users.service";
-import { useAuthStore } from "@/stores/user.store";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { User } from "@/types/user.type";
+import { User } from "@/types/users.type";
+import { useAuthStore } from "@/stores/user.store";
 import { queryClient } from "./query-client";
 
 // 로그인

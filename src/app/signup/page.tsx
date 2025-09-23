@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import useSignupValidation from "@/hooks/useSignupValidation";
-import { usePostUser } from "@/queries/user.query";
+import { usePostUser } from "@/queries/users.query";
 import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 
 export default function SignupPage() {

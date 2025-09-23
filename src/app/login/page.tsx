@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { User } from "@/types/user.type";
-import { useGetLogin } from "@/queries/user.query";
+import { User } from "@/types/users.type";
+import { useGetLogin } from "@/queries/users.query";
 import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 
 export default function LoginPage() {

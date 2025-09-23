@@ -1,23 +1,23 @@
 "use client";
 
-import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAuthStore } from "@/stores/user.store";
 
 export default function MyPageLayout({ children }: { children: React.ReactNode }) {
-  const { sessionId } = useAuthStore();
+  const { user } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (sessionId === null) return;
-    if (!sessionId) {
-      router.replace("/protected");
+    if (user === undefined) return;
+    if (user === null) {
+      router.push("/protected");
     }
-  }, [sessionId, router]);
+  }, [user, router]);
 
-  if (sessionId === null) {
-    return null;
-  }
+  if (user === undefined) return null;
+
+  if (user === null) return null;
 
   return <>{children}</>;
 }

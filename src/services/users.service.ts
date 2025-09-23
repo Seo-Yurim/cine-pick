@@ -1,4 +1,4 @@
-import { User } from "@/types/user.type";
+import { User } from "@/types/users.type";
 import { get, patch, post, remove } from "./method";
 
 // 로그인
