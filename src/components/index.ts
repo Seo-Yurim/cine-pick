@@ -10,3 +10,5 @@ export * from "./movie-list.component";
 export * from "./rating.component";
 export * from "./require-login-modal.component";
 export * from "./modal/modal.component";
+export * from "./input/input.component";
+export * from "./form/form.component";

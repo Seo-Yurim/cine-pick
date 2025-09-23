@@ -1,3 +1,5 @@
+"use client";
+
 import { FieldError, Input, Label, TextField, TextFieldProps } from "react-aria-components";
 import "./input.component.scss";
 
