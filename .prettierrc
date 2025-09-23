@@ -5,9 +5,10 @@
     "^react(.*)",
     "^@/types/(.*)$",
     "^@/constants/(.*)$",
-    "^@/(components)(/.*)?$",
+    "^@/stores/(.*)$",
     "^@/hooks/(.*)$",
     "^@/queries/(.*)$",
+    "^@/(components)(/.*)?$",
     "^@/pages/(.*)$",
     "^@/public/assets/(.*)$",
     "^[./]"

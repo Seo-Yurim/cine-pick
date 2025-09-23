@@ -1,17 +1,17 @@
 "use client";
 
-import { useAuthStore } from "@/stores/auth.store";
 import Image from "next/image";
 import Link from "next/link";
-import { useLogin } from "@/hooks/useLogin";
-import { ButtonComponent } from "./button/button.component";
+import { useAuthStore } from "@/stores/user.store";
+import { useHasHydrated } from "@/hooks/useHasHydration";
+import { ButtonComponent } from "./index";
 
 export function Header() {
-  const { isAuthInitialized } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
-  const { handleLogin } = useLogin();
+  const hasHydrated = useHasHydrated();
 
-  if (!isAuthInitialized) {
+  if (!hasHydrated) {
     return (
       <header className="bg-header-bg p-8">
         <div className="mx-auto flex w-full max-w-[1920px] items-center justify-between gap-8">
@@ -36,7 +36,7 @@ export function Header() {
             <ButtonComponent>찾아보기</ButtonComponent>
           </Link>
 
-          {isAuthInitialized ? (
+          {user ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
                 <Link href="/mypage/favorites">
@@ -56,7 +56,9 @@ export function Header() {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <ButtonComponent onClick={handleLogin}>로그인</ButtonComponent>
+              <Link href="/login">
+                <ButtonComponent>로그인</ButtonComponent>
+              </Link>
               <Link href="https://www.themoviedb.org/signup">
                 <ButtonComponent>회원가입</ButtonComponent>
               </Link>

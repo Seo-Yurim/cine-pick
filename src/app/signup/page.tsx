@@ -4,9 +4,9 @@ import { getCheckUsername } from "@/services/users.service";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 import useSignupValidation from "@/hooks/useSignupValidation";
 import { usePostUser } from "@/queries/user.query";
+import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 
 export default function SignupPage() {
   const { values, errors, setErrors, handleChange, validate } = useSignupValidation({
@@ -49,7 +49,12 @@ export default function SignupPage() {
         />
       </Link>
 
-      <FormComponent>
+      <FormComponent
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSignup();
+        }}
+      >
         <InputComponent
           name="name"
           type="text"
@@ -87,7 +92,7 @@ export default function SignupPage() {
           errorMessage={errors.checkPassword}
         />
         <ButtonComponent
-          onClick={handleSignup}
+          type="submit"
           className="w-full rounded-xl bg-point-color p-4 text-lg font-medium"
         >
           회원가입

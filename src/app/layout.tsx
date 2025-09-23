@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { Header } from "@/components";
-import { AuthInitializer } from "@/components/auth-initializer.component";
 import { QueryClientProvider } from "@/queries/query-client";
 import "./globals.css";
 
@@ -19,7 +18,6 @@ export default function RootLayout({
     <html lang="ko" className="dark">
       <body className="font-sans">
         <QueryClientProvider>
-          <AuthInitializer />
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
           {children}

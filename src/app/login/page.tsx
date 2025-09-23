@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { User } from "@/types/user.type";
-import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 import { useGetLogin } from "@/queries/user.query";
+import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 
 export default function LoginPage() {
   const [form, setForm] = useState<Pick<User, "username" | "password">>({
@@ -16,18 +16,8 @@ export default function LoginPage() {
 
   const getLogin = useGetLogin();
   const handleLogin = () => {
-    if (!form.username.trim() && !form.password.trim()) {
+    if (!form.username.trim() || !form.password.trim()) {
       toast.error("아이디와 비밀번호를 입력해주세요!");
-      return;
-    }
-
-    if (!form.username.trim()) {
-      toast.error("아이디를 입력해주세요!");
-      return;
-    }
-
-    if (!form.password.trim()) {
-      toast.error("비밀번호를 입력해주세요!");
       return;
     }
 
@@ -46,7 +36,12 @@ export default function LoginPage() {
         />
       </Link>
 
-      <FormComponent>
+      <FormComponent
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
         <InputComponent
           name="username"
           type="username"
@@ -64,7 +59,7 @@ export default function LoginPage() {
           label="비밀번호"
         />
         <ButtonComponent
-          onClick={handleLogin}
+          type="submit"
           className="w-full rounded-xl bg-point-color p-4 text-lg font-medium"
         >
           로그인

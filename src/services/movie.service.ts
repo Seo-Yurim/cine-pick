@@ -3,19 +3,19 @@ import { get, post, remove } from "./method";
 
 // 영화 목록
 export async function getMovies(params?: MovieParams) {
-  const res = await get("/discover/movie", params);
+  const res = await get("/discover/movie", params, "tmdb");
   return res.data;
 }
 
 // 영화 상세 정보
 export async function getMovieDetail(movieId: number) {
-  const res = await get(`/movie/${movieId}`);
+  const res = await get(`/movie/${movieId}`, {}, "tmdb");
   return res.data;
 }
 
 // 장르 목록
 export async function getGenres() {
-  const res = await get("/genre/movie/list");
+  const res = await get("/genre/movie/list", {}, "tmdb");
   return res.data;
 }
 
