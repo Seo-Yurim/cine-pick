@@ -5,12 +5,18 @@ import Link from "next/link";
 import { useState } from "react";
 import { User } from "@/types/user.type";
 import { ButtonComponent, FormComponent, InputComponent } from "@/components";
+import { useGetLogin } from "@/queries/user.query";
 
 export default function LoginPage() {
   const [form, setForm] = useState<Pick<User, "username" | "password">>({
     username: "",
     password: "",
   });
+
+  const getLogin = useGetLogin();
+  const handleLogin = () => {
+    getLogin.mutate({ username: form.username, password: form.password });
+  };
 
   return (
     <section className="mx-auto flex max-w-[500px] flex-col items-center gap-8 py-24">
@@ -41,7 +47,9 @@ export default function LoginPage() {
           onChange={(value) => setForm((prev) => ({ ...prev, password: value }))}
           label="비밀번호"
         />
-        <ButtonComponent className="w-full rounded-xl bg-point-color p-4">로그인</ButtonComponent>
+        <ButtonComponent onClick={handleLogin} className="w-full rounded-xl bg-point-color p-4">
+          로그인
+        </ButtonComponent>
       </FormComponent>
 
       <div className="flex w-full items-center justify-between">

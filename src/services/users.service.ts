@@ -1,6 +1,12 @@
 import { User } from "@/types/user.type";
 import { get, patch, post, remove } from "./method";
 
+// 로그인
+export async function getLogin(username: string, password: string) {
+  const res = await get("/users", { username, password });
+  return res.data.length > 0 ? res.data[0] : null;
+}
+
 // 내 정보 가져오기
 export async function getUser(userId: number) {
   const res = await get(`/users/${userId}`);

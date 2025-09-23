@@ -1,9 +1,31 @@
-import { deleteUser, getUser, patchUser, postUser } from "@/services/users.service";
+import { deleteUser, getLogin, getUser, patchUser, postUser } from "@/services/users.service";
 import { useAuthStore } from "@/stores/user.store";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { User } from "@/types/user.type";
 import { queryClient } from "./query-client";
+
+// 로그인
+export function useGetLogin() {
+  return useMutation({
+    mutationFn: ({ username, password }: { username: string; password: string }) =>
+      getLogin(username, password),
+    onSuccess: (data) => {
+      if (!data) {
+        toast.error("아이디 또는 비밀번호가 일치하지 않습니다.");
+        return;
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      useAuthStore.getState().setUser(data);
+      toast.success("로그인 성공!");
+    },
+    onError: (err) => {
+      console.error("로그인 실패: ", err.message);
+      toast.error("로그인 처리 중 문제가 발생하였습니다!");
+    },
+  });
+}
 
 // 내 정보 가져오기
 export function useGetUser(userId: number) {
@@ -21,7 +43,6 @@ export function usePostUser() {
     mutationFn: ({ userData }: { userData: User }) => postUser(userData),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      useAuthStore.getState().setUser(data);
       toast.success("회원가입 성공!");
     },
     onError: (err) => {

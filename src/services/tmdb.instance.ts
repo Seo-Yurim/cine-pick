@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+const tmdbInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_TMDB_API_URL,
   headers: {
     "Content-Type": "application/json",
     Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY,
@@ -11,7 +11,7 @@ const instance = axios.create({
 
 // 로딩
 
-instance.interceptors.request.use(
+tmdbInstance.interceptors.request.use(
   (config) => {
     const sessionId = localStorage.getItem("session_id");
 
@@ -27,12 +27,12 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-instance.interceptors.response.use(
+tmdbInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API 응답 에러:", error);
+    console.error("TMDB API 응답 에러:", error);
     return Promise.reject(error);
   },
 );
 
-export default instance;
+export default tmdbInstance;
