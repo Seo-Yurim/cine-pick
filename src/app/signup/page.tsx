@@ -5,17 +5,24 @@ import Link from "next/link";
 import { useState } from "react";
 import { User } from "@/types/user.type";
 import { ButtonComponent, FormComponent, InputComponent } from "@/components";
-import { useGetLogin } from "@/queries/user.query";
+import { usePostUser } from "@/queries/user.query";
 
-export default function LoginPage() {
-  const [form, setForm] = useState<Pick<User, "username" | "password">>({
+export default function SignupPage() {
+  const [form, setForm] = useState<Omit<User, "id">>({
+    name: "",
     username: "",
     password: "",
   });
 
-  const getLogin = useGetLogin();
-  const handleLogin = () => {
-    getLogin.mutate({ username: form.username, password: form.password });
+  const signup = usePostUser();
+  const handleSignup = () => {
+    const userData = {
+      name: form.name,
+      username: form.username,
+      password: form.password,
+    };
+
+    signup.mutate(userData);
   };
 
   return (
@@ -31,6 +38,14 @@ export default function LoginPage() {
       </Link>
 
       <FormComponent>
+        <InputComponent
+          name="name"
+          type="name"
+          placeholder="이름을 입력해주세요."
+          value={form.name}
+          onChange={(value) => setForm((prev) => ({ ...prev, name: value }))}
+          label="이름"
+        />
         <InputComponent
           name="username"
           type="username"
@@ -48,17 +63,17 @@ export default function LoginPage() {
           label="비밀번호"
         />
         <ButtonComponent
-          onClick={handleLogin}
+          onClick={handleSignup}
           className="w-full rounded-xl bg-point-color p-4 text-lg font-medium"
         >
-          로그인
+          회원가입
         </ButtonComponent>
       </FormComponent>
 
       <div className="flex w-full items-center justify-between">
-        <p className="text-lg font-medium">아직 회원이 아니신가요?</p>
-        <Link href="/signup">
-          <ButtonComponent>회원가입</ButtonComponent>
+        <p className="text-lg font-medium">이미 회원이신가요?</p>
+        <Link href="/login">
+          <ButtonComponent>로그인</ButtonComponent>
         </Link>
       </div>
     </section>

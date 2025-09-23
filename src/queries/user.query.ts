@@ -28,7 +28,7 @@ export function useGetLogin() {
 }
 
 // 내 정보 가져오기
-export function useGetUser(userId: number) {
+export function useGetUser(userId: string) {
   return useQuery<User>({
     queryKey: ["users", userId],
     queryFn: () => getUser(userId),
@@ -40,8 +40,8 @@ export function useGetUser(userId: number) {
 // 회원가입
 export function usePostUser() {
   return useMutation({
-    mutationFn: ({ userData }: { userData: User }) => postUser(userData),
-    onSuccess: (data) => {
+    mutationFn: (userData: Omit<User, "id">) => postUser(userData),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success("회원가입 성공!");
     },
@@ -55,7 +55,7 @@ export function usePostUser() {
 // 회원 정보 수정
 export function usePatchUser() {
   return useMutation({
-    mutationFn: ({ userId, userData }: { userId: number; userData: User }) =>
+    mutationFn: ({ userId, userData }: { userId: string; userData: User }) =>
       patchUser(userId, userData),
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["users", variables.userId] });
@@ -72,7 +72,7 @@ export function usePatchUser() {
 // 회원 탈퇴
 export function useDeleteUser() {
   return useMutation({
-    mutationFn: ({ userId }: { userId: number }) => deleteUser(userId),
+    mutationFn: ({ userId }: { userId: string }) => deleteUser(userId),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["users", variables.userId] });
       toast.success("회원 탈퇴 성공!");
