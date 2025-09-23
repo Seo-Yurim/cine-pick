@@ -1,43 +1,21 @@
 "use client";
 
-import { useAuthStore } from "@/stores/auth.store";
-import { useModalStore } from "@/stores/modal.store";
 import { useState } from "react";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { LocalReview } from "@/types/movie.type";
+import { useModalStore } from "@/stores/modal.store";
 import { ButtonComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
-import { useLocalReviews } from "@/hooks/useLocalReview";
-import { useDeleteRating } from "@/queries/movie.query";
 import { ReviewFormComponent } from "./review-form.component";
 
 export function ReviewListComponent({ movieId }: { movieId: number }) {
-  const { accountId } = useAuthStore();
   const { modals, openModal, closeModal } = useModalStore();
-
-  const { getAllReviews, deleteReview } = useLocalReviews(movieId);
 
   const [editingReview, setEditingReview] = useState<LocalReview | null>(null);
 
-  const reviews = getAllReviews();
-  const deleteRating = useDeleteRating();
-
-  const handleEdit = (review: LocalReview) => {
-    setEditingReview(review);
-    openModal("editReviewForm");
-  };
-
-  const handleDelete = (reviewId: string) => {
-    if (!confirm("리뷰와 평점을 삭제하시겠습니까?")) return;
-
-    deleteReview(reviewId);
-
-    deleteRating.mutate({ movieId });
-  };
-
   return (
     <div className="flex w-full flex-col">
-      {reviews.length === 0 ? (
+      {/* {reviews.length === 0 ? (
         <div className="flex items-center justify-center py-16">
           <p className="text-xl font-medium">아직 작성된 리뷰가 없습니다.</p>
         </div>
@@ -64,7 +42,7 @@ export function ReviewListComponent({ movieId }: { movieId: number }) {
             </div>
           </div>
         ))
-      )}
+      )} */}
 
       {editingReview && (
         <ReviewFormComponent

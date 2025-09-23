@@ -21,6 +21,6 @@ export async function getGenres() {
 
 // 출연진, 제작진 목록
 export async function getMovieCredits(movieId: number) {
-  const res = await get(`/movie/${movieId}/credits`);
+  const res = await get(`/movie/${movieId}/credits`, {}, "tmdb");
   return res.data;
 }

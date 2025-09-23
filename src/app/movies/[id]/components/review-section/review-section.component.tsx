@@ -1,22 +1,10 @@
-import { useAuthStore } from "@/stores/auth.store";
-import { useModalStore } from "@/stores/modal.store";
 import { MdOutlineRateReview } from "react-icons/md";
+import { useModalStore } from "@/stores/modal.store";
 import { ButtonComponent, LoginRequiredModalComponent } from "@/components";
 import { ReviewFormComponent, ReviewListComponent } from "../index";
 
 export function ReviewSection({ movieId }: { movieId: number }) {
-  const { sessionId } = useAuthStore();
   const { modals, openModal, closeModal } = useModalStore();
-
-  // 수정
-  const requireLogin = (callback: () => void) => {
-    if (!sessionId) {
-      openModal("loginRequire");
-    } else {
-      closeModal("loginRequire");
-      callback();
-    }
-  };
 
   return (
     <>
@@ -26,9 +14,7 @@ export function ReviewSection({ movieId }: { movieId: number }) {
             <MdOutlineRateReview className="h-8 w-8" />
             <h2 className="text-xl font-semibold">리뷰</h2>
           </div>
-          <ButtonComponent onClick={() => requireLogin(() => openModal("reviewForm"))}>
-            리뷰 작성하기
-          </ButtonComponent>
+          <ButtonComponent>리뷰 작성하기</ButtonComponent>
         </div>
         <ReviewListComponent movieId={movieId} />
       </section>

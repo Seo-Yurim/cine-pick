@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
-import { useMovieAccountStates } from "@/queries/movie.query";
-import { FavoriteMovieComponent } from "./favorite-movie.component";
 
 export function MovieCardComponent({
   minWidth = "312px",
