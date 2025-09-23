@@ -27,15 +27,51 @@
   ],
   "reviews": [
     {
-      "id": 1,
-      "movieId": 1311031,
-      "rating": 5,
-      "content": "최고의 애니메이션이에요!",
-      "createdAt": "2025-09-23T10:30:00.000Z",
+      "id": "6b8c",
+      "movieId": 755898,
+      "userId": "bad7",
+      "rating": 9,
+      "content": "최고의 영화",
+      "createdAt": "2025-09-23T07:37:35.323Z",
       "user": {
-        "id": "1",
         "name": "테스트1",
         "username": "test01"
+      }
+    },
+    {
+      "id": "8206",
+      "movieId": 755898,
+      "userId": "1",
+      "rating": 9,
+      "content": "최고의 영화",
+      "createdAt": "2025-09-23T07:40:33.553Z",
+      "user": {
+        "name": "테스트1",
+        "username": "test01"
+      }
+    },
+    {
+      "id": "3e34",
+      "movieId": 755898,
+      "userId": "bad7",
+      "rating": 9,
+      "content": "재밌어요",
+      "createdAt": "2025-09-23T07:42:39.217Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
+      }
+    },
+    {
+      "id": "b78c",
+      "movieId": 1311031,
+      "userId": "bad7",
+      "rating": 1,
+      "content": "제가 만드는게 낫겠어요",
+      "createdAt": "2025-09-23T07:51:35.858Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
       }
     }
   ]

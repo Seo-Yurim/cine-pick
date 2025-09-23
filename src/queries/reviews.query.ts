@@ -30,7 +30,7 @@ export function useGetReviewDetail(reviewId: string) {
 // 리뷰 작성
 export function usePostReview() {
   return useMutation({
-    mutationFn: (reviewData: Omit<ReviewItem, "id" | "user">) => postReview(reviewData),
+    mutationFn: (reviewData: Omit<ReviewItem, "id">) => postReview(reviewData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast.success("리뷰를 작성했습니다.");

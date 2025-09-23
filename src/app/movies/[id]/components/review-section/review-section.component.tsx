@@ -14,7 +14,7 @@ export function ReviewSection({ movieId }: { movieId: number }) {
             <MdOutlineRateReview className="h-8 w-8" />
             <h2 className="text-xl font-semibold">리뷰</h2>
           </div>
-          <ButtonComponent>리뷰 작성하기</ButtonComponent>
+          <ButtonComponent onClick={() => openModal("reviewForm")}>리뷰 작성하기</ButtonComponent>
         </div>
         <ReviewListComponent movieId={movieId} />
       </section>
