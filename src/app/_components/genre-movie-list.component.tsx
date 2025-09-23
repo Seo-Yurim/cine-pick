@@ -1,9 +1,9 @@
-import { ButtonComponent, MovieCardComponent, ToggleButtonComponent } from "@/components";
-import { useGenres, useMovies } from "@/queries/movie.query";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
+import { ButtonComponent, MovieCardComponent, ToggleButtonComponent } from "@/components";
+import { useGenres, useMovies } from "@/queries/movie.query";
 
 export function GenreMovieListComponent() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -70,6 +70,7 @@ export function GenreMovieListComponent() {
             <h2 className="whitespace-nowrap text-3xl font-bold">장르별 추천 영화</h2>
 
             <div className="flex min-w-0 flex-1 items-center gap-2">
+              {/* 버튼 바꾸기 */}
               <button onClick={scrollLeft} className="shrink-0 px-2 text-2xl">
                 ◀
               </button>

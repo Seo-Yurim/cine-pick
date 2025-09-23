@@ -23,6 +23,7 @@ export default function MoviesPage() {
 
   const { data, isLoading, isError } = useMovies(params);
 
+  // 고려
   useEffect(() => {
     setParams((prev) => ({ ...prev, page }));
   }, [page]);

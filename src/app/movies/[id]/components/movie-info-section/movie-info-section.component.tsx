@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
-import { PersonListComponent } from "./index";
-import { MovieControlComponent } from "./movie-info-section/movie-control.component";
+import { PersonListComponent } from "../index";
+import { MovieControlComponent } from "./movie-control.component";
 
 const statusMapping: Record<string, string> = {
   Rumored: "제작 미정",

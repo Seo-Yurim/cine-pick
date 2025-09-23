@@ -33,7 +33,8 @@ export function ReviewFormComponent({
   const sendRating = usePostRating();
   const { data: accountData } = useAccount();
 
-  const handleSubmit = async () => {
+  // onClose 의도 파악 > 에러나도 모달이 닫히는지 안닫히는지
+  const handleSubmit = () => {
     if (rating === 0) return toast.error("별점을 선택해주세요!");
     if (reviewText.trim() === "") return toast.error("리뷰를 작성해주세요!");
 

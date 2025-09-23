@@ -9,6 +9,8 @@ const instance = axios.create({
   params: { language: "ko" },
 });
 
+// 로딩
+
 instance.interceptors.request.use(
   (config) => {
     const sessionId = localStorage.getItem("session_id");

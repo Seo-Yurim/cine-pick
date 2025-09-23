@@ -21,8 +21,6 @@ export function MovieCardComponent({
     ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
     : "/default.svg";
 
-  const { data: movieAccountStates } = useMovieAccountStates(data.id);
-
   const handleClick = () => {
     if (type !== "grid") router.push(`/movies/${data.id}`);
   };
@@ -65,12 +63,6 @@ export function MovieCardComponent({
           </div>
 
           <div className="flex items-center gap-4 border-t bg-text-bg p-4">
-            {movieAccountStates && (
-              <FavoriteMovieComponent
-                movieId={data.id}
-                defaultValue={movieAccountStates.favorite}
-              />
-            )}
             <Link
               href={`/movies/${data.id}`}
               className="flex w-full cursor-pointer justify-center rounded-lg border bg-text-bg p-4 text-lg font-semibold hover:bg-point-color"

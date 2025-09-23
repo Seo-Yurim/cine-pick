@@ -1,10 +1,10 @@
 "use client";
 
-import { LoadingComponent, MovieListComponent } from "@/components";
-import { useMovies } from "@/queries/movie.query";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { GenreMovieListComponent } from "./component/genre-movie-list.component";
+import { LoadingComponent, MovieListComponent } from "@/components";
+import { useMovies } from "@/queries/movie.query";
+import { GenreMovieListComponent } from "./_components/genre-movie-list.component";
 
 export default function Home() {
   const today = new Date();

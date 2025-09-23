@@ -2,12 +2,13 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { MdOutlineRateReview } from "react-icons/md";
 import { ButtonComponent, LoginRequiredModalComponent } from "@/components";
-import { ReviewFormComponent, ReviewListComponent } from "./index";
+import { ReviewFormComponent, ReviewListComponent } from "../index";
 
 export function ReviewSection({ movieId }: { movieId: number }) {
   const { sessionId } = useAuthStore();
   const { modals, openModal, closeModal } = useModalStore();
 
+  // 수정
   const requireLogin = (callback: () => void) => {
     if (!sessionId) {
       openModal("loginRequire");

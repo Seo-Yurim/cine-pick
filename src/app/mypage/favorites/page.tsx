@@ -1,29 +1,23 @@
 "use client";
 
-import { LoadingComponent, MovieCardComponent } from "@/components";
-import { useAccount, useFavoriteMovies } from "@/queries/account.query";
+import { useAuthStore } from "@/stores/auth.store";
 import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
+import { LoadingComponent, MovieCardComponent } from "@/components";
+import { useAccount, useFavoriteMovies } from "@/queries/account.query";
 
 export default function MyFavoritePage() {
-  const {
-    data: accountInfo,
-    isLoading: isAccountInfoLoading,
-    isError: isAccountInfoError,
-  } = useAccount();
-
-  const accountId = accountInfo?.id;
+  const { accountId } = useAuthStore();
 
   const {
     data: favoriteMovies,
     isLoading: isFavoriteMoviesLoading,
     isError: isFavoriteMoviesError,
-  } = useFavoriteMovies(accountId);
+  } = useFavoriteMovies(accountId as string);
 
-  if (isFavoriteMoviesLoading || isAccountInfoLoading)
-    return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
+  if (isFavoriteMoviesLoading) return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
 
-  if (isFavoriteMoviesError || isAccountInfoError) {
+  if (isFavoriteMoviesError) {
     toast.error("데이터를 불러오는 중 오류가 발생했습니다.");
     return;
   }
