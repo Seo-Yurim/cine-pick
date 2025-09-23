@@ -7,9 +7,7 @@ import { useAuthStore } from "@/stores/user.store";
 import { queryClient } from "./query-client";
 
 // 로그인
-export function useGetLogin() {
-  const router = useRouter();
-
+export function useGetLogin({ onSuccess }: { onSuccess: () => void }) {
   return useMutation({
     mutationFn: ({ username, password }: { username: string; password: string }) =>
       getLogin(username, password),
@@ -22,7 +20,8 @@ export function useGetLogin() {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       useAuthStore.getState().setUser(data);
       toast.success("로그인 성공!");
-      router.push("/");
+
+      onSuccess();
     },
     onError: (err) => {
       console.error("로그인 실패: ", err.message);

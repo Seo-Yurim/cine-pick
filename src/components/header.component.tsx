@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/stores/user.store";
 import { useHasHydrated } from "@/hooks/useHasHydration";
 import { ButtonComponent } from "./index";
@@ -10,6 +11,8 @@ export function Header() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const hasHydrated = useHasHydrated();
+
+  const pathname = usePathname();
 
   if (!hasHydrated) {
     return (
@@ -56,7 +59,7 @@ export function Header() {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Link href="/login">
+              <Link href={`/login?redirect=${encodeURIComponent(pathname)}`}>
                 <ButtonComponent>로그인</ButtonComponent>
               </Link>
               <Link href="https://www.themoviedb.org/signup">

@@ -39,18 +39,6 @@
       }
     },
     {
-      "id": "8206",
-      "movieId": 755898,
-      "userId": "1",
-      "rating": 9,
-      "content": "최고의 영화",
-      "createdAt": "2025-09-23T07:40:33.553Z",
-      "user": {
-        "name": "테스트1",
-        "username": "test01"
-      }
-    },
-    {
       "id": "3e34",
       "movieId": 755898,
       "userId": "bad7",

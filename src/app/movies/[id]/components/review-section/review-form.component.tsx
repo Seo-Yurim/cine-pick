@@ -1,7 +1,6 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/stores/user.store";
-import { usePostReview } from "@/queries/reviews.query";
+import { usePatchReview, usePostReview } from "@/queries/reviews.query";
 import { ButtonComponent, FormComponent, ModalComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
 
@@ -13,7 +12,6 @@ interface ReviewFormProps {
   defaultRating?: number;
   reviewId?: string;
   isEditing?: boolean;
-  onSubmitComplete?: () => void;
 }
 
 export function ReviewFormComponent({
@@ -22,35 +20,58 @@ export function ReviewFormComponent({
   onClose,
   defaultContent,
   defaultRating,
+  reviewId,
   isEditing = false,
-  onSubmitComplete,
 }: ReviewFormProps) {
   const { user } = useAuthStore();
-  if (!user) {
-    return toast.error("로그인이 필요합니다!");
-  }
+  const userId = user?.id as string;
+  const name = user?.name as string;
+  const username = user?.username as string;
 
   const [rating, setRating] = useState<number>(defaultRating || 0);
   const [content, setContent] = useState<string>(defaultContent || "");
 
+  useEffect(() => {
+    setRating(defaultRating || 0);
+    setContent(defaultContent || "");
+  }, [defaultRating, defaultContent]);
+
   const postReview = usePostReview();
-  const handlePostReview = () => {
+  const patchReview = usePatchReview();
+
+  const handleSubmit = () => {
     const reviewData = {
       movieId,
-      userId: user.id,
+      userId,
       rating,
       content,
       createdAt: new Date().toISOString(),
       user: {
-        name: user.name,
-        username: user.username,
+        name,
+        username,
       },
     };
-    postReview.mutate(reviewData, {
-      onSuccess: () => {
-        onClose();
-      },
-    });
+
+    // 리뷰 수정
+    if (isEditing && reviewId) {
+      patchReview.mutate(
+        { reviewId, reviewData },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
+    }
+
+    // 리뷰 작성
+    else {
+      postReview.mutate(reviewData, {
+        onSuccess: () => {
+          onClose();
+        },
+      });
+    }
   };
 
   return (
@@ -73,7 +94,7 @@ export function ReviewFormComponent({
           />
 
           <ButtonComponent
-            onClick={handlePostReview}
+            onClick={handleSubmit}
             className="w-full rounded-xl bg-point-color p-4 text-white"
           >
             {isEditing ? "수정 완료" : "작성 완료"}

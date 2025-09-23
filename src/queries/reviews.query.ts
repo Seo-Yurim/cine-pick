@@ -52,8 +52,8 @@ export function usePatchReview() {
       reviewId: string;
       reviewData: Omit<ReviewItem, "id" | "user">;
     }) => patchReview(reviewId, reviewData),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["reviews", variables.reviewId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast.success("리뷰를 수정했습니다.");
     },
     onError: (err) => {
@@ -67,8 +67,8 @@ export function usePatchReview() {
 export function useDeleteReview() {
   return useMutation({
     mutationFn: ({ reviewId }: { reviewId: string }) => deleteReview(reviewId),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["reviews", variables.reviewId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast.success("리뷰를 삭제했습니다.");
     },
     onError: (err) => {
