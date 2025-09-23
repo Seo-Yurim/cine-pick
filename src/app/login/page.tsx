@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { User } from "@/types/user.type";
 import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 import { useGetLogin } from "@/queries/user.query";
@@ -15,6 +16,21 @@ export default function LoginPage() {
 
   const getLogin = useGetLogin();
   const handleLogin = () => {
+    if (!form.username.trim() && !form.password.trim()) {
+      toast.error("아이디와 비밀번호를 입력해주세요!");
+      return;
+    }
+
+    if (!form.username.trim()) {
+      toast.error("아이디를 입력해주세요!");
+      return;
+    }
+
+    if (!form.password.trim()) {
+      toast.error("비밀번호를 입력해주세요!");
+      return;
+    }
+
     getLogin.mutate({ username: form.username, password: form.password });
   };
 
@@ -36,7 +52,7 @@ export default function LoginPage() {
           type="username"
           placeholder="아이디를 입력해주세요."
           value={form.username}
-          onChange={(value) => setForm((prev) => ({ ...prev, username: value }))}
+          onInputChange={(e) => setForm((prev) => ({ ...prev, username: e.target.value }))}
           label="아이디"
         />
         <InputComponent
@@ -44,7 +60,7 @@ export default function LoginPage() {
           type="password"
           placeholder="비밀번호를 입력해주세요."
           value={form.password}
-          onChange={(value) => setForm((prev) => ({ ...prev, password: value }))}
+          onInputChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
           label="비밀번호"
         />
         <ButtonComponent
@@ -56,7 +72,7 @@ export default function LoginPage() {
       </FormComponent>
 
       <div className="flex w-full items-center justify-between">
-        <p className="text-lg font-medium">아직 회원이 아니신가요?</p>
+        <p className="font-medium">아직 회원이 아니신가요?</p>
         <Link href="/signup">
           <ButtonComponent>회원가입</ButtonComponent>
         </Link>

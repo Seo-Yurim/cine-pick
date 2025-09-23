@@ -1,12 +1,15 @@
 import { deleteUser, getLogin, getUser, patchUser, postUser } from "@/services/users.service";
 import { useAuthStore } from "@/stores/user.store";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { User } from "@/types/user.type";
 import { queryClient } from "./query-client";
 
 // 로그인
 export function useGetLogin() {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: ({ username, password }: { username: string; password: string }) =>
       getLogin(username, password),
@@ -19,6 +22,7 @@ export function useGetLogin() {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       useAuthStore.getState().setUser(data);
       toast.success("로그인 성공!");
+      router.push("/");
     },
     onError: (err) => {
       console.error("로그인 실패: ", err.message);
@@ -39,11 +43,14 @@ export function useGetUser(userId: string) {
 
 // 회원가입
 export function usePostUser() {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: (userData: Omit<User, "id">) => postUser(userData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success("회원가입 성공!");
+      router.push("/login");
     },
     onError: (err) => {
       console.error("회원가입 실패: ", err.message);

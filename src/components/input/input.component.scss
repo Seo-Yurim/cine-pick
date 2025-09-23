@@ -4,16 +4,28 @@
   gap: 0.8rem;
 
   width: 100%;
+}
 
-  .react-aria-Input {
-    padding: 1rem 1.5rem;
-    border: 1px solid hsl(var(--point-color));
-    border-radius: 1rem;
+.react-aria-Input {
+  width: 100%;
 
-    color: black;
+  padding: 1rem 1.5rem;
+  border: 1px solid hsl(var(--point-color));
+  border-radius: 1rem;
 
-    &:focus {
-      outline: 1px solid palevioletred;
-    }
+  color: black;
+
+  &:focus {
+    outline: 1px solid palevioletred;
   }
+}
+
+.eye-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 1.5rem;
+  color: gray;
 }

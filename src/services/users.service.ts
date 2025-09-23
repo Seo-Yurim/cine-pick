@@ -7,6 +7,12 @@ export async function getLogin(username: string, password: string) {
   return res.data.length > 0 ? res.data[0] : null;
 }
 
+// 아이디 중복 확인
+export async function getCheckUsername(username: string) {
+  const res = await get("/users", { username });
+  return res.data.length > 0 ? false : true;
+}
+
 // 내 정보 가져오기
 export async function getUser(userId: string) {
   const res = await get(`/users/${userId}`);
