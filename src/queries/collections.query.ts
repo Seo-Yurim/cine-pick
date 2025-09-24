@@ -24,9 +24,10 @@ export function useGetCollectionList(userId: string) {
 // 컬렉션 상세
 export function useGetCollectionDetail(collectionId: string) {
   return useQuery({
-    queryKey: ["collections", collectionId],
+    queryKey: ["collections"],
     queryFn: () => getCollectionDetail(collectionId),
     enabled: !!collectionId,
+    staleTime: 0,
   });
 }
 

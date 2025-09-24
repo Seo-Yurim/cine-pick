@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaFolderPlus } from "react-icons/fa";
-import { CollectionItem, CollectionList } from "@/types/collections.type";
+import { CollectionList } from "@/types/collections.type";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useGetCollectionList, usePostCollectionMovie } from "@/queries/collections.query";

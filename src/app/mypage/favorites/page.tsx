@@ -1,19 +1,20 @@
 "use client";
 
-import { useAuthStore } from "@/stores/auth.store";
 import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
+import { useAuthStore } from "@/stores/auth.store";
+import { useGetMyFavoriteList } from "@/queries/favorites.query";
 import { LoadingComponent, MovieCardComponent } from "@/components";
-import { useAccount, useFavoriteMovies } from "@/queries/account.query";
 
 export default function MyFavoritePage() {
-  const { accountId } = useAuthStore();
+  const { user } = useAuthStore();
+  const userId = user?.id as string;
 
   const {
     data: favoriteMovies,
     isLoading: isFavoriteMoviesLoading,
     isError: isFavoriteMoviesError,
-  } = useFavoriteMovies(accountId as string);
+  } = useGetMyFavoriteList(userId);
 
   if (isFavoriteMoviesLoading) return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
 

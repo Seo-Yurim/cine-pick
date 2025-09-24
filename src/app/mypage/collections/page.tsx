@@ -3,44 +3,60 @@
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { CollectionItem } from "@/types/collections.type";
+import { CollectionItem, CollectionList } from "@/types/collections.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
-import { usePostCollection } from "@/queries/collections.query";
+import { useGetCollectionList, usePostCollection } from "@/queries/collections.query";
 import { ButtonComponent, LoadingComponent } from "@/components";
 import { CollectionFormModal } from "./components/collection-form-modal.component";
 
 export default function MyCollectionPage() {
   const { user } = useAuthStore();
-  const userId = user?.id;
+  const userId = user?.id as string;
+
   const { modals, openModal, closeModal } = useModalStore();
 
   const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionItem, "id">>({
     title: "",
     description: "",
-    userId: userId || "",
+    userId: "",
   });
 
   const addCollection = usePostCollection();
 
   const handleSubmit = () => {
-    if (collectionFormData.name.trim() == "" || collectionFormData.description.trim() == "") {
+    if (collectionFormData.title.trim() == "" || collectionFormData.description.trim() == "") {
       toast.error("내용을 전부 입력해주세요!");
       return;
     }
 
     const collectionData = {
-      name: collectionFormData.name,
+      title: collectionFormData.title,
       description: collectionFormData.description,
+      userId,
     };
 
-    addCollection.mutate({ sessionId, collection: collectionData });
+    addCollection.mutate(collectionData, {
+      onSuccess: () => {
+        closeModal("collectionForm");
+        setCollectionFormData({
+          title: "",
+          description: "",
+          userId: "",
+        });
+      },
+    });
   };
 
-  const { data, isLoading, isError } = useCollectionList(accountId);
+  const {
+    data: collectionList,
+    isLoading: isCollectionListLoading,
+    isError: isCollectionListError,
+  } = useGetCollectionList(userId);
 
-  if (isLoading) return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
-  if (isError) {
+  if (!collectionList && isCollectionListLoading)
+    return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
+  if (isCollectionListError) {
     toast.error("데이터를 불러오는 중 오류가 발생하였습니다!");
     return;
   }
@@ -53,13 +69,13 @@ export default function MyCollectionPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        {data.results.map((item: MovieCollectionItem) => (
+        {collectionList?.map((item: CollectionList) => (
           <Link
             key={item.id}
             href={`/mypage/collections/${item.id}`}
             className="flex h-8 items-center justify-center rounded-xl bg-point-color/50 p-16"
           >
-            <p className="text-lg font-semibold">{item.name}</p>
+            <p className="text-lg font-semibold">{item.title}</p>
           </Link>
         ))}
       </div>

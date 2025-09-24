@@ -15,6 +15,7 @@ export function useMovieDetail(movieId: number) {
   return useQuery({
     queryKey: ["movie", movieId],
     queryFn: () => getMovieDetail(movieId),
+    enabled: !!movieId,
   });
 }
 

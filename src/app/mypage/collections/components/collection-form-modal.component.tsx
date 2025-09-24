@@ -1,4 +1,4 @@
-import { CollectionData } from "@/services/collections.service";
+import { CollectionItem } from "@/types/collections.type";
 import { ButtonComponent, ModalComponent } from "@/components";
 import { InputComponent } from "@/components/input/input.component";
 
@@ -6,8 +6,8 @@ interface CollectionFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  collectionFormData: CollectionData;
-  setCollectionFormData: React.Dispatch<React.SetStateAction<CollectionData>>;
+  collectionFormData: Omit<CollectionItem, "id">;
+  setCollectionFormData: React.Dispatch<React.SetStateAction<Omit<CollectionItem, "id">>>;
 }
 
 export function CollectionFormModal({
@@ -21,19 +21,21 @@ export function CollectionFormModal({
     <ModalComponent isOpen={isOpen} onClose={onClose}>
       <h2 className="text-2xl font-bold">컬렉션 추가</h2>
       <InputComponent
-        name="collection-name"
+        name="title"
         type="text"
         placeholder="컬렉션 이름을 작성해주세요."
-        value={collectionFormData.name}
-        onChange={(value) => setCollectionFormData((prev) => ({ ...prev, name: value }))}
+        value={collectionFormData.title}
+        onInputChange={(e) => setCollectionFormData((prev) => ({ ...prev, title: e.target.value }))}
         label="컬렉션 이름"
       />
       <InputComponent
-        name="collection-description"
+        name="cdescription"
         type="text"
         placeholder="컬렉션 설명을 작성해주세요."
         value={collectionFormData.description}
-        onChange={(value) => setCollectionFormData((prev) => ({ ...prev, description: value }))}
+        onInputChange={(e) =>
+          setCollectionFormData((prev) => ({ ...prev, description: e.target.value }))
+        }
         label="컬렉션 설명"
       />
       <ButtonComponent className="text-point-color" onClick={onSubmit}>
