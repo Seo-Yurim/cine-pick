@@ -25,7 +25,7 @@ export function MovieControlComponent({ movieId }: { movieId: number }) {
 
   return (
     <div className="flex items-center gap-4">
-      <FavoriteMovieComponent defaultValue={favoriteMovie} movieId={movieId} />
+      <FavoriteMovieComponent defaultValue={!user ? null : favoriteMovie} movieId={movieId} />
 
       {/* <MenuComponent
         isOpen={isMenuOpen}
