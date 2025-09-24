@@ -62,5 +62,25 @@
         "username": "test04"
       }
     }
+  ],
+  "favorites": [
+    {
+      "id": "13a6",
+      "movieId": 755898,
+      "userId": "2",
+      "favorite": true
+    },
+    {
+      "id": "81d0",
+      "movieId": 1311031,
+      "userId": "bad7",
+      "favorite": true
+    },
+    {
+      "id": "140a",
+      "movieId": 755898,
+      "userId": "bad7",
+      "favorite": false
+    }
   ]
 }

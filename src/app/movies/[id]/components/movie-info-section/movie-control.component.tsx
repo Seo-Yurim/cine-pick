@@ -1,27 +1,31 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaFolderPlus } from "react-icons/fa";
-import { MovieCollectionItem } from "@/types/movie.type";
+import { useAuthStore } from "@/stores/user.store";
 import { usePostAddMovie } from "@/queries/collection.query";
+import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { LoadingComponent, RatingComponent } from "@/components";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
 import { MenuComponent } from "@/components/menu.component";
 
 export function MovieControlComponent({ movieId }: { movieId: number }) {
+  const { user } = useAuthStore();
+  const userId = user?.id as string;
+
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const addMovie = usePostAddMovie();
+  const {
+    data: favoriteMovie,
+    isLoading: isFavoriteLoading,
+    isError: isFavoriteError,
+  } = useGetFavoriteMovie(userId, movieId);
 
-  const handleSelectCollection = (collection: MovieCollectionItem) => {
-    addMovie.mutate({
-      listId: collection.id,
-      media_id: movieId,
-    });
-  };
+  if (isFavoriteLoading) return <LoadingComponent />;
+  if (isFavoriteError) return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
 
   return (
     <div className="flex items-center gap-4">
-      <FavoriteMovieComponent defaultValue={true} movieId={movieId} />
+      <FavoriteMovieComponent defaultValue={favoriteMovie} movieId={movieId} />
 
       {/* <MenuComponent
         isOpen={isMenuOpen}

@@ -97,16 +97,6 @@ export interface MovieCrew extends MovieCreditItem {
   job: string;
 }
 
-export interface LocalReview {
-  id: string;
-  account_id: string;
-  movie_id: number;
-  author: string;
-  rating: string;
-  content: string;
-  createdAt: string;
-}
-
 export interface PersonItem {
   adult: boolean;
   also_known_as: string[];
@@ -122,31 +112,4 @@ export interface PersonItem {
   place_of_birth: string;
   popularity: number;
   profile_path: string;
-}
-
-export interface MovieAccountStates {
-  id: number;
-  favorite: boolean;
-  rated: {
-    value: number;
-  };
-  watchlist: boolean;
-}
-
-export interface MovieCollectionsResponse {
-  page: number;
-  results: MovieCollectionItem[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface MovieCollectionItem {
-  description: string;
-  favorite_count: number;
-  id: number;
-  item_count: number;
-  iso_639_1: string;
-  list_type: string;
-  name: string;
-  poster_path: string;
 }
