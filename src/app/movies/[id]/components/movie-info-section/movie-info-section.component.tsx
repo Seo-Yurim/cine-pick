@@ -3,11 +3,15 @@
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { FaFolderPlus } from "react-icons/fa";
+import { CollectionItem, CollectionList } from "@/types/collections.type";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { useAuthStore } from "@/stores/auth.store";
+import { useGetCollectionList, usePostCollectionMovie } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { LoadingComponent, RatingComponent } from "@/components";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
+import { MenuComponent } from "@/components/menu.component";
 import { PersonListComponent } from "../index";
 
 const statusMapping: Record<string, string> = {
@@ -30,6 +34,9 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
   const userId = user?.id as string;
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [selectedCollection, setSelectedCollection] = useState<CollectionList | null>(null);
+
+  const addCollectionMovie = usePostCollectionMovie();
 
   const {
     data: favoriteMovie,
@@ -37,12 +44,37 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
     isError: isFavoriteError,
   } = useGetFavoriteMovie(userId, movieData.id);
 
-  if (isFavoriteLoading) return <LoadingComponent />;
-  if (isFavoriteError) return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
+  const {
+    data: collectionList,
+    isLoading: isCollectionLoading,
+    isError: isCollectionError,
+  } = useGetCollectionList(userId);
+
+  if (isFavoriteLoading || isCollectionLoading) return <LoadingComponent />;
+  if (isFavoriteError || isCollectionError)
+    return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
 
   const moviePosterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : "/default.svg";
+
+  const handleSelectCollection = (collection: CollectionList) => {
+    if (!collection) return toast.error("영화를 추가할 컬렉션을 선택해주세요!");
+
+    const alreadyExists = collection.movies?.some((movie) => movie.movieId === movieData.id);
+
+    if (alreadyExists) {
+      return toast.error("이미 컬렉션에 추가된 영화입니다.");
+    }
+
+    const collectionMovie = {
+      collectionId: collection.id,
+      movieId: movieData.id,
+    };
+
+    setSelectedCollection(collection);
+    addCollectionMovie.mutate(collectionMovie);
+  };
 
   return (
     <section className="flex w-full flex-col gap-8">
@@ -83,13 +115,13 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
               movieId={movieData.id}
             />
 
-            {/* <MenuComponent
-                  isOpen={isMenuOpen}
-                  onOpenChange={() => setIsMenuOpen(!isMenuOpen)}
-                  btnIcon={<FaFolderPlus className="h-6 w-6" />}
-                  menuList={collectionList.results}
-                  onSelectCollection={handleSelectCollection}
-                /> */}
+            <MenuComponent
+              isOpen={isMenuOpen}
+              onOpenChange={() => setIsMenuOpen(!isMenuOpen)}
+              btnIcon={<FaFolderPlus className="h-6 w-6" />}
+              menuList={collectionList || []}
+              onSelectCollection={handleSelectCollection}
+            />
 
             <p className="text-nowrap rounded-xl bg-point-color px-4 py-1 font-medium">평점</p>
             <RatingComponent type="show" defaultValue={rating} />

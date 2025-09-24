@@ -11,7 +11,7 @@ export interface CollectionMovie {
   movieId: number;
 }
 
-export interface CollectionDetail {
+export interface CollectionList extends CollectionItem {
   id: string;
   userId: string;
   title: string;

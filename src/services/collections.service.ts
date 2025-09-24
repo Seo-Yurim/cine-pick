@@ -1,21 +1,30 @@
-import { CollectionItem, CollectionMovie } from "@/types/collections.type";
+import { CollectionItem, CollectionList, CollectionMovie } from "@/types/collections.type";
 import { get, patch, post, remove } from "./method";
 
 // 컬렉션 목록
-export async function getCollectionList(userId: string) {
-  const res = await get(`/collections?userId=${userId}`);
-  return res.data;
+export async function getCollectionList(userId: string): Promise<CollectionList[]> {
+  const collectionRes = await get(`/collections?userId=${userId}`);
+  const collections: CollectionItem[] = collectionRes.data;
+
+  const collectionsWithMovies = await Promise.all(
+    collections.map(async (collection) => {
+      const moviesRes = await get(`/collectionMovies?collectionId=${collection.id}`);
+      const movies: CollectionMovie[] = moviesRes.data;
+
+      return {
+        ...collection,
+        movies,
+      };
+    }),
+  );
+
+  return collectionsWithMovies;
 }
 
 // 컬렉션 상세
 export async function getCollectionDetail(collectionId: string) {
-  const collectionRes = await get(`/collections/${collectionId}`);
-  const moviesRes = await get(`/collectionMovies?collectionId=${collectionId}`);
-
-  return {
-    ...collectionRes.data,
-    movies: moviesRes.data,
-  };
+  const res = await get(`/collections/${collectionId}`);
+  return res.data;
 }
 
 // 컬렉션 추가
@@ -47,7 +56,7 @@ export async function deleteCollection(collectionId: string) {
 }
 
 // 컬렉션에 영화 추가
-export async function postCollectionMovie(collectionMovie: CollectionMovie) {
+export async function postCollectionMovie(collectionMovie: Omit<CollectionMovie, "id">) {
   const res = await post(`/collectionMovies`, collectionMovie);
   return res.data;
 }

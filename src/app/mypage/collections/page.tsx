@@ -1,26 +1,24 @@
 "use client";
 
-import { CollectionData } from "@/services/collections.service";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { MovieCollectionItem } from "@/types/movie.type";
+import { CollectionItem } from "@/types/collections.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
-import { useCollectionList } from "@/queries/account.query";
 import { usePostCollection } from "@/queries/collections.query";
 import { ButtonComponent, LoadingComponent } from "@/components";
 import { CollectionFormModal } from "./components/collection-form-modal.component";
 
 export default function MyCollectionPage() {
-  const { sessionId, accountId } = useAuthStore();
-  if (!sessionId || !accountId) return null;
-
+  const { user } = useAuthStore();
+  const userId = user?.id;
   const { modals, openModal, closeModal } = useModalStore();
 
-  const [collectionFormData, setCollectionFormData] = useState<CollectionData>({
-    name: "",
+  const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionItem, "id">>({
+    title: "",
     description: "",
+    userId: userId || "",
   });
 
   const addCollection = usePostCollection();

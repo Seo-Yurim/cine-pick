@@ -84,7 +84,8 @@ export function useDeleteCollection() {
 // 컬렉션에 영화 추가
 export function usePostCollectionMovie() {
   return useMutation({
-    mutationFn: (collectionMovie: CollectionMovie) => postCollectionMovie(collectionMovie),
+    mutationFn: (collectionMovie: Omit<CollectionMovie, "id">) =>
+      postCollectionMovie(collectionMovie),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["collection-movies"] });
       toast.success("컬렉션에 영화를 추가했어요!");
