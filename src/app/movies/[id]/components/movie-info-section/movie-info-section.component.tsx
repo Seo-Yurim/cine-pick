@@ -1,9 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
+import { useAuthStore } from "@/stores/auth.store";
+import { useGetFavoriteMovie } from "@/queries/favorites.query";
+import { LoadingComponent, RatingComponent } from "@/components";
+import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
 import { PersonListComponent } from "../index";
-import { MovieControlComponent } from "./movie-control.component";
 
 const statusMapping: Record<string, string> = {
   Rumored: "제작 미정",
@@ -17,9 +22,24 @@ const statusMapping: Record<string, string> = {
 interface MovieInfoProps {
   movieData: MovieDetailItem;
   creditData: MovieCreditResponse;
+  rating: number;
 }
 
-export function MovieInfoSection({ movieData, creditData }: MovieInfoProps) {
+export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoProps) {
+  const { user } = useAuthStore();
+  const userId = user?.id as string;
+
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const {
+    data: favoriteMovie,
+    isLoading: isFavoriteLoading,
+    isError: isFavoriteError,
+  } = useGetFavoriteMovie(userId, movieData.id);
+
+  if (isFavoriteLoading) return <LoadingComponent />;
+  if (isFavoriteError) return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
+
   const moviePosterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : "/default.svg";
@@ -57,7 +77,24 @@ export function MovieInfoSection({ movieData, creditData }: MovieInfoProps) {
             <p className="rounded-xl border px-4 py-1">{statusMapping[movieData.status]}</p>
           </div>
 
-          <MovieControlComponent movieId={movieData.id} />
+          <div className="flex items-center gap-4">
+            <FavoriteMovieComponent
+              defaultValue={!user ? null : favoriteMovie}
+              movieId={movieData.id}
+            />
+
+            {/* <MenuComponent
+                  isOpen={isMenuOpen}
+                  onOpenChange={() => setIsMenuOpen(!isMenuOpen)}
+                  btnIcon={<FaFolderPlus className="h-6 w-6" />}
+                  menuList={collectionList.results}
+                  onSelectCollection={handleSelectCollection}
+                /> */}
+
+            <p className="text-nowrap rounded-xl bg-point-color px-4 py-1 font-medium">평점</p>
+            <RatingComponent type="show" defaultValue={rating} />
+            <p>{rating}점</p>
+          </div>
 
           <div className="flex flex-col gap-4">
             <PersonListComponent type="cast" creditData={creditData.cast} />

@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { MdOutlineRateReview } from "react-icons/md";
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
-import { useDeleteReview, useGetReviews } from "@/queries/reviews.query";
-import {
-  ButtonComponent,
-  LoadingComponent,
-  LoginRequiredModalComponent,
-  RatingComponent,
-} from "@/components";
+import { useDeleteReview } from "@/queries/reviews.query";
+import { ButtonComponent, LoginRequiredModalComponent, RatingComponent } from "@/components";
 import { ReviewFormComponent } from "../index";
 
-export function ReviewSection({ movieId }: { movieId: number }) {
+export function ReviewSection({
+  reviewData,
+  movieId,
+}: {
+  reviewData: ReviewItem[];
+  movieId: number;
+}) {
   const { user } = useAuthStore();
   const { modals, openModal, closeModal } = useModalStore();
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
@@ -29,12 +30,6 @@ export function ReviewSection({ movieId }: { movieId: number }) {
     deleteReview.mutate({ reviewId: review.id });
   };
 
-  const { data: reviewList, isLoading: isReviewLoading, isError: isReviewError } = useGetReviews();
-  if (isReviewLoading) return <LoadingComponent />;
-  if (isReviewError) return toast.error("리뷰 목록을 불러오는 중 오류가 발생했습니다.");
-
-  const filteredReview = reviewList.filter((review: ReviewItem) => review.movieId === movieId);
-
   const handleShowModal = () => {
     if (!user) {
       openModal("loginRequire");
@@ -42,6 +37,8 @@ export function ReviewSection({ movieId }: { movieId: number }) {
       openModal("reviewForm");
     }
   };
+
+  const filteredReview = reviewData.filter((review: ReviewItem) => review.movieId === movieId);
 
   return (
     <section className="flex flex-col gap-8 rounded-xl bg-text-bg p-8">
@@ -69,6 +66,7 @@ export function ReviewSection({ movieId }: { movieId: number }) {
                   </div>
                   <RatingComponent type="show" defaultValue={Number(review.rating)} />
                 </div>
+
                 {review.userId === user?.id && (
                   <div className="flex items-center gap-4">
                     <ButtonComponent
