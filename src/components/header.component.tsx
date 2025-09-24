@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useAuthStore } from "@/stores/user.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { useHasHydrated } from "@/hooks/useHasHydration";
 import { ButtonComponent } from "./index";
 

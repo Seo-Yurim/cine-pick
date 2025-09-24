@@ -3,8 +3,8 @@ import toast from "react-hot-toast";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { MdOutlineRateReview } from "react-icons/md";
 import { ReviewItem } from "@/types/reviews.type";
+import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
-import { useAuthStore } from "@/stores/user.store";
 import { useDeleteReview, useGetReviews } from "@/queries/reviews.query";
 import {
   ButtonComponent,

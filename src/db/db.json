@@ -82,5 +82,17 @@
       "userId": "bad7",
       "favorite": false
     }
+  ],
+  "collections": [
+    {
+      "id": "1",
+      "userId": "1",
+      "title": "My Collection",
+      "description": "My favorite movies"
+    }
+  ],
+  "collectionMovies": [
+    { "id": "1", "collectionId": "1", "movieId": 755898 },
+    { "id": "2", "collectionId": "1", "movieId": 1311031 }
   ]
 }

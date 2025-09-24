@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "@/stores/user.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { usePatchReview, usePostReview } from "@/queries/reviews.query";
 import { ButtonComponent, FormComponent, ModalComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";

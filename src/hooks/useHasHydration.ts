@@ -1,5 +1,5 @@
-import { useAuthStore } from "@/stores/user.store";
 import { useEffect, useState } from "react";
+import { useAuthStore } from "@/stores/auth.store";
 
 export function useHasHydrated() {
   const [hasHydrated, setHasHydrated] = useState<boolean>(false);

@@ -3,7 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { FavoriteMovieItem } from "@/types/users.type";
-import { useAuthStore } from "@/stores/user.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { usePatchFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
 import { ButtonComponent } from "./button/button.component";
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaFolderPlus } from "react-icons/fa";
-import { useAuthStore } from "@/stores/user.store";
-import { usePostAddMovie } from "@/queries/collection.query";
+import { useAuthStore } from "@/stores/auth.store";
+import { usePostAddMovie } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { LoadingComponent, RatingComponent } from "@/components";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";

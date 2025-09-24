@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { User } from "@/types/users.type";
-import { useAuthStore } from "@/stores/user.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { queryClient } from "./query-client";
 
 // 로그인

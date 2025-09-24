@@ -1,15 +1,15 @@
 "use client";
 
-import { CollectionData } from "@/services/collection.service";
-import { useAuthStore } from "@/stores/auth.store";
-import { useModalStore } from "@/stores/modal.store";
+import { CollectionData } from "@/services/collections.service";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { MovieCollectionItem } from "@/types/movie.type";
-import { ButtonComponent, LoadingComponent } from "@/components";
+import { useAuthStore } from "@/stores/auth.store";
+import { useModalStore } from "@/stores/modal.store";
 import { useCollectionList } from "@/queries/account.query";
-import { usePostCollection } from "@/queries/collection.query";
+import { usePostCollection } from "@/queries/collections.query";
+import { ButtonComponent, LoadingComponent } from "@/components";
 import { CollectionFormModal } from "./components/collection-form-modal.component";
 
 export default function MyCollectionPage() {

@@ -1,4 +1,4 @@
-import { CollectionData } from "@/services/collection.service";
+import { CollectionData } from "@/services/collections.service";
 import { ButtonComponent, ModalComponent } from "@/components";
 import { InputComponent } from "@/components/input/input.component";
 
