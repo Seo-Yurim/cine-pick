@@ -103,6 +103,12 @@
       "movieId": 1311031,
       "userId": "1",
       "watched": true
+    },
+    {
+      "id": "a478",
+      "movieId": 617126,
+      "userId": "1",
+      "watched": true
     }
   ]
 }

@@ -19,15 +19,13 @@ export default function WatchedPage() {
   if (isWatchedListLoading) return <LoadingComponent />;
 
   return (
-    <section className="flex flex-col">
-      {watchedList.map((watched: WatchesItem) => (
-        <div
-          key={watched.id}
-          className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 md:justify-between lg:grid-cols-4"
-        >
-          <WatchedListComponent movieId={watched.movieId} />
-        </div>
-      ))}
-    </section>
+    <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
+      <h1 className="text-2xl font-bold">시청기록</h1>
+      <div className="grid grid-cols-3 gap-4 p-4">
+        {watchedList.map((watched: WatchesItem) => (
+          <WatchedListComponent key={watched.id} movieId={watched.movieId} />
+        ))}
+      </div>
+    </main>
   );
 }
