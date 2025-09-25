@@ -1,5 +1,5 @@
 import { FavoriteMovieItem } from "@/types/users.type";
-import { get, patch, post, remove } from "./method";
+import { get, post, remove } from "./method";
 
 // 내가 좋아요 한 영화 목록
 export async function getMyFavoriteList(userId: string) {

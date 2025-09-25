@@ -90,5 +90,13 @@
         }
       ]
     }
+  ],
+  "watches": [
+    {
+      "id": "1",
+      "movieId": 1311031,
+      "userId": "1",
+      "watched": "true"
+    }
   ]
 }
