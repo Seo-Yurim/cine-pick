@@ -71,8 +71,8 @@ export function usePatchCollection() {
 export function useDeleteCollection() {
   return useMutation({
     mutationFn: ({ collectionId }: { collectionId: string }) => deleteCollection(collectionId),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["collections", variables.collectionId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("컬렉션 목록을 삭제했어요!");
     },
     onError: (err) => {

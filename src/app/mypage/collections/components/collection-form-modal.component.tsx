@@ -1,25 +1,98 @@
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { CollectionList } from "@/types/collections.type";
+import { usePatchCollection, usePostCollection } from "@/queries/collections.query";
 import { ButtonComponent, ModalComponent } from "@/components";
 import { InputComponent } from "@/components/input/input.component";
 
 interface CollectionFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
-  collectionFormData: Omit<CollectionList, "id">;
-  setCollectionFormData: React.Dispatch<React.SetStateAction<Omit<CollectionList, "id">>>;
+  userId: string;
+  defaultValue: CollectionList | null;
 }
 
 export function CollectionFormModal({
   isOpen,
   onClose,
-  onSubmit,
-  collectionFormData,
-  setCollectionFormData,
+  userId,
+  defaultValue,
 }: CollectionFormModalProps) {
+  const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionList, "id">>({
+    title: "",
+    description: "",
+    userId: userId,
+    movies: [],
+  });
+
+  useEffect(() => {
+    if (defaultValue) {
+      setCollectionFormData({
+        title: defaultValue.title || "",
+        description: defaultValue.description || "",
+        userId: defaultValue.userId || userId,
+        movies: defaultValue.movies || [],
+      });
+    } else {
+      setCollectionFormData({
+        title: "",
+        description: "",
+        userId: userId,
+        movies: [],
+      });
+    }
+  }, [defaultValue, userId]);
+
+  const addCollection = usePostCollection();
+  const editCollection = usePatchCollection();
+
+  const handleSubmit = () => {
+    if (collectionFormData.title.trim() == "" || collectionFormData.description.trim() == "") {
+      toast.error("내용을 전부 입력해주세요!");
+      return;
+    }
+
+    if (defaultValue) {
+      editCollection.mutate(
+        {
+          collectionId: defaultValue.id,
+          collectionData: {
+            title: collectionFormData.title,
+            description: collectionFormData.description,
+            userId,
+          },
+        },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
+    } else {
+      addCollection.mutate(
+        {
+          title: collectionFormData.title,
+          description: collectionFormData.description,
+          userId,
+          movies: [],
+        },
+        {
+          onSuccess: () => {
+            onClose();
+            setCollectionFormData({
+              title: "",
+              description: "",
+              userId: "",
+              movies: [],
+            });
+          },
+        },
+      );
+    }
+  };
   return (
     <ModalComponent isOpen={isOpen} onClose={onClose}>
-      <h2 className="text-2xl font-bold">컬렉션 추가</h2>
+      <h2 className="text-2xl font-bold"> {defaultValue ? "컬렉션 수정" : "컬렉션 추가"}</h2>
       <InputComponent
         name="title"
         type="text"
@@ -38,8 +111,8 @@ export function CollectionFormModal({
         }
         label="컬렉션 설명"
       />
-      <ButtonComponent className="text-point-color" onClick={onSubmit}>
-        컬렉션 추가하기
+      <ButtonComponent className="text-point-color" onClick={handleSubmit}>
+        {defaultValue ? "컬렉션 수정하기" : "컬렉션 추가하기"}
       </ButtonComponent>
     </ModalComponent>
   );

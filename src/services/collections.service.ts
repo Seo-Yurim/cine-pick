@@ -30,13 +30,6 @@ export async function patchCollection(
 
 // 컬렉션 삭제
 export async function deleteCollection(collectionId: string) {
-  const moviesRes = await get(`/collectionMovies?collectionId=${collectionId}`);
-  const movies: CollectionMovie[] = moviesRes.data;
-
-  for (const movie of movies) {
-    await remove(`/collectionMovies/${movie.movieId}`);
-  }
-
   const res = await remove(`/collections/${collectionId}`);
   return res.data;
 }

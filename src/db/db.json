@@ -87,8 +87,8 @@
     {
       "id": "1",
       "userId": "1",
-      "title": "My Collection",
-      "description": "My favorite movies",
+      "title": "My Collections",
+      "description": "제 컬렉션이에요.",
       "movies": [
         {
           "collectionId": "1",
@@ -101,18 +101,6 @@
         {
           "collectionId": "1",
           "movieId": 617126
-        }
-      ]
-    },
-    {
-      "id": "89e3",
-      "title": "ㄴㅇㄹㄴㅇㄹ",
-      "description": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ",
-      "userId": "1",
-      "movies": [
-        {
-          "collectionId": "89e3",
-          "movieId": 1311031
         }
       ]
     }
