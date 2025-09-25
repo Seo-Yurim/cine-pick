@@ -1,5 +1,6 @@
 import {
   deleteReview,
+  getMyReviews,
   getReivews,
   getReviewDetail,
   patchReview,
@@ -15,6 +16,15 @@ export function useGetReviews() {
   return useQuery({
     queryKey: ["reviews"],
     queryFn: () => getReivews(),
+  });
+}
+
+// 내가 쓴 리뷰 목록
+export function useGetMyReviews(userId: string) {
+  return useQuery({
+    queryKey: ["reviews", userId],
+    queryFn: () => getMyReviews(userId),
+    enabled: !!userId,
   });
 }
 

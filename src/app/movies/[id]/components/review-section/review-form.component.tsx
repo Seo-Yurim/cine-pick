@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { usePatchReview, usePostReview } from "@/queries/reviews.query";
 import { ButtonComponent, FormComponent, ModalComponent } from "@/components";
@@ -8,33 +9,27 @@ interface ReviewFormProps {
   isOpen: boolean;
   movieId: number;
   onClose: () => void;
-  defaultContent?: string;
-  defaultRating?: number;
-  reviewId?: string;
-  isEditing?: boolean;
+  defaultValue: ReviewItem | null;
 }
 
-export function ReviewFormComponent({
-  isOpen,
-  movieId,
-  onClose,
-  defaultContent,
-  defaultRating,
-  reviewId,
-  isEditing = false,
-}: ReviewFormProps) {
+export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: ReviewFormProps) {
   const { user } = useAuthStore();
   const userId = user?.id as string;
   const name = user?.name as string;
   const username = user?.username as string;
 
-  const [rating, setRating] = useState<number>(defaultRating || 0);
-  const [content, setContent] = useState<string>(defaultContent || "");
+  const [rating, setRating] = useState<number>(0);
+  const [content, setContent] = useState<string>("");
 
   useEffect(() => {
-    setRating(defaultRating || 0);
-    setContent(defaultContent || "");
-  }, [defaultRating, defaultContent]);
+    if (defaultValue) {
+      setRating(defaultValue.rating || 0);
+      setContent(defaultValue.content || "");
+    } else {
+      setRating(0);
+      setContent("");
+    }
+  }, [defaultValue]);
 
   const postReview = usePostReview();
   const patchReview = usePatchReview();
@@ -53,9 +48,9 @@ export function ReviewFormComponent({
     };
 
     // 리뷰 수정
-    if (isEditing && reviewId) {
+    if (defaultValue) {
       patchReview.mutate(
-        { reviewId, reviewData },
+        { reviewId: defaultValue.id, reviewData },
         {
           onSuccess: () => {
             onClose();
@@ -76,7 +71,7 @@ export function ReviewFormComponent({
 
   return (
     <ModalComponent
-      title={isEditing ? "리뷰 수정하기" : "리뷰 작성하기"}
+      title={defaultValue ? "리뷰 수정하기" : "리뷰 작성하기"}
       isOpen={isOpen}
       onClose={onClose}
     >
@@ -97,7 +92,7 @@ export function ReviewFormComponent({
             onClick={handleSubmit}
             className="w-full rounded-xl bg-point-color p-4 text-white"
           >
-            {isEditing ? "수정 완료" : "작성 완료"}
+            {defaultValue ? "수정 완료" : "작성 완료"}
           </ButtonComponent>
         </FormComponent>
       </div>

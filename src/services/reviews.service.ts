@@ -7,6 +7,12 @@ export async function getReivews() {
   return res.data;
 }
 
+// 내가 쓴 리뷰 목록
+export async function getMyReviews(userId: string) {
+  const res = await get(`/reviews?userId=${userId}`);
+  return res.data;
+}
+
 // 리뷰 상세 정보
 export async function getReviewDetail(reviewId: string) {
   const res = await get(`/reviews/${reviewId}`);

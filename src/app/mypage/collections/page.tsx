@@ -46,39 +46,43 @@ export default function MyCollectionPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        {collectionList?.map((collection: CollectionList) => (
-          <div
-            key={collection.id}
-            className="relative flex min-h-32 flex-col items-center justify-around gap-4 rounded-xl bg-point-color/50 p-4"
-          >
-            <div className="relative ml-auto">
-              <CiMenuKebab
-                onClick={() => toggleModal(`collectionMenu ${collection.id}`)}
-                className="h-6 w-6 cursor-pointer text-white"
-              />
-              {modals[`collectionMenu ${collection.id}`] && (
-                <div className="absolute right-0 top-full z-10 mt-2 flex flex-col items-center gap-2 text-nowrap rounded-lg bg-text-bg px-4 py-2">
-                  <ButtonComponent
-                    onClick={() => {
-                      setSelectedCollection(collection);
-                      openModal("collectionForm");
-                    }}
-                  >
-                    수정
-                  </ButtonComponent>
-                  <ButtonComponent onClick={() => handleDeleteCollection(collection)}>
-                    삭제
-                  </ButtonComponent>
-                </div>
-              )}
-            </div>
+        {collectionList.length > 0 ? (
+          collectionList?.map((collection: CollectionList) => (
+            <div
+              key={collection.id}
+              className="relative flex min-h-32 flex-col items-center justify-around gap-4 rounded-xl bg-point-color/50 p-4"
+            >
+              <div className="relative ml-auto">
+                <CiMenuKebab
+                  onClick={() => toggleModal(`collectionMenu ${collection.id}`)}
+                  className="h-6 w-6 cursor-pointer text-white"
+                />
+                {modals[`collectionMenu ${collection.id}`] && (
+                  <div className="absolute right-0 top-full z-10 mt-2 flex flex-col items-center gap-2 text-nowrap rounded-lg bg-text-bg px-4 py-2">
+                    <ButtonComponent
+                      onClick={() => {
+                        setSelectedCollection(collection);
+                        openModal("collectionForm");
+                      }}
+                    >
+                      수정
+                    </ButtonComponent>
+                    <ButtonComponent onClick={() => handleDeleteCollection(collection)}>
+                      삭제
+                    </ButtonComponent>
+                  </div>
+                )}
+              </div>
 
-            <Link href={`/mypage/collections/${collection.id}`} className="p-4">
-              <p className="text-lg font-semibold">{collection.title}</p>
-              <p className="text-lg font-semibold">{collection.description}</p>
-            </Link>
-          </div>
-        ))}
+              <Link href={`/mypage/collections/${collection.id}`} className="p-4">
+                <p className="text-lg font-semibold">{collection.title}</p>
+                <p className="text-lg font-semibold">{collection.description}</p>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p>아직 생성된 컬렉션이 없습니다!</p>
+        )}
       </div>
 
       <CollectionFormModal

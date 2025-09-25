@@ -22,23 +22,21 @@ export function ReviewSection({
 
   const deleteReview = useDeleteReview();
   const handleDeleteReview = (review: ReviewItem) => {
-    if (!review) {
-      toast.error("삭제할 리뷰를 선택해주세요.");
-      return;
-    }
-
     deleteReview.mutate({ reviewId: review.id });
   };
 
+  const filteredReview = reviewData.filter((review: ReviewItem) => review.movieId === movieId);
+
   const handleShowModal = () => {
+    const alreadyWritten = filteredReview?.some((review) => review.userId === user?.id);
+    if (alreadyWritten) return toast.error("이미 해당 영화에 리뷰를 작성했습니다.");
+
     if (!user) {
       openModal("loginRequire");
     } else {
       openModal("reviewForm");
     }
   };
-
-  const filteredReview = reviewData.filter((review: ReviewItem) => review.movieId === movieId);
 
   return (
     <section className="flex flex-col gap-8 rounded-xl bg-text-bg p-8">
@@ -98,10 +96,7 @@ export function ReviewSection({
           closeModal("reviewForm");
           setSelectedReview(null);
         }}
-        defaultContent={selectedReview?.content}
-        defaultRating={selectedReview?.rating}
-        reviewId={selectedReview?.id}
-        isEditing={!!selectedReview}
+        defaultValue={selectedReview}
       />
 
       <LoginRequiredModalComponent
