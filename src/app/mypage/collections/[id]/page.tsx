@@ -26,7 +26,7 @@ export default function CollectionDetailPage() {
     <section className="flex items-center gap-8">
       {collectionMovies && collectionMovies.length > 0 ? (
         collectionMovies.map((movie: CollectionMovie) => (
-          <CollectionMovieLIst key={movie.id} movieId={movie.movieId} />
+          <CollectionMovieLIst key={movie.movieId} movieId={movie.movieId} />
         ))
       ) : (
         <p>아직 추가한 영화가 없어요.</p>

@@ -4,12 +4,12 @@ import {
   getCollectionDetail,
   getCollectionList,
   patchCollection,
+  patchCollectionMovie,
   postCollection,
-  postCollectionMovie,
 } from "@/services/collections.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { CollectionItem, CollectionMovie } from "@/types/collections.type";
+import { CollectionItem, CollectionList, CollectionMovie } from "@/types/collections.type";
 import { queryClient } from "./query-client";
 
 // 컬렉션 목록
@@ -34,7 +34,7 @@ export function useGetCollectionDetail(collectionId: string) {
 // 컬렉션 추가
 export function usePostCollection() {
   return useMutation({
-    mutationFn: (collectionData: Omit<CollectionItem, "id">) => postCollection(collectionData),
+    mutationFn: (collectionData: Omit<CollectionList, "id">) => postCollection(collectionData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("새 컬렉션 목록을 생성했어요!");
@@ -85,10 +85,15 @@ export function useDeleteCollection() {
 // 컬렉션에 영화 추가
 export function usePostCollectionMovie() {
   return useMutation({
-    mutationFn: (collectionMovie: Omit<CollectionMovie, "id">) =>
-      postCollectionMovie(collectionMovie),
+    mutationFn: ({
+      collectionId,
+      collectionMovie,
+    }: {
+      collectionId: string;
+      collectionMovie: CollectionMovie[];
+    }) => patchCollectionMovie(collectionId, collectionMovie),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["collection-movies"] });
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("컬렉션에 영화를 추가했어요!");
     },
     onError: (err) => {
@@ -103,7 +108,7 @@ export function useDeleteCollectionMovie() {
   return useMutation({
     mutationFn: (collectionMovieId: string) => deleteCollectionMovie(collectionMovieId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["collection-movies"] });
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("해당 영화를 삭제했어요!");
     },
     onError: (err) => {

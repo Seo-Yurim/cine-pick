@@ -34,7 +34,6 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
   const userId = user?.id as string;
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [selectedCollection, setSelectedCollection] = useState<CollectionList | null>(null);
 
   const addCollectionMovie = usePostCollectionMovie();
 
@@ -72,8 +71,9 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
       movieId: movieData.id,
     };
 
-    setSelectedCollection(collection);
-    addCollectionMovie.mutate(collectionMovie);
+    const updatedMovies = [...collection.movies, collectionMovie];
+
+    addCollectionMovie.mutate({ collectionId: collection.id, collectionMovie: updatedMovies });
   };
 
   return (

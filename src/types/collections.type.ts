@@ -6,7 +6,6 @@ export interface CollectionItem {
 }
 
 export interface CollectionMovie {
-  id: string;
   collectionId: string;
   movieId: number;
 }

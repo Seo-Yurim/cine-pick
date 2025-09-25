@@ -1,4 +1,4 @@
-import { CollectionItem } from "@/types/collections.type";
+import { CollectionList } from "@/types/collections.type";
 import { ButtonComponent, ModalComponent } from "@/components";
 import { InputComponent } from "@/components/input/input.component";
 
@@ -6,8 +6,8 @@ interface CollectionFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  collectionFormData: Omit<CollectionItem, "id">;
-  setCollectionFormData: React.Dispatch<React.SetStateAction<Omit<CollectionItem, "id">>>;
+  collectionFormData: Omit<CollectionList, "id">;
+  setCollectionFormData: React.Dispatch<React.SetStateAction<Omit<CollectionList, "id">>>;
 }
 
 export function CollectionFormModal({

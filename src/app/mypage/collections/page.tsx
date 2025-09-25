@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { CollectionItem, CollectionList } from "@/types/collections.type";
+import { CollectionList } from "@/types/collections.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { useGetCollectionList, usePostCollection } from "@/queries/collections.query";
@@ -16,10 +16,11 @@ export default function MyCollectionPage() {
 
   const { modals, openModal, closeModal } = useModalStore();
 
-  const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionItem, "id">>({
+  const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionList, "id">>({
     title: "",
     description: "",
     userId: "",
+    movies: [],
   });
 
   const addCollection = usePostCollection();
@@ -34,6 +35,7 @@ export default function MyCollectionPage() {
       title: collectionFormData.title,
       description: collectionFormData.description,
       userId,
+      movies: [],
     };
 
     addCollection.mutate(collectionData, {
@@ -43,6 +45,7 @@ export default function MyCollectionPage() {
           title: "",
           description: "",
           userId: "",
+          movies: [],
         });
       },
     });

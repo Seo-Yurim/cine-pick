@@ -91,51 +91,30 @@
       "description": "My favorite movies",
       "movies": [
         {
-          "id": "2",
+          "collectionId": "1",
+          "movieId": 755898
+        },
+        {
           "collectionId": "1",
           "movieId": 1311031
         },
         {
-          "id": "899e",
           "collectionId": "1",
-          "movieId": 755898
+          "movieId": 617126
         }
       ]
     },
     {
-      "id": "0d2f",
-      "title": "테스트",
-      "description": "테스트에요.",
-      "userId": "1"
-    },
-    {
-      "id": "220a",
-      "title": "ㄴㅇㄹ",
-      "description": "ㄴㅇㄹㄴㅇㄹ",
-      "userId": "1"
-    },
-    {
-      "id": "a02b",
-      "title": "ㄴㄴㄴ",
-      "description": "ㄴㄴㄴㄴ",
-      "userId": "1"
-    }
-  ],
-  "collectionMovies": [
-    {
-      "id": "1",
-      "collectionId": "1",
-      "movieId": 755898
-    },
-    {
-      "id": "2",
-      "collectionId": "1",
-      "movieId": 1311031
-    },
-    {
-      "id": "899e",
-      "collectionId": "1",
-      "movieId": 755898
+      "id": "89e3",
+      "title": "ㄴㅇㄹㄴㅇㄹ",
+      "description": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ",
+      "userId": "1",
+      "movies": [
+        {
+          "collectionId": "89e3",
+          "movieId": 1311031
+        }
+      ]
     }
   ]
 }

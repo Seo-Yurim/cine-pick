@@ -2,23 +2,9 @@ import { CollectionItem, CollectionList, CollectionMovie } from "@/types/collect
 import { get, patch, post, remove } from "./method";
 
 // 컬렉션 목록
-export async function getCollectionList(userId: string): Promise<CollectionList[]> {
-  const collectionRes = await get(`/collections?userId=${userId}`);
-  const collections: CollectionItem[] = collectionRes.data;
-
-  const collectionsWithMovies = await Promise.all(
-    collections.map(async (collection) => {
-      const moviesRes = await get(`/collectionMovies?collectionId=${collection.id}`);
-      const movies: CollectionMovie[] = moviesRes.data;
-
-      return {
-        ...collection,
-        movies,
-      };
-    }),
-  );
-
-  return collectionsWithMovies;
+export async function getCollectionList(userId: string) {
+  const res = await get(`/collections?userId=${userId}`);
+  return res.data;
 }
 
 // 컬렉션 상세
@@ -28,7 +14,7 @@ export async function getCollectionDetail(collectionId: string) {
 }
 
 // 컬렉션 추가
-export async function postCollection(collectionData: Omit<CollectionItem, "id">) {
+export async function postCollection(collectionData: Omit<CollectionList, "id">) {
   const res = await post("/collections", collectionData);
   return res.data;
 }
@@ -42,13 +28,13 @@ export async function patchCollection(
   return res.data;
 }
 
-// 컬렉션 삭제 (컬렉션 삭제 시 컬렉션에 추가했던 영화 정보도 삭제)
+// 컬렉션 삭제
 export async function deleteCollection(collectionId: string) {
   const moviesRes = await get(`/collectionMovies?collectionId=${collectionId}`);
   const movies: CollectionMovie[] = moviesRes.data;
 
   for (const movie of movies) {
-    await remove(`/collectionMovies/${movie.id}`);
+    await remove(`/collectionMovies/${movie.movieId}`);
   }
 
   const res = await remove(`/collections/${collectionId}`);
@@ -56,8 +42,11 @@ export async function deleteCollection(collectionId: string) {
 }
 
 // 컬렉션에 영화 추가
-export async function postCollectionMovie(collectionMovie: Omit<CollectionMovie, "id">) {
-  const res = await post(`/collectionMovies`, collectionMovie);
+export async function patchCollectionMovie(
+  collectionId: string,
+  collectionMovie: CollectionMovie[],
+) {
+  const res = await patch(`/collections/${collectionId}`, { movies: collectionMovie });
   return res.data;
 }
 
