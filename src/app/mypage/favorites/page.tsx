@@ -30,11 +30,7 @@ export default function MyFavoritePage() {
       <div className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 md:justify-between lg:grid-cols-4">
         {favoriteMovies.length > 0 ? (
           favoriteMovies.map((favoriteMovie: FavoriteMovieItem) => (
-            <FavoriteListComponent
-              key={favoriteMovie.id}
-              movieId={favoriteMovie.movieId}
-              userId={userId}
-            />
+            <FavoriteListComponent key={favoriteMovie.id} movieId={favoriteMovie.movieId} />
           ))
         ) : (
           <p>즐겨찾기한 작품이 없습니다.</p>
