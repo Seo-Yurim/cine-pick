@@ -1,7 +1,7 @@
 import {
+  deleteFavoriteMovie,
   getMyFavoriteList,
   getMyFavoriteMovie,
-  patchFavoriteMovie,
   postFavoriteMovie,
 } from "@/services/favorites.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ export function useGetMyFavoriteList(userId: string) {
     queryKey: ["favorites", userId],
     queryFn: () => getMyFavoriteList(userId),
     enabled: !!userId,
+    staleTime: 0,
   });
 }
 
@@ -24,6 +25,7 @@ export function useGetFavoriteMovie(userId: string, movieId: number) {
     queryKey: ["favorites", userId],
     queryFn: () => getMyFavoriteMovie(userId, movieId),
     enabled: !!movieId,
+    staleTime: 0,
   });
 }
 
@@ -43,15 +45,9 @@ export function usePostFavoriteMovie() {
 }
 
 // 좋아요 취소
-export function usePatchFavoriteMovie() {
+export function useDeleteFavoriteMovie() {
   return useMutation({
-    mutationFn: ({
-      favoriteId,
-      favoriteData,
-    }: {
-      favoriteId: string;
-      favoriteData: Omit<FavoriteMovieItem, "id">;
-    }) => patchFavoriteMovie(favoriteId, favoriteData),
+    mutationFn: ({ favoriteId }: { favoriteId: string }) => deleteFavoriteMovie(favoriteId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["favorites"] });
       toast.success("좋아요를 취소했습니다!");

@@ -1,10 +1,10 @@
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
-import { usePatchFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
+import { useDeleteFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
 import { ButtonComponent } from "./button/button.component";
 
 interface FavoriteMovieProps {
@@ -18,8 +18,12 @@ export function FavoriteMovieComponent({ defaultValue, movieId }: FavoriteMovieP
   const pathname = usePathname();
   const [favorited, setFavorited] = useState<boolean>(defaultValue?.favorite || false);
 
+  useEffect(() => {
+    setFavorited(defaultValue?.favorite || false);
+  }, [defaultValue]);
+
   const addFavorite = usePostFavoriteMovie();
-  const toggleFavorite = usePatchFavoriteMovie();
+  const toggleFavorite = useDeleteFavoriteMovie();
 
   const handleFavorite = () => {
     if (!user) {
@@ -38,10 +42,10 @@ export function FavoriteMovieComponent({ defaultValue, movieId }: FavoriteMovieP
       });
     } else {
       toggleFavorite.mutate(
-        { favoriteId: defaultValue.id, favoriteData },
+        { favoriteId: defaultValue.id },
         {
           onSuccess: () => {
-            setFavorited(!favorited);
+            setFavorited(false);
           },
         },
       );
