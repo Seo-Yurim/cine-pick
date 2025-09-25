@@ -9,10 +9,12 @@ import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie
 import { useAuthStore } from "@/stores/auth.store";
 import { useGetCollectionList, usePatchCollectionMovie } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
+import { useGetWatchedDetail } from "@/queries/watches.query";
 import { LoadingComponent, RatingComponent } from "@/components";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
 import { MenuComponent } from "@/components/menu.component";
 import { PersonListComponent } from "../index";
+import { WatchedControlComponent } from "./watched.compoent";
 
 const statusMapping: Record<string, string> = {
   Rumored: "제작 미정",
@@ -49,8 +51,14 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
     isError: isCollectionError,
   } = useGetCollectionList(userId);
 
-  if (isFavoriteLoading || isCollectionLoading) return <LoadingComponent />;
-  if (isFavoriteError || isCollectionError)
+  const {
+    data: watchedMovie,
+    isLoading: isWatchedLoading,
+    isError: isWatchedError,
+  } = useGetWatchedDetail(userId, movieData.id);
+
+  if (isFavoriteLoading || isCollectionLoading || isWatchedLoading) return <LoadingComponent />;
+  if (isFavoriteError || isCollectionError || isWatchedError)
     return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
 
   const handleSelectCollection = (collection: CollectionList) => {
@@ -128,6 +136,11 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
               btnIcon={<FaFolderPlus className="h-6 w-6" />}
               menuList={collectionList || []}
               onSelectCollection={handleSelectCollection}
+            />
+
+            <WatchedControlComponent
+              defaultValue={!user ? null : watchedMovie}
+              movieId={movieData.id}
             />
 
             <p className="text-nowrap rounded-xl bg-point-color px-4 py-1 font-medium">평점</p>

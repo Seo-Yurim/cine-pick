@@ -33,7 +33,6 @@ export default function MoviesDetailPage() {
     toast.error("데이터를 불러오는 중 오류가 발생했습니다!", { duration: 3000 });
 
   const avg = getAvgRating(movieId, reviewList);
-  console.log(avg);
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-8">

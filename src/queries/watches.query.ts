@@ -1,4 +1,9 @@
-import { deleteWatchedMovie, getWatchedList, postWatchedMovie } from "@/services/watches.service";
+import {
+  deleteWatchedMovie,
+  getWatchedDetail,
+  getWatchedList,
+  postWatchedMovie,
+} from "@/services/watches.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { WatchesItem } from "@/types/watches.type";
@@ -10,6 +15,16 @@ export function useGetWatchedList(userId: string) {
     queryKey: ["watches", userId],
     queryFn: () => getWatchedList(userId),
     enabled: !!userId,
+  });
+}
+
+// 시청 목록 상세
+export function useGetWatchedDetail(userId: string, movieId: number) {
+  return useQuery({
+    queryKey: ["watches", userId],
+    queryFn: () => getWatchedDetail(userId, movieId),
+    enabled: !!userId && !!movieId,
+    staleTime: 0,
   });
 }
 

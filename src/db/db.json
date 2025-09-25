@@ -75,6 +75,12 @@
       "movieId": 1311031,
       "userId": "bad7",
       "favorite": true
+    },
+    {
+      "id": "bc43",
+      "movieId": 1311031,
+      "userId": "1",
+      "favorite": true
     }
   ],
   "collections": [
@@ -93,10 +99,10 @@
   ],
   "watches": [
     {
-      "id": "1",
+      "id": "34a2",
       "movieId": 1311031,
       "userId": "1",
-      "watched": "true"
+      "watched": true
     }
   ]
 }
