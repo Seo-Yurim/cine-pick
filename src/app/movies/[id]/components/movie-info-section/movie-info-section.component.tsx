@@ -7,7 +7,7 @@ import { FaFolderPlus } from "react-icons/fa";
 import { CollectionList } from "@/types/collections.type";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { useAuthStore } from "@/stores/auth.store";
-import { useGetCollectionList, usePostCollectionMovie } from "@/queries/collections.query";
+import { useGetCollectionList, usePatchCollectionMovie } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { LoadingComponent, RatingComponent } from "@/components";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
@@ -35,7 +35,7 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const addCollectionMovie = usePostCollectionMovie();
+  const addCollectionMovie = usePatchCollectionMovie();
 
   const {
     data: favoriteMovie,
@@ -53,10 +53,6 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
   if (isFavoriteError || isCollectionError)
     return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
 
-  const moviePosterUrl = movieData.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
-    : "/default.svg";
-
   const handleSelectCollection = (collection: CollectionList) => {
     if (!collection) return toast.error("영화를 추가할 컬렉션을 선택해주세요!");
 
@@ -73,7 +69,14 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
 
     const updatedMovies = [...collection.movies, collectionMovie];
 
-    addCollectionMovie.mutate({ collectionId: collection.id, collectionMovie: updatedMovies });
+    addCollectionMovie.mutate(
+      { collectionId: collection.id, collectionMovie: updatedMovies },
+      {
+        onSuccess: () => {
+          toast.success("컬렉션에 영화를 추가했어요!");
+        },
+      },
+    );
   };
 
   return (
@@ -86,7 +89,11 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
       <div className="flex min-w-0 justify-between gap-8 max-lg:flex-col max-lg:items-center">
         <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[624px] shrink-0">
           <Image
-            src={moviePosterUrl}
+            src={
+              movieData.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+                : "/default.svg"
+            }
             className="absolute h-full w-full rounded-xl object-contain"
             fill
             priority

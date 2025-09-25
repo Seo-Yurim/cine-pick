@@ -1,6 +1,5 @@
 import {
   deleteCollection,
-  deleteCollectionMovie,
   getCollectionDetail,
   getCollectionList,
   patchCollection,
@@ -82,8 +81,8 @@ export function useDeleteCollection() {
   });
 }
 
-// 컬렉션에 영화 추가
-export function usePostCollectionMovie() {
+// 컬렉션에 영화 추가 및 삭제
+export function usePatchCollectionMovie() {
   return useMutation({
     mutationFn: ({
       collectionId,
@@ -94,26 +93,9 @@ export function usePostCollectionMovie() {
     }) => patchCollectionMovie(collectionId, collectionMovie),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["collections"] });
-      toast.success("컬렉션에 영화를 추가했어요!");
     },
     onError: (err) => {
       console.error("영화 추가 실패: ", err.message);
-      toast.error("영화 추가 중 문제가 발생하였습니다!");
-    },
-  });
-}
-
-// 컬렉션에 영화 삭제
-export function useDeleteCollectionMovie() {
-  return useMutation({
-    mutationFn: (collectionMovieId: string) => deleteCollectionMovie(collectionMovieId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["collections"] });
-      toast.success("해당 영화를 삭제했어요!");
-    },
-    onError: (err) => {
-      console.error("영화 삭제 실패: ", err.message);
-      toast.error("영화 삭제 중 문제가 발생하였습니다!");
     },
   });
 }

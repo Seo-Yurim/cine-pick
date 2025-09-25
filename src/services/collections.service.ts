@@ -34,17 +34,11 @@ export async function deleteCollection(collectionId: string) {
   return res.data;
 }
 
-// 컬렉션에 영화 추가
+// 컬렉션에 영화 추가 및 삭제
 export async function patchCollectionMovie(
   collectionId: string,
   collectionMovie: CollectionMovie[],
 ) {
   const res = await patch(`/collections/${collectionId}`, { movies: collectionMovie });
-  return res.data;
-}
-
-// 컬렉션에 영화 삭제
-export async function deleteCollectionMovie(collectionMovieId: string) {
-  const res = await remove(`/collectionMovies/${collectionMovieId}`);
   return res.data;
 }
