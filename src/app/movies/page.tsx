@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { MovieItem, MovieParams } from "@/types/movie.type";
-import { LoadingComponent, MovieCardComponent } from "@/components";
-import Pagination from "@/components/pagination.component";
 import { useMovies } from "@/queries/movie.query";
+import { MovieCardComponent } from "@/components";
+import Pagination from "@/components/pagination.component";
 import MoviesHeaderComponent from "./components/movies-header.component";
 
 export default function MoviesPage() {
@@ -21,7 +20,7 @@ export default function MoviesPage() {
     "primary_release_date.lte": "",
   });
 
-  const { data, isLoading, isError } = useMovies(params);
+  const { data: movies } = useMovies(params);
 
   // 고려
   useEffect(() => {
@@ -32,17 +31,11 @@ export default function MoviesPage() {
     setPage(1);
   }, [params]);
 
-  if (isError) {
-    toast.error("데이터를 불러오는 중 에러가 발생했어요.", { duration: 3000 });
-    return null;
-  }
-  const totalPages = data?.total_pages ?? 1;
+  const totalPages = movies?.total_pages ?? 1;
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
       <MoviesHeaderComponent tab={activeTab} onTab={setActiveTab} onParams={setParams} />
-
-      {isLoading && <LoadingComponent label="로딩 중 ... " isIndeterminate />}
 
       <div
         className={
@@ -51,7 +44,7 @@ export default function MoviesPage() {
             : "flex flex-col gap-4"
         }
       >
-        {data?.results.map((result: MovieItem) => (
+        {movies?.results.map((result: MovieItem) => (
           <MovieCardComponent key={result.id} data={result} type={activeTab} minWidth="240px" />
         ))}
       </div>

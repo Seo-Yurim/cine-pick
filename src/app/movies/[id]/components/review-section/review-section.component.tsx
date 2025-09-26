@@ -25,7 +25,7 @@ export function ReviewSection({
     deleteReview.mutate({ reviewId: review.id });
   };
 
-  const filteredReview = reviewData.filter((review: ReviewItem) => review.movieId === movieId);
+  const filteredReview = reviewData?.filter((review: ReviewItem) => review.movieId === movieId);
 
   const handleShowModal = () => {
     const alreadyWritten = filteredReview?.some((review) => review.userId === user?.id);

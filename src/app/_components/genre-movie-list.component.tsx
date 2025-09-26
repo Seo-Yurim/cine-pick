@@ -2,8 +2,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { MovieItem } from "@/types/movie.type";
-import { ButtonComponent, MovieCardComponent, ToggleButtonComponent } from "@/components";
 import { useGenres, useMovies } from "@/queries/movie.query";
+import { ButtonComponent, MovieCardComponent, ToggleButtonComponent } from "@/components";
 
 export function GenreMovieListComponent() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ export function GenreMovieListComponent() {
     scrollRef.current?.scrollBy({ left: 150, behavior: "smooth" });
   };
 
-  const { data: genres, isLoading: genresLoading, isError: genresErr } = useGenres();
+  const { data: genres, isLoading: genresLoading } = useGenres();
 
   const toggleMenus = useMemo(() => {
     if (!genres) return [];
@@ -36,17 +36,12 @@ export function GenreMovieListComponent() {
     ];
   }, [genres]);
 
-  const {
-    data: popularData,
-    isLoading: popularLoading,
-    isError: popularErr,
-  } = useMovies({
+  const { data: popularData, isLoading: popularLoading } = useMovies({
     sort_by: "popularity.desc",
     with_genres: activeTab,
   });
 
   const isLoading = popularLoading || genresLoading;
-  const isError = genresErr || popularErr;
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -59,8 +54,6 @@ export function GenreMovieListComponent() {
 
     return () => clearTimeout(timeout);
   }, [isLoading]);
-
-  if (isError) toast.error("데이터를 불러오는 중 오류가 발생하였습니다.");
 
   return (
     <section className="flex p-6">

@@ -17,6 +17,14 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "user-data",
+      partialize: (state) => ({
+        user: state.user
+          ? {
+              ...state.user,
+              password: undefined,
+            }
+          : null,
+      }),
     },
   ),
 );

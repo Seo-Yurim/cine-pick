@@ -27,7 +27,7 @@ export function PersonListComponent({
       </div>
       <div className="flex flex-col gap-2 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
         <div className="mb-4 grid w-full auto-cols-auto grid-flow-col gap-8 p-2">
-          {creditData.slice(0, visibleCount).map((credit: MovieCast | MovieCrew) => (
+          {creditData?.slice(0, visibleCount).map((credit: MovieCast | MovieCrew) => (
             <Link
               href={`/person/${credit.id}`}
               key={credit.credit_id}
@@ -54,7 +54,7 @@ export function PersonListComponent({
             </Link>
           ))}
 
-          {visibleCount < creditData.length && (
+          {visibleCount < creditData?.length && (
             <FaCircleArrowRight
               onClick={handleLoadData}
               className="my-auto h-16 w-16 cursor-pointer"

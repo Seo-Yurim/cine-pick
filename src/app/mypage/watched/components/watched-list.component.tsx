@@ -1,9 +1,9 @@
 import { useMovieDetail } from "@/queries/movie.query";
-import { LoadingComponent, MovieCardComponent } from "@/components";
+import { MovieCardComponent } from "@/components";
 
 export function WatchedListComponent({ movieId }: { movieId: number }) {
-  const { data, isLoading, isError } = useMovieDetail(movieId);
-  if (isLoading) return <LoadingComponent />;
+  const { data } = useMovieDetail(movieId);
+  const movieDetail = data ?? {};
 
-  return <MovieCardComponent data={data} />;
+  return <MovieCardComponent data={movieDetail} />;
 }

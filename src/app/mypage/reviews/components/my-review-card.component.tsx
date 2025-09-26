@@ -1,6 +1,6 @@
 import { ReviewItem } from "@/types/reviews.type";
 import { useMovieDetail } from "@/queries/movie.query";
-import { LoadingComponent, MovieCardComponent } from "@/components";
+import { MovieCardComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
 
 export function MyReviewCard({
@@ -10,14 +10,8 @@ export function MyReviewCard({
   movieId: number;
   reviewList: ReviewItem[];
 }) {
-  const {
-    data: movieDetail,
-    isLoading: isMovieDetailLoading,
-    isError: isMovieDetailError,
-  } = useMovieDetail(movieId);
-
-  if (isMovieDetailLoading) return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
-  if (isMovieDetailError || !movieDetail) return <p>에러 발생</p>;
+  const { data } = useMovieDetail(movieId);
+  const movieDetail = data ?? {};
 
   const filteredReviewList = reviewList.filter((review) => review.movieId === movieId);
 

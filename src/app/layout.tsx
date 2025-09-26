@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
-import { Header } from "@/components";
 import { QueryClientProvider } from "@/queries/query-client";
+import { Header, LoadingComponent } from "@/components";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +18,7 @@ export default function RootLayout({
     <html lang="ko" className="dark">
       <body className="font-sans">
         <QueryClientProvider>
+          <LoadingComponent label="로딩 중 ... " isIndeterminate />
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
           {children}

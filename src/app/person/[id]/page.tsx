@@ -1,12 +1,11 @@
 "use client";
 
-import { LoadingComponent, MovieListComponent } from "@/components";
-import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { ReactNode } from "react";
-import toast from "react-hot-toast";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
+import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
+import { MovieListComponent } from "@/components";
 
 const genderMapping: Record<string, ReactNode> = {
   1: <IoMdFemale className="h-6 w-6" />,
@@ -17,27 +16,11 @@ export default function PersonDetailPage() {
   const params = useParams();
   const personId = params.id as string;
 
-  const {
-    data: personInfo,
-    isLoading: isPersonInfoLoading,
-    isError: isPersonInfoError,
-  } = usePersonInfo(personId);
+  const { data: personData } = usePersonInfo(personId);
+  const { data: personMoviesData } = usePersonMovies(personId);
 
-  const {
-    data: personMovies,
-    isLoading: isPersonMoviesLoading,
-    isError: isPersonMoviesError,
-  } = usePersonMovies(personId);
-
-  if (isPersonInfoLoading || isPersonMoviesLoading)
-    return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
-
-  if (isPersonInfoError || isPersonMoviesError)
-    toast.error("인물 정보를 불러오는 중 오류가 발생했습니다.");
-
-  const profileUrl = personInfo.profile_path
-    ? `https://image.tmdb.org/t/p/w500${personInfo.profile_path}`
-    : "/default.svg";
+  const personInfo = personData ?? {};
+  const personMovies = personMoviesData ?? [];
 
   return (
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-12">
@@ -46,7 +29,11 @@ export default function PersonDetailPage() {
       <section className="flex items-center gap-8 max-lg:flex-col">
         <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[624px] shrink-0">
           <Image
-            src={profileUrl}
+            src={
+              personInfo.profile_path
+                ? `https://image.tmdb.org/t/p/w500${personInfo.profile_path}`
+                : "/default.svg"
+            }
             className="absolute h-full w-full object-contain"
             fill
             priority
@@ -65,8 +52,8 @@ export default function PersonDetailPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <MovieListComponent title="연기 활동" data={personMovies.cast} btnShow={false} />
-        <MovieListComponent title="제작 참여 작품" data={personMovies.crew} btnShow={false} />
+        <MovieListComponent title="연기 활동" data={personMovies?.cast} btnShow={false} />
+        <MovieListComponent title="제작 참여 작품" data={personMovies?.crew} btnShow={false} />
       </section>
     </main>
   );

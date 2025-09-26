@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { CiMenuKebab } from "react-icons/ci";
 import { CollectionList } from "@/types/collections.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { useDeleteCollection, useGetCollectionList } from "@/queries/collections.query";
-import { ButtonComponent, LoadingComponent } from "@/components";
+import { ButtonComponent } from "@/components";
 import { CollectionFormModal } from "./components/collection-form-modal.component";
 
 export default function MyCollectionPage() {
@@ -20,19 +19,7 @@ export default function MyCollectionPage() {
 
   const deleteCollection = useDeleteCollection();
 
-  const {
-    data: collectionList,
-    isLoading: isCollectionListLoading,
-    isError: isCollectionListError,
-  } = useGetCollectionList(userId);
-
-  if (!collectionList && isCollectionListLoading)
-    return <LoadingComponent label="로딩 중 ... " isIndeterminate />;
-
-  if (isCollectionListError) {
-    toast.error("데이터를 불러오는 중 오류가 발생하였습니다!");
-    return;
-  }
+  const { data: collectionList } = useGetCollectionList(userId);
 
   const handleDeleteCollection = (collection: CollectionList) => {
     deleteCollection.mutate({ collectionId: collection.id });
@@ -46,7 +33,7 @@ export default function MyCollectionPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        {collectionList.length > 0 ? (
+        {collectionList?.length > 0 ? (
           collectionList?.map((collection: CollectionList) => (
             <div
               key={collection.id}

@@ -7,7 +7,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { queryClient } from "./query-client";
 
 // 로그인
-export function useGetLogin({ onSuccess }: { onSuccess: () => void }) {
+export function useLogin({ onSuccess }: { onSuccess: () => void }) {
   return useMutation({
     mutationFn: ({ username, password }: { username: string; password: string }) =>
       getLogin(username, password),

@@ -39,27 +39,9 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
 
   const addCollectionMovie = usePatchCollectionMovie();
 
-  const {
-    data: favoriteMovie,
-    isLoading: isFavoriteLoading,
-    isError: isFavoriteError,
-  } = useGetFavoriteMovie(userId, movieData.id);
-
-  const {
-    data: collectionList,
-    isLoading: isCollectionLoading,
-    isError: isCollectionError,
-  } = useGetCollectionList(userId);
-
-  const {
-    data: watchedMovie,
-    isLoading: isWatchedLoading,
-    isError: isWatchedError,
-  } = useGetWatchedDetail(userId, movieData.id);
-
-  if (isFavoriteLoading || isCollectionLoading || isWatchedLoading) return <LoadingComponent />;
-  if (isFavoriteError || isCollectionError || isWatchedError)
-    return toast.error("데이터를 불러오는 중 오류가 발생했습니다!");
+  const { data: favoriteMovie } = useGetFavoriteMovie(userId, movieData.id);
+  const { data: collectionList } = useGetCollectionList(userId);
+  const { data: watchedMovie } = useGetWatchedDetail(userId, movieData.id);
 
   const handleSelectCollection = (collection: CollectionList) => {
     if (!collection) return toast.error("영화를 추가할 컬렉션을 선택해주세요!");
@@ -116,7 +98,7 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
           <div className="flex items-center gap-4">
             <p className="rounded-xl border px-4 py-1">{movieData.release_date}</p>
             <div className="flex items-center gap-2 rounded-xl border px-4 py-1">
-              {movieData.genres.map((genre: MovieGenres) => (
+              {movieData.genres?.map((genre: MovieGenres) => (
                 <p key={genre.id}>{genre.name}</p>
               ))}
             </div>

@@ -39,10 +39,10 @@ export function MovieListComponent({
         <div className="flex items-center overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground">
           <div
             className={`mb-4 gap-4 p-4 ${
-              data.length <= 4 ? "flex" : "grid auto-cols-auto grid-flow-col"
+              data?.length <= 4 ? "flex" : "grid auto-cols-auto grid-flow-col"
             }`}
           >
-            {data.map((item) => (
+            {data?.map((item) => (
               <MovieCardComponent key={item.id} data={item} />
             ))}
           </div>

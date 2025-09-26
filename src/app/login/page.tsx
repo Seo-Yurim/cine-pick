@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { User } from "@/types/users.type";
-import { useGetLogin } from "@/queries/users.query";
+import { useLogin } from "@/queries/users.query";
 import { ButtonComponent, FormComponent, InputComponent } from "@/components";
 
 export default function LoginPage() {
@@ -19,7 +19,7 @@ export default function LoginPage() {
     password: "",
   });
 
-  const getLogin = useGetLogin({
+  const getLogin = useLogin({
     onSuccess: () => {
       router.push(redirect);
     },
