@@ -1,7 +1,7 @@
 "use client";
 
 import { useMovies } from "@/queries/movie.query";
-import { MovieListComponent } from "@/components";
+import { Slider } from "@/components";
 import { GenreMovieListComponent } from "./genre-movie-list.component";
 
 export default function Hydrated() {
@@ -15,12 +15,12 @@ export default function Hydrated() {
 
   return (
     <main className="flex flex-col gap-16 pb-40">
-      <MovieListComponent
+      <Slider
         title="오늘의 인기 영화"
         bgColor="hsl(var(--point-color))"
         data={popularData?.results}
       />
-      <MovieListComponent title="최신 개봉작" data={newData?.results} />
+      <Slider title="최신 개봉작" data={newData?.results} />
       <GenreMovieListComponent />
     </main>
   );

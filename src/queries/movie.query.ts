@@ -4,7 +4,14 @@ import { getGenres, getMovieCredits, getMovieDetail, getMovies } from "@/service
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { MovieParams } from "@/types/movie.type";
 
-export function useMovies(params?: MovieParams) {
+export function useMovies(params: MovieParams) {
+  return useQuery({
+    queryKey: ["movies", params],
+    queryFn: () => getMovies(params),
+  });
+}
+
+export function useInfinityMovies(params: MovieParams) {
   return useInfiniteQuery({
     queryKey: ["movies", params],
     queryFn: ({ pageParam = 1 }) => getMovies({ ...params, page: pageParam }),

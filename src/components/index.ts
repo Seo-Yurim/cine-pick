@@ -6,7 +6,7 @@ export * from "./tag.component";
 export * from "./toggle-button.component";
 export * from "./loading.component";
 export * from "./header.component";
-export * from "./movie-list.component";
+export * from "./slider.component";
 export * from "./rating.component";
 export * from "./require-login-modal.component";
 export * from "./modal/modal.component";

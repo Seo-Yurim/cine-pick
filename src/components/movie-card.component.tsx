@@ -5,19 +5,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
 
-export function MovieCardComponent({
-  minWidth = "312px",
-  data,
-  type = "grid",
-}: {
-  minWidth?: string;
+interface MovieCardProps {
   data: MovieItem;
   type?: string;
-}) {
+  minWidth?: string;
+  maxWidth?: string;
+}
+
+export function MovieCardComponent({
+  data,
+  type = "grid",
+  minWidth = "240px",
+  maxWidth = "412px",
+}: MovieCardProps) {
   const router = useRouter();
-  const posterUrl = data.poster_path
-    ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-    : "/default.svg";
 
   const handleClick = () => {
     if (type !== "grid") router.push(`/movies/${data.id}`);
@@ -26,13 +27,17 @@ export function MovieCardComponent({
   return (
     <div
       onClick={handleClick}
-      style={{ minWidth: minWidth }}
-      className={`${type === "grid" ? "" : "cursor-pointer"} group relative flex w-full flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-105`}
+      style={{ minWidth: minWidth, maxWidth: maxWidth }}
+      className={`${type === "grid" ? "hover:scale-105" : "cursor-pointer hover:bg-white/70"} group relative flex h-full w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300`}
     >
       {type === "grid" && (
         <div className="relative aspect-[3/4] w-full min-w-[200px]">
           <Image
-            src={posterUrl}
+            src={
+              data.poster_path
+                ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+                : "/default.svg"
+            }
             className="absolute h-full w-full rounded-xl object-cover"
             fill
             priority
