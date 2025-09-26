@@ -1,13 +1,18 @@
 "use client";
 
 import { getGenres, getMovieCredits, getMovieDetail, getMovies } from "@/services/movie.service";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { MovieParams } from "@/types/movie.type";
 
 export function useMovies(params?: MovieParams) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["movies", params],
-    queryFn: () => getMovies(params),
+    queryFn: ({ pageParam = 1 }) => getMovies({ ...params, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+      return nextPage <= lastPage.total_pages ? nextPage : undefined;
+    },
+    initialPageParam: 1,
   });
 }
 

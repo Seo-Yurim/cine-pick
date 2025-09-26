@@ -1,5 +1,5 @@
 import { MovieParams } from "@/types/movie.type";
-import { get, post, remove } from "./method";
+import { get } from "./method";
 
 // 영화 목록
 export async function getMovies(params?: MovieParams) {
