@@ -61,6 +61,18 @@
         "name": "테스트4",
         "username": "test04"
       }
+    },
+    {
+      "id": "5739",
+      "movieId": 617126,
+      "userId": "bad7",
+      "rating": 9,
+      "content": "재밌다",
+      "createdAt": "2025-09-26T01:47:59.943Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
+      }
     }
   ],
   "favorites": [
@@ -81,6 +93,12 @@
       "movieId": 1311031,
       "userId": "1",
       "favorite": true
+    },
+    {
+      "id": "7446",
+      "movieId": 617126,
+      "userId": "bad7",
+      "favorite": true
     }
   ],
   "collections": [
@@ -95,6 +113,13 @@
           "movieId": 1311031
         }
       ]
+    },
+    {
+      "id": "cb3a",
+      "title": "컬렉션",
+      "description": "컬렉션이에요",
+      "userId": "bad7",
+      "movies": []
     }
   ],
   "watches": [

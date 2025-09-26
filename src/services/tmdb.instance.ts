@@ -9,21 +9,8 @@ const tmdbInstance = axios.create({
   params: { language: "ko" },
 });
 
-// 로딩
-
 tmdbInstance.interceptors.request.use(
-  (config) => {
-    const sessionId = localStorage.getItem("session_id");
-
-    if (sessionId) {
-      config.params = {
-        ...config.params,
-        session_id: sessionId,
-      };
-    }
-
-    return config;
-  },
+  (config) => config,
   (error) => Promise.reject(error),
 );
 

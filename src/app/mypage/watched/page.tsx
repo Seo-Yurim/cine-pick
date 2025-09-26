@@ -15,9 +15,13 @@ export default function WatchedPage() {
     <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
       <h1 className="text-2xl font-bold">시청기록</h1>
       <div className="grid grid-cols-3 gap-4 p-4">
-        {watchedList?.map((watched: WatchesItem) => (
-          <WatchedListComponent key={watched.id} movieId={watched.movieId} />
-        ))}
+        {watchedList?.length > 0 ? (
+          watchedList?.map((watched: WatchesItem) => (
+            <WatchedListComponent key={watched.id} movieId={watched.movieId} />
+          ))
+        ) : (
+          <p>아직 시청 기록이 없어요.</p>
+        )}
       </div>
     </main>
   );

@@ -7,8 +7,6 @@ const localInstance = axios.create({
   },
 });
 
-// 로딩
-
 localInstance.interceptors.response.use(
   (res) => res,
   (err) => {
