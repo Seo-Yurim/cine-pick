@@ -1,6 +1,5 @@
 import { getPersonIds } from "@/services/search.service";
 import { useState } from "react";
-import { DateValue } from "react-aria-components";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
 import { MovieParams } from "@/types/movie.type";
@@ -13,7 +12,8 @@ import {
   TagComponent,
   ToggleButtonComponent,
 } from "@/components";
-import { DatePickerComponent } from "@/components/date-picker/date-picker.component";
+import BasicDatePicker from "@/components/date-picker/date-picker.component";
+import DatePickerComponent from "@/components/date-picker/date-picker.component";
 
 // constants
 const sortOptions = [
@@ -31,8 +31,8 @@ const toggleMenus = [
 ];
 
 export type DatePickerType = {
-  start: DateValue | null;
-  end: DateValue | null;
+  start: Date | null;
+  end: Date | null;
 };
 
 interface MoviesHeaderProps {

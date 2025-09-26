@@ -1,39 +1,70 @@
-.react-aria-DateRangePicker {
-  .react-aria-Group {
-    @apply relative flex w-full min-w-[320px] items-center whitespace-nowrap;
+.react-datepicker {
+  font-family: "Pretendard", sans-serif;
 
-    &[data-selected] {
-      background-color: #6a9e9c;
+  border-radius: 1rem;
+  border: 1px solid white;
+
+  &__input-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    color: black;
+
+    input {
+      padding: 0.5rem 2rem;
+      border-radius: 0.8rem;
     }
   }
 
-  .react-aria-DateInput {
-    @apply text-lg;
-  }
-}
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 
-.react-aria-Popover[data-trigger="DateRangePicker"] {
-  @apply rounded-xl border bg-point-color p-4;
-}
+    padding: 1rem;
 
-.react-aria-CalendarCell {
-  @apply flex items-center justify-center p-2 transition-colors duration-200;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
 
-  &[data-selected] {
-    background-color: #6a9e9c;
+    color: black;
   }
 
-  &[data-hovered] {
-    background-color: #6a9e9c;
+  &__day-names {
+    margin: 0.4rem;
+    padding: 1rem 1rem 0;
   }
 
-  &[data-in-range] {
-    background-color: #6a9e9c;
+  &__day-name {
+    width: 2rem;
+    height: 2rem;
   }
 
-  &[data-range-start],
-  &[data-range-end] {
-    background-color: #6a9e9c;
-    font-weight: 700;
+  &__month {
+    padding: 0 1rem 1rem;
+  }
+
+  &__day {
+    width: 2rem;
+    height: 2rem;
+
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+
+    vertical-align: middle;
+
+    &--selected {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    &--today {
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    &:hover {
+      background-color: #e0e7ff;
+    }
   }
 }
