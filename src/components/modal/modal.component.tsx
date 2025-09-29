@@ -16,11 +16,12 @@ export function ModalComponent({ children, title, isOpen, onClose, ...props }: M
   return (
     <Modal
       isOpen={isOpen}
+      onClick={onClose}
       onOpenChange={(open) => {
         if (!open) onClose();
       }}
     >
-      <Dialog {...(!title ? { "aria-label": "모달" } : {})} {...props}>
+      <Dialog aria-label="모달" onClick={(e) => e.stopPropagation()} {...props}>
         <div className="flex items-center justify-between gap-4">
           {title && <Heading slot="title">{title}</Heading>}
           <ImCancelCircle
