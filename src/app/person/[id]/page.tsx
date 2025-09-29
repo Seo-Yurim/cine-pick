@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { ReactNode } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
-import { MovieListComponent } from "@/components";
+import { Slider } from "@/components";
 
 const genderMapping: Record<string, ReactNode> = {
   1: <IoMdFemale className="h-6 w-6" />,
@@ -52,8 +52,8 @@ export default function PersonDetailPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <MovieListComponent title="연기 활동" data={personMovies?.cast} btnShow={false} />
-        <MovieListComponent title="제작 참여 작품" data={personMovies?.crew} btnShow={false} />
+        <Slider title="연기 활동" data={personMovies?.cast} btnShow={false} />
+        <Slider title="제작 참여 작품" data={personMovies?.crew} btnShow={false} />
       </section>
     </main>
   );

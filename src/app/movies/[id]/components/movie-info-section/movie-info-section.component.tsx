@@ -10,10 +10,9 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useGetCollectionList, usePatchCollectionMovie } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
-import { LoadingComponent, RatingComponent } from "@/components";
+import { RatingComponent, Slider } from "@/components";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
 import { MenuComponent } from "@/components/menu.component";
-import { PersonListComponent } from "../index";
 import { WatchedControlComponent } from "./watched.compoent";
 
 const statusMapping: Record<string, string> = {
@@ -131,8 +130,8 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
           </div>
 
           <div className="flex flex-col gap-4">
-            <PersonListComponent type="cast" creditData={creditData.cast} />
-            <PersonListComponent type="crew" creditData={creditData.crew} />
+            <Slider title="출연진" type="cast" data={creditData.cast} btnShow={false} />
+            <Slider title="제작진" type="crew" data={creditData.crew} btnShow={false} />
           </div>
         </div>
       </div>

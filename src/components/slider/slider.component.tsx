@@ -5,17 +5,19 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
-import { MovieItem } from "@/types/movie.type";
+import { MovieCast, MovieCrew, MovieItem } from "@/types/movie.type";
 import { ButtonComponent } from "../button/button.component";
 import { MovieCardComponent } from "../movie-card.component";
+import { PersonCard } from "../person-card.component";
 import "./slider.component.scss";
 
-interface MovieListProps {
+interface SliderProps {
   title: string;
+  data: MovieItem[] | MovieCast[] | MovieCrew[];
   bgColor?: string;
   btnText?: string;
   btnShow?: boolean;
-  data: MovieItem[];
+  type?: "movie" | "cast" | "crew";
 }
 
 export function Slider({
@@ -24,7 +26,8 @@ export function Slider({
   btnText = "전체보기",
   btnShow = true,
   data,
-}: MovieListProps) {
+  type = "movie",
+}: SliderProps) {
   return (
     <div style={{ backgroundColor: bgColor }} className="flex flex-col gap-4 p-6">
       <div className="flex items-center justify-between gap-8 text-nowrap">
@@ -67,8 +70,21 @@ export function Slider({
           }}
         >
           {data?.map((item) => (
-            <SwiperSlide key={item.id} className="flex h-[600px] items-stretch justify-center p-4">
-              <MovieCardComponent data={item} />
+            <SwiperSlide
+              key={
+                type === "movie"
+                  ? (item as MovieItem).id
+                  : (item as MovieCast | MovieCrew).credit_id
+              }
+              className="flex h-[600px] items-stretch justify-center p-4"
+            >
+              {type === "movie" ? (
+                <MovieCardComponent data={item as MovieItem} />
+              ) : type === "cast" ? (
+                <PersonCard type="cast" creditData={item as MovieCast} />
+              ) : (
+                <PersonCard type="crew" creditData={item as MovieCrew} />
+              )}
             </SwiperSlide>
           ))}
         </Swiper>
