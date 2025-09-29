@@ -1,4 +1,4 @@
-import { DatePickerType } from "@/app/movies/components/movies-header.component";
+import { DatePickerType } from "@/app/movies/_components/movies-header.component";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

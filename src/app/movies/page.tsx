@@ -5,8 +5,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieItem, MovieParams } from "@/types/movie.type";
 import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
-import MoviesHeaderComponent from "./components/movies-header.component";
-import { ScrollToTop } from "./components/scroll-to-top.component";
+import MoviesHeaderComponent from "./_components/movies-header.component";
+import { ScrollToTop } from "./_components/scroll-to-top.component";
 
 export default function MoviesPage() {
   const [activeTab, setActiveTab] = useState<string>("grid");
