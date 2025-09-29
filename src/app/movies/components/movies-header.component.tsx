@@ -12,7 +12,6 @@ import {
   TagComponent,
   ToggleButtonComponent,
 } from "@/components";
-import BasicDatePicker from "@/components/date-picker/date-picker.component";
 import DatePickerComponent from "@/components/date-picker/date-picker.component";
 
 // constants
@@ -42,7 +41,7 @@ interface MoviesHeaderProps {
 }
 
 export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHeaderProps) {
-  const { modals, toggleModal } = useModalStore();
+  const { modals, closeModal, toggleModal } = useModalStore();
   const [sortOption, setSortOption] = useState<{ label: string; value: string }>(sortOptions[0]);
   const [genreSelected, setGenreSelected] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<DatePickerType>({
@@ -53,16 +52,30 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
 
   const { data: genres } = useGenres();
 
-  const handlefilterSubmit = async () => {
+  const handleFilterSubmit = async () => {
     const personIds = await getPersonIds(tagList);
 
     onParams({
       sort_by: sortOption.value,
-      with_genres: genreSelected.toString(),
-      with_people: personIds.toString(),
+      with_genres: genreSelected.join("|"),
+      with_people: personIds.join("|"),
       "primary_release_date.gte": selectedDate.start?.toString(),
       "primary_release_date.lte": selectedDate.end?.toString(),
     });
+  };
+
+  const handleFilterReset = () => {
+    onParams({
+      sort_by: sortOption.value,
+      with_genres: "",
+      with_people: "",
+      "primary_release_date.gte": "",
+      "primary_release_date.lte": "",
+    });
+
+    setGenreSelected([]);
+    setSelectedDate({ start: null, end: null });
+    setTagList([]);
   };
 
   return (
@@ -82,23 +95,30 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
           </ButtonComponent>
 
           {modals.sortMenu && (
-            <div className="absolute top-full z-50 mt-2 flex flex-col gap-2 rounded-xl border bg-black p-4 text-lg">
-              {sortOptions.map((option) => (
-                <ButtonComponent
-                  key={option.value}
-                  onClick={() => {
-                    setSortOption(option);
-                    onParams((prev) => ({
-                      ...prev,
-                      sort_by: option.value,
-                    }));
-                  }}
-                  className={`${sortOption === option && "text-point-color"} hover:bg-white/50`}
-                >
-                  {option.label}
-                </ButtonComponent>
-              ))}
-            </div>
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => closeModal("sortMenu")} />
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="absolute top-full z-50 mt-2 flex flex-col gap-2 rounded-xl border bg-black p-4 text-lg"
+              >
+                {sortOptions.map((option) => (
+                  <ButtonComponent
+                    key={option.value}
+                    onClick={() => {
+                      closeModal("sortMenu");
+                      setSortOption(option);
+                      onParams((prev) => ({
+                        ...prev,
+                        sort_by: option.value,
+                      }));
+                    }}
+                    className={`${sortOption === option && "text-point-color"} hover:bg-white/50`}
+                  >
+                    {option.label}
+                  </ButtonComponent>
+                ))}
+              </div>
+            </>
           )}
         </div>
 
@@ -142,7 +162,11 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
               </div>
             </div>
           </div>
-          <ButtonComponent onPress={handlefilterSubmit}>필터링 적용</ButtonComponent>
+
+          <div className="flex items-center gap-4">
+            <ButtonComponent onPress={handleFilterSubmit}>필터링 적용</ButtonComponent>
+            <ButtonComponent onPress={handleFilterReset}>필터링 초기화</ButtonComponent>
+          </div>
         </div>
       )}
     </div>

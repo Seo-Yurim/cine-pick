@@ -21,9 +21,7 @@ export default function RootLayout({
           <LoadingComponent label="로딩 중 ... " isIndeterminate />
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
-          <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
-            {children}
-          </main>
+          <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8">{children}</main>
         </QueryClientProvider>
       </body>
     </html>
