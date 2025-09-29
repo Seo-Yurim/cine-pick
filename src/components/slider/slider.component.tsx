@@ -3,92 +3,43 @@
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Link from "next/link";
-import { MovieCast, MovieCrew, MovieItem } from "@/types/movie.type";
-import { ButtonComponent } from "../button/button.component";
-import { MovieCardComponent } from "../movie-card.component";
-import { PersonCard } from "../person-card.component";
+import { Swiper } from "swiper/react";
+import { ReactNode } from "react";
 import "./slider.component.scss";
 
 interface SliderProps {
-  title: string;
-  data: MovieItem[] | MovieCast[] | MovieCrew[];
-  bgColor?: string;
-  btnText?: string;
-  btnShow?: boolean;
-  type?: "movie" | "cast" | "crew";
+  children?: ReactNode;
 }
 
-export function Slider({
-  title,
-  bgColor,
-  btnText = "전체보기",
-  btnShow = true,
-  data,
-  type = "movie",
-}: SliderProps) {
+export function Slider({ children }: SliderProps) {
   return (
-    <div style={{ backgroundColor: bgColor }} className="flex flex-col gap-4 p-6">
-      <div className="flex items-center justify-between gap-8 text-nowrap">
-        <h2 className="text-3xl font-bold">{title}</h2>
-
-        <div className="w-full border-b" />
-        {btnShow &&
-          (btnText === "전체보기" ? (
-            <Link href="/movies">
-              <ButtonComponent>전체보기</ButtonComponent>
-            </Link>
-          ) : (
-            <ButtonComponent>{btnText}</ButtonComponent>
-          ))}
-      </div>
-
-      <div>
-        <Swiper
-          slidesPerView={4}
-          spaceBetween={1}
-          navigation={true}
-          modules={[Navigation]}
-          breakpoints={{
-            1400: {
-              slidesPerView: 4,
-              spaceBetween: 1,
-            },
-            1080: {
-              slidesPerView: 3,
-              spaceBetween: 8,
-            },
-            624: {
-              slidesPerView: 2,
-              spaceBetween: 5,
-            },
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 5,
-            },
-          }}
-        >
-          {data?.map((item) => (
-            <SwiperSlide
-              key={
-                type === "movie"
-                  ? (item as MovieItem).id
-                  : (item as MovieCast | MovieCrew).credit_id
-              }
-              className="flex h-[600px] items-stretch justify-center p-4"
-            >
-              {type === "movie" ? (
-                <MovieCardComponent data={item as MovieItem} />
-              ) : type === "cast" ? (
-                <PersonCard type="cast" creditData={item as MovieCast} />
-              ) : (
-                <PersonCard type="crew" creditData={item as MovieCrew} />
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+    <div>
+      <Swiper
+        slidesPerView={4}
+        spaceBetween={1}
+        navigation={true}
+        modules={[Navigation]}
+        breakpoints={{
+          1400: {
+            slidesPerView: 4,
+            spaceBetween: 1,
+          },
+          1080: {
+            slidesPerView: 3,
+            spaceBetween: 8,
+          },
+          624: {
+            slidesPerView: 2,
+            spaceBetween: 5,
+          },
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 5,
+          },
+        }}
+      >
+        {children}
+      </Swiper>
     </div>
   );
 }

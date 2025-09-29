@@ -1,0 +1,26 @@
+.slider-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 3rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  &__title {
+    text-wrap: nowrap;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
