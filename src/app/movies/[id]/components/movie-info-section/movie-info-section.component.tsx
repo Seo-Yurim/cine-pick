@@ -1,5 +1,6 @@
 "use client";
 
+import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -11,8 +12,10 @@ import { useGetCollectionList, usePatchCollectionMovie } from "@/queries/collect
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
 import { RatingComponent, Slider } from "@/components";
+import { PersonCard } from "@/components/card-template/person-card.component";
 import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
 import { MenuComponent } from "@/components/menu.component";
+import { SliderSection } from "@/components/slider-section/slider-section.component";
 import { WatchedControlComponent } from "./watched.compoent";
 
 const statusMapping: Record<string, string> = {
@@ -130,8 +133,25 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
           </div>
 
           <div className="flex flex-col gap-4">
-            <Slider title="출연진" type="cast" data={creditData.cast} btnShow={false} />
-            <Slider title="제작진" type="crew" data={creditData.crew} btnShow={false} />
+            <SliderSection title="출연진">
+              <Slider>
+                {creditData.cast?.map((cast) => (
+                  <SwiperSlide>
+                    <PersonCard type="cast" creditData={cast} />
+                  </SwiperSlide>
+                ))}
+              </Slider>
+            </SliderSection>
+
+            <SliderSection title="제작진">
+              <Slider>
+                {creditData.crew?.map((crew) => (
+                  <SwiperSlide>
+                    <PersonCard type="crew" creditData={crew} />
+                  </SwiperSlide>
+                ))}
+              </Slider>
+            </SliderSection>
           </div>
         </div>
       </div>

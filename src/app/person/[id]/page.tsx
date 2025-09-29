@@ -1,11 +1,14 @@
 "use client";
 
+import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { ReactNode } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
+import { MovieItem } from "@/types/movie.type";
 import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
-import { Slider } from "@/components";
+import { MovieCardComponent, Slider } from "@/components";
+import { SliderSection } from "@/components/slider-section/slider-section.component";
 
 const genderMapping: Record<string, ReactNode> = {
   1: <IoMdFemale className="h-6 w-6" />,
@@ -52,8 +55,25 @@ export default function PersonDetailPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <Slider title="연기 활동" data={personMovies?.cast} btnShow={false} />
-        <Slider title="제작 참여 작품" data={personMovies?.crew} btnShow={false} />
+        <SliderSection title="연기 활동">
+          <Slider>
+            {personMovies.cast?.map((movie: MovieItem) => (
+              <SwiperSlide>
+                <MovieCardComponent data={movie} />
+              </SwiperSlide>
+            ))}
+          </Slider>
+        </SliderSection>
+
+        <SliderSection title="제작 활동">
+          <Slider>
+            {personMovies.crew?.map((movie: MovieItem) => (
+              <SwiperSlide>
+                <MovieCardComponent data={movie} />
+              </SwiperSlide>
+            ))}
+          </Slider>
+        </SliderSection>
       </section>
     </main>
   );

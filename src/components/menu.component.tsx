@@ -6,16 +6,23 @@ import { ButtonComponent } from "./button/button.component";
 interface MenuProps {
   menuList: CollectionList[];
   btnIcon?: ReactNode;
+  btnText?: string;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSelectCollection?: (collection: CollectionList) => void;
 }
 
-export function MenuComponent({ menuList, btnIcon, onSelectCollection, ...props }: MenuProps) {
+export function MenuComponent({
+  menuList,
+  btnIcon,
+  btnText,
+  onSelectCollection,
+  ...props
+}: MenuProps) {
   return (
     <MenuTrigger {...props}>
       <ButtonComponent className="rounded-full border p-2 focus:outline-none">
-        {btnIcon}
+        {btnIcon} {btnText}
       </ButtonComponent>
       <Popover>
         <Menu className="rounded-xl border bg-black p-2">
