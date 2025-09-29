@@ -49,7 +49,7 @@ export function MovieCardComponent({
 
       <div className="flex flex-col items-end gap-4 text-background">
         <div className="flex w-full justify-between gap-4">
-          <p className="text-xl font-bold">{data.title}</p>
+          <p className="truncate text-xl font-bold">{data.title}</p>
           <p className="text-nowrap py-1 text-sm text-gray-500">{data.release_date}</p>
         </div>
       </div>
