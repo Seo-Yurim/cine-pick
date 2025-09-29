@@ -8,7 +8,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { useDeleteCollection, useGetCollectionList } from "@/queries/collections.query";
 import { ButtonComponent } from "@/components";
-import { CollectionFormModal } from "./components/collection-form-modal.component";
+import { CollectionFormModal } from "./_components/collection-form-modal.component";
 
 export default function MyCollectionPage() {
   const { user } = useAuthStore();

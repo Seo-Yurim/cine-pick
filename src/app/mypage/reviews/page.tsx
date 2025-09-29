@@ -3,7 +3,7 @@
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useGetMyReviews } from "@/queries/reviews.query";
-import { MyReviewCard } from "./components/my-review-card.component";
+import { MyReviewCard } from "./_components/my-review-card.component";
 
 export default function MyReviewsPage() {
   const { user } = useAuthStore();

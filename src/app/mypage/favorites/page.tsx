@@ -3,7 +3,7 @@
 import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useGetMyFavoriteList } from "@/queries/favorites.query";
-import { FavoriteListComponent } from "./components/favorite-list.component";
+import { FavoriteListComponent } from "./_components/favorite-list.component";
 
 export default function MyFavoritePage() {
   const { user } = useAuthStore();

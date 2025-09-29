@@ -3,7 +3,7 @@
 import { WatchesItem } from "@/types/watches.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useGetWatchedList } from "@/queries/watches.query";
-import { WatchedListComponent } from "./components/watched-list.component";
+import { WatchedListComponent } from "./_components/watched-list.component";
 
 export default function WatchedPage() {
   const { user } = useAuthStore();
