@@ -39,18 +39,6 @@
       }
     },
     {
-      "id": "b78c",
-      "movieId": 1311031,
-      "userId": "bad7",
-      "rating": 1,
-      "content": "제가 만드는게 낫겠어요",
-      "createdAt": "2025-09-23T07:51:35.858Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
-    },
-    {
       "id": "2439",
       "movieId": 1038392,
       "userId": "bad7",
