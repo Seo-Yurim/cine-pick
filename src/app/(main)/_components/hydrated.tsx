@@ -17,7 +17,8 @@ export default function Hydrated() {
   });
 
   const { data: genres } = useGenres();
-  const { data: popularData } = useMovies({
+  const { data: popularData } = useMovies({ sort_by: "popularity.desc" });
+  const { data: popularDataWithGenres } = useMovies({
     sort_by: "popularity.desc",
     with_genres: activeTab.value,
   });
@@ -54,7 +55,7 @@ export default function Hydrated() {
         }
       >
         <Slider>
-          {popularData?.results.map((data: MovieItem) => (
+          {popularDataWithGenres?.results.map((data: MovieItem) => (
             <SwiperSlide key={data.id} className="p-4">
               <MovieCardComponent data={data} />
             </SwiperSlide>

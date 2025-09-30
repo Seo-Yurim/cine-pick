@@ -2,7 +2,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { EffectFade, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,15 +19,21 @@ interface HeroSectionProps {
 export function HeroSection({ popularData, genres }: HeroSectionProps) {
   return (
     <section>
+      <h2 className="bg-point-color/50 p-8 text-3xl font-bold">오늘의 인기 영화 TOP 3</h2>
       <Swiper
         spaceBetween={30}
         effect={"fade"}
+        centeredSlides={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
         navigation={true}
         pagination={{
           clickable: true,
         }}
         fadeEffect={{ crossFade: true }}
-        modules={[EffectFade, Navigation, Pagination]}
+        modules={[Autoplay, EffectFade, Navigation, Pagination]}
       >
         {popularData?.map((movie, idx) => (
           <SwiperSlide key={movie.id}>
@@ -62,7 +68,7 @@ export function HeroSection({ popularData, genres }: HeroSectionProps) {
 
               <div className="flex flex-col justify-center gap-12 rounded-xl bg-text-bg/70 p-8">
                 <div className="flex flex-wrap items-center justify-between gap-8">
-                  <h2 className="text-3xl font-bold">{movie.title}</h2>
+                  <h3 className="text-3xl font-bold">{movie.title}</h3>
                   <div className="flex items-center gap-4">
                     <p className="text-lg font-semibold">{movie.release_date}</p>
 
