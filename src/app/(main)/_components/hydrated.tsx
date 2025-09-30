@@ -7,6 +7,7 @@ import { useGenres, useMovies } from "@/queries/movie.query";
 import { MovieCardComponent, Slider } from "@/components";
 import { SelectComponent } from "@/components/select/select.component";
 import { SliderSection } from "../../../components/slider-section/slider-section.component";
+import { HeroSection } from "./hero-section.component";
 
 export default function Hydrated() {
   const today = new Date().toISOString().split("T")[0];
@@ -39,6 +40,7 @@ export default function Hydrated() {
 
   return (
     <>
+      <HeroSection popularData={popularData?.results?.slice(0, 3)} genres={genres?.genres} />
       <SliderSection
         title="인기 영화"
         controls={
