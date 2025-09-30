@@ -6,8 +6,18 @@
   font-weight: 500;
 
   transition:
-    color 3s ease,
-    background-color 3s ease;
+    color 0.3s ease,
+    background-color 0.3s ease;
+
+  @media (max-width: 1024px) {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
 
 .link-button {

@@ -5,14 +5,15 @@ import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useDeleteFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
-import { ButtonComponent } from "./button/button.component";
+import { ButtonComponent } from "@/components";
+import { TooltipComponent } from "@/components/tooltip/tooltip.component";
 
-interface FavoriteMovieProps {
+interface FavoriteControlComponentProps {
   defaultValue?: FavoriteMovieItem | null;
   movieId: number;
 }
 
-export function FavoriteMovieComponent({ defaultValue, movieId }: FavoriteMovieProps) {
+export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteControlComponentProps) {
   const { user } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -53,14 +54,19 @@ export function FavoriteMovieComponent({ defaultValue, movieId }: FavoriteMovieP
   };
 
   return (
-    <ButtonComponent>
-      <div onClick={handleFavorite} className="rounded-full border border-rose-600 p-2">
-        {favorited ? (
-          <IoIosHeart className="h-6 w-6 text-rose-600" />
-        ) : (
-          <IoIosHeartEmpty className="h-6 w-6 text-rose-600" />
-        )}
-      </div>
-    </ButtonComponent>
+    <TooltipComponent text="즐겨찾기" bgColor="#e11d48">
+      <ButtonComponent>
+        <div
+          onClick={handleFavorite}
+          className="rounded-full border-2 border-rose-600 p-3 transition-all duration-300 hover:scale-105"
+        >
+          {favorited ? (
+            <IoIosHeart size={30} className="text-rose-600" />
+          ) : (
+            <IoIosHeartEmpty size={30} className="text-rose-600" />
+          )}
+        </div>
+      </ButtonComponent>
+    </TooltipComponent>
   );
 }

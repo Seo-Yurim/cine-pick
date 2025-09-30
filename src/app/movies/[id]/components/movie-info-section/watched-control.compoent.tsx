@@ -6,13 +6,14 @@ import { WatchesItem } from "@/types/watches.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useDeleteWatchedMovie, usePostWatchedMovie } from "@/queries/watches.query";
 import { ButtonComponent } from "@/components";
+import { TooltipComponent } from "@/components/tooltip/tooltip.component";
 
-interface FavoriteMovieProps {
+interface WatchedControlProps {
   defaultValue?: WatchesItem | null;
   movieId: number;
 }
 
-export function WatchedControlComponent({ defaultValue, movieId }: FavoriteMovieProps) {
+export function WatchedControlComponent({ defaultValue, movieId }: WatchedControlProps) {
   const { user } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -59,14 +60,19 @@ export function WatchedControlComponent({ defaultValue, movieId }: FavoriteMovie
   };
 
   return (
-    <ButtonComponent>
-      <div onClick={handleWatched} className="rounded-full border border-sky-700 p-2">
-        {!watched ? (
-          <BsBookmarkPlus className="h-6 w-6 text-sky-700" />
-        ) : (
-          <BsBookmarkCheckFill className="h-6 w-6 text-sky-700" />
-        )}
-      </div>
-    </ButtonComponent>
+    <TooltipComponent text="시청기록 추가" bgColor="#0369a1">
+      <ButtonComponent>
+        <div
+          onClick={handleWatched}
+          className="rounded-full border-2 border-sky-700 p-3 transition-all duration-300 hover:scale-105"
+        >
+          {!watched ? (
+            <BsBookmarkPlus size={30} className="text-sky-700" />
+          ) : (
+            <BsBookmarkCheckFill size={30} className="text-sky-700" />
+          )}
+        </div>
+      </ButtonComponent>
+    </TooltipComponent>
   );
 }

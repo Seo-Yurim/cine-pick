@@ -83,12 +83,6 @@
       "favorite": true
     },
     {
-      "id": "81d0",
-      "movieId": 1311031,
-      "userId": "bad7",
-      "favorite": true
-    },
-    {
       "id": "bc43",
       "movieId": 1311031,
       "userId": "1",
@@ -97,6 +91,18 @@
     {
       "id": "7446",
       "movieId": 617126,
+      "userId": "bad7",
+      "favorite": true
+    },
+    {
+      "id": "d033",
+      "movieId": 1311031,
+      "userId": "bad7",
+      "favorite": true
+    },
+    {
+      "id": "6572",
+      "movieId": 1267319,
       "userId": "bad7",
       "favorite": true
     }
@@ -120,6 +126,20 @@
       "description": "컬렉션이에요",
       "userId": "bad7",
       "movies": []
+    },
+    {
+      "id": "b7ff",
+      "title": "테스트",
+      "description": "테스트요",
+      "userId": "bad7",
+      "movies": []
+    },
+    {
+      "id": "a6c6",
+      "title": "테스트2",
+      "description": "테스트입니다.",
+      "userId": "bad7",
+      "movies": []
     }
   ],
   "watches": [
@@ -133,6 +153,12 @@
       "id": "a478",
       "movieId": 617126,
       "userId": "1",
+      "watched": true
+    },
+    {
+      "id": "5ff5",
+      "movieId": 1311031,
+      "userId": "bad7",
       "watched": true
     }
   ]

@@ -2,21 +2,17 @@
 
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { FaFolderPlus } from "react-icons/fa";
-import { CollectionList } from "@/types/collections.type";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { useAuthStore } from "@/stores/auth.store";
-import { useGetCollectionList, usePatchCollectionMovie } from "@/queries/collections.query";
+import { useGetCollectionList } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
 import { RatingComponent, Slider } from "@/components";
 import { PersonCard } from "@/components/card-template/person-card.component";
-import { FavoriteMovieComponent } from "@/components/favorite-movie.component";
-import { MenuComponent } from "@/components/menu.component";
 import { SliderSection } from "@/components/slider-section/slider-section.component";
-import { WatchedControlComponent } from "./watched.compoent";
+import { CollectionControlComponent } from "./collection-control.component";
+import { FavoriteControlComponent } from "./favorite-control.component";
+import { WatchedControlComponent } from "./watched-control.compoent";
 
 const statusMapping: Record<string, string> = {
   Rumored: "제작 미정",
@@ -37,39 +33,9 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
   const { user } = useAuthStore();
   const userId = user?.id as string;
 
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-  const addCollectionMovie = usePatchCollectionMovie();
-
   const { data: favoriteMovie } = useGetFavoriteMovie(userId, movieData.id);
   const { data: collectionList } = useGetCollectionList(userId);
   const { data: watchedMovie } = useGetWatchedDetail(userId, movieData.id);
-
-  const handleSelectCollection = (collection: CollectionList) => {
-    if (!collection) return toast.error("영화를 추가할 컬렉션을 선택해주세요!");
-
-    const alreadyExists = collection.movies?.some((movie) => movie.movieId === movieData.id);
-
-    if (alreadyExists) {
-      return toast.error("이미 컬렉션에 추가된 영화입니다.");
-    }
-
-    const collectionMovie = {
-      collectionId: collection.id,
-      movieId: movieData.id,
-    };
-
-    const updatedMovies = [...collection.movies, collectionMovie];
-
-    addCollectionMovie.mutate(
-      { collectionId: collection.id, collectionMovie: updatedMovies },
-      {
-        onSuccess: () => {
-          toast.success("컬렉션에 영화를 추가했어요!");
-        },
-      },
-    );
-  };
 
   return (
     <section className="flex w-full flex-col gap-8">
@@ -108,18 +74,16 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
             <p className="rounded-xl border px-4 py-1">{statusMapping[movieData.status]}</p>
           </div>
 
-          <div className="flex items-center gap-4">
-            <FavoriteMovieComponent
+          <div className="flex items-center gap-2">
+            <FavoriteControlComponent
               defaultValue={!user ? null : favoriteMovie}
               movieId={movieData.id}
             />
 
-            <MenuComponent
-              isOpen={isMenuOpen}
-              onOpenChange={() => setIsMenuOpen(!isMenuOpen)}
-              btnIcon={<FaFolderPlus className="h-6 w-6" />}
-              menuList={collectionList || []}
-              onSelectCollection={handleSelectCollection}
+            <CollectionControlComponent
+              userId={userId}
+              movieData={movieData}
+              collectionList={collectionList}
             />
 
             <WatchedControlComponent
@@ -132,7 +96,7 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
             <p>{rating}점</p>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col">
             <SliderSection title="출연진">
               <Slider>
                 {creditData.cast?.map((cast) => (
