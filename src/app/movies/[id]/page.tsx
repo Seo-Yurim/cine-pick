@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import { useGetReviews } from "@/queries/reviews.query";
-import { MovieInfoSection, ReviewSection } from "./components";
+import { MovieInfoSection, ReviewSection } from "./_components";
 
 export default function MoviesDetailPage() {
   const { user } = useAuthStore();
