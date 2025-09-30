@@ -1,5 +1,17 @@
 .button {
-  @apply relative px-4 py-2 text-lg font-medium text-white transition-colors duration-300;
+  padding: 0.5rem 1rem;
+
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+
+  transition:
+    color 3s ease,
+    background-color 3s ease;
+}
+
+.link-button {
+  position: relative;
 
   &:before {
     content: "";

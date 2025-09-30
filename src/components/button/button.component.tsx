@@ -1,11 +1,21 @@
 "use client";
 
 import { Button, ButtonProps } from "react-aria-components";
-import styles from "./button.component.module.scss";
+import "./button.component.scss";
 
-export function ButtonComponent({ children, ...props }: ButtonProps) {
+interface ButtonComponent extends ButtonProps {
+  btnType?: string;
+  className?: string;
+}
+
+export function ButtonComponent({
+  btnType = "default",
+  className,
+  children,
+  ...props
+}: ButtonComponent) {
   return (
-    <Button className={styles.button} {...props}>
+    <Button className={`button ${btnType === "link" && "link-button"} ${className}`} {...props}>
       {children}
     </Button>
   );
