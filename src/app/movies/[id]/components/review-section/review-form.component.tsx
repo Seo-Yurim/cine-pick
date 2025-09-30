@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { usePatchReview, usePostReview } from "@/queries/reviews.query";
@@ -46,6 +47,9 @@ export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: 
         username,
       },
     };
+
+    if (reviewData.rating === 0) return toast.error("평점을 선택해주세요!");
+    if (reviewData.content === "") return toast.error("리뷰를 작성해주세요!");
 
     // 리뷰 수정
     if (defaultValue) {

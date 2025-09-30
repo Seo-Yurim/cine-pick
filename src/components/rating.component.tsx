@@ -31,27 +31,27 @@ export function RatingComponent({ type, defaultValue = 0, rating = 0, setRating 
     }
   };
 
-  const getStarIcon = (index: number) => {
-    const value = (index + 1) * 2;
+  const getStarIcon = (idx: number) => {
+    const value = idx + 1;
     const currentRating = type === "select" ? hoverRating || rating : defaultValue;
 
     if (currentRating >= value) {
-      return <FaStar className="h-10 w-10 text-yellow-400" key={index} />;
-    } else if (currentRating >= value - 1) {
-      return <FaStarHalfAlt className="h-10 w-10 text-yellow-400" key={index} />;
+      return <FaStar className="h-10 w-10 text-yellow-400" key={idx} />;
+    } else if (currentRating >= value - 0.5) {
+      return <FaStarHalfAlt className="h-10 w-10 text-yellow-400" key={idx} />;
     } else {
-      return <FaRegStar className="h-10 w-10 text-gray-300" key={index} />;
+      return <FaRegStar className="h-10 w-10 text-gray-300" key={idx} />;
     }
   };
 
   return (
     <div className={`flex ${type === "select" ? "cursor-pointer" : ""} gap-4`}>
-      {Array.from({ length: 5 }, (_, index) => {
-        const halfValue = index * 2 + 1;
-        const fullValue = (index + 1) * 2;
+      {Array.from({ length: 5 }, (_, idx) => {
+        const halfValue = idx + 0.5;
+        const fullValue = idx + 1;
 
         return (
-          <span key={index} className="relative inline-block h-10 w-10">
+          <span key={idx} className="relative inline-block h-10 w-10">
             {type === "select" && (
               <>
                 <span
@@ -70,7 +70,7 @@ export function RatingComponent({ type, defaultValue = 0, rating = 0, setRating 
               </>
             )}
 
-            {getStarIcon(index)}
+            {getStarIcon(idx)}
           </span>
         );
       })}

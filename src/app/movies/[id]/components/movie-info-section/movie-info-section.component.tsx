@@ -3,7 +3,6 @@
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
-import { useAuthStore } from "@/stores/auth.store";
 import { useGetCollectionList } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
@@ -24,15 +23,13 @@ const statusMapping: Record<string, string> = {
 };
 
 interface MovieInfoProps {
+  userId: string;
   movieData: MovieDetailItem;
   creditData: MovieCreditResponse;
   rating: number;
 }
 
-export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoProps) {
-  const { user } = useAuthStore();
-  const userId = user?.id as string;
-
+export function MovieInfoSection({ userId, movieData, creditData, rating }: MovieInfoProps) {
   const { data: favoriteMovie } = useGetFavoriteMovie(userId, movieData.id);
   const { data: collectionList } = useGetCollectionList(userId);
   const { data: watchedMovie } = useGetWatchedDetail(userId, movieData.id);
@@ -88,7 +85,7 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
             {/* 컨트롤 영역 (즐겨찾기, 컬렉션 추가, 시청기록 추가) */}
             <div className="flex items-center gap-2">
               <FavoriteControlComponent
-                defaultValue={!user ? null : favoriteMovie}
+                defaultValue={!userId ? null : favoriteMovie}
                 movieId={movieData.id}
               />
 
@@ -99,7 +96,7 @@ export function MovieInfoSection({ movieData, creditData, rating }: MovieInfoPro
               />
 
               <WatchedControlComponent
-                defaultValue={!user ? null : watchedMovie}
+                defaultValue={!userId ? null : watchedMovie}
                 movieId={movieData.id}
               />
             </div>

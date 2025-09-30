@@ -61,6 +61,66 @@
         "name": "테스트4",
         "username": "test04"
       }
+    },
+    {
+      "id": "b9ca",
+      "movieId": 1311031,
+      "userId": "bad7",
+      "rating": 10,
+      "content": "저의 인생 애니메이션이라고 할 수 있어요. 진짜 재밌어요 다들 꼭 보세요 !",
+      "createdAt": "2025-09-30T08:41:19.038Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
+      }
+    },
+    {
+      "id": "8fb9",
+      "movieId": 1267319,
+      "userId": "bad7",
+      "rating": 5,
+      "content": "너무 재밌는 영화.",
+      "createdAt": "2025-09-30T09:08:49.137Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
+      }
+    },
+    {
+      "id": "3b82",
+      "movieId": 1267319,
+      "userId": "1",
+      "rating": 2,
+      "content": "그냥 그랬어요",
+      "createdAt": "2025-09-30T09:09:09.672Z",
+      "user": {
+        "name": "테스트1",
+        "username": "test01"
+      }
+    },
+    {
+      "id": "0e22",
+      "movieId": 1267319,
+      "userId": "2",
+      "rating": 3,
+      "content": "그냥 저냥 무난하네요",
+      "createdAt": "2025-09-30T09:13:28.031Z",
+      "user": {
+        "name": "테스트2",
+        "username": "test02"
+      }
+    },
+    {
+      "id": "c137",
+      "movieId": 1267319,
+      "userId": "80f1",
+      "rating": 0.5,
+      "content": "최악!",
+      "createdAt": "2025-09-30T09:17:05.721Z",
+      "user": {
+        "name": "테스트3",
+        "username": "test03"
+      }
     }
   ],
   "favorites": [
