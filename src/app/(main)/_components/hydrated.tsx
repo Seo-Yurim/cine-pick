@@ -5,21 +5,27 @@ import { useMemo, useState } from "react";
 import { MovieItem } from "@/types/movie.type";
 import { useGenres, useMovies } from "@/queries/movie.query";
 import { MovieCardComponent, Slider } from "@/components";
-import { MenuComponent } from "@/components/menu.component";
+import { SelectComponent } from "@/components/select/select.component";
 import { SliderSection } from "../../../components/slider-section/slider-section.component";
 
 export default function Hydrated() {
   const today = new Date().toISOString().split("T")[0];
-  const [activeTab, setActiveTab] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<{ label: string; value: string }>({
+    label: "전체",
+    value: "",
+  });
 
   const { data: genres } = useGenres();
-  const { data: popularData } = useMovies({ sort_by: "popularity.desc", with_genres: activeTab });
+  const { data: popularData } = useMovies({
+    sort_by: "popularity.desc",
+    with_genres: activeTab.value,
+  });
   const { data: newData } = useMovies({
     sort_by: "primary_release_date.desc",
     "primary_release_date.lte": today,
   });
 
-  const toggleMenus = useMemo(() => {
+  const genresList = useMemo(() => {
     if (!genres) return [];
 
     return [
@@ -35,7 +41,15 @@ export default function Hydrated() {
     <>
       <SliderSection
         title="인기 영화"
-        controls={<MenuComponent menuList={toggleMenus} btnText={"장르"} />}
+        controls={
+          genresList.length > 0 && (
+            <SelectComponent
+              value={activeTab}
+              options={genresList}
+              onSelect={(option) => setActiveTab(option)}
+            />
+          )
+        }
       >
         <Slider>
           {popularData?.results.map((data: MovieItem) => (

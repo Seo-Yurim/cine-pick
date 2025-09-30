@@ -1,5 +1,5 @@
 import { getPersonIds } from "@/services/search.service";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
 import { MovieParams } from "@/types/movie.type";
@@ -13,6 +13,7 @@ import {
   ToggleButtonComponent,
 } from "@/components";
 import DatePickerComponent from "@/components/date-picker/date-picker.component";
+import { SelectComponent } from "@/components/select/select.component";
 
 // constants
 const sortOptions = [
@@ -41,7 +42,7 @@ interface MoviesHeaderProps {
 }
 
 export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHeaderProps) {
-  const { modals, closeModal, toggleModal } = useModalStore();
+  const { modals, toggleModal } = useModalStore();
   const [sortOption, setSortOption] = useState<{ label: string; value: string }>(sortOptions[0]);
   const [genreSelected, setGenreSelected] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<DatePickerType>({
@@ -51,6 +52,13 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
   const [tagList, setTagList] = useState<string[]>([]);
 
   const { data: genres } = useGenres();
+
+  useEffect(() => {
+    onParams((prevParams) => ({
+      ...prevParams,
+      sort_by: sortOption.value,
+    }));
+  }, [sortOption, onParams]);
 
   const handleFilterSubmit = async () => {
     const personIds = await getPersonIds(tagList);
@@ -79,7 +87,7 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4">
       <div className="flex w-full items-center justify-between gap-8">
         <h1 className="text-nowrap text-2xl font-bold">영화 찾아보기</h1>
         <SearchComponent placeholder="원하는 영화를 찾아보세요!" />
@@ -89,38 +97,11 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
           onChange={(tab) => onTab(tab)}
         />
 
-        <div className="relative flex flex-col items-center text-nowrap rounded-xl border p-1">
-          <ButtonComponent onClick={() => toggleModal("sortMenu")}>
-            {sortOption.label}
-          </ButtonComponent>
-
-          {modals.sortMenu && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => closeModal("sortMenu")} />
-              <div
-                onClick={(e) => e.stopPropagation()}
-                className="absolute top-full z-50 mt-2 flex flex-col gap-2 rounded-xl border bg-black p-4 text-lg"
-              >
-                {sortOptions.map((option) => (
-                  <ButtonComponent
-                    key={option.value}
-                    onClick={() => {
-                      closeModal("sortMenu");
-                      setSortOption(option);
-                      onParams((prev) => ({
-                        ...prev,
-                        sort_by: option.value,
-                      }));
-                    }}
-                    className={`${sortOption === option && "text-point-color"} hover:bg-white/50`}
-                  >
-                    {option.label}
-                  </ButtonComponent>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+        <SelectComponent
+          value={sortOption}
+          options={sortOptions}
+          onSelect={(option: { label: string; value: string }) => setSortOption(option)}
+        />
 
         <div
           onClick={() => toggleModal("filterMenu")}
@@ -169,6 +150,6 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }
