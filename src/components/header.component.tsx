@@ -41,7 +41,7 @@ export function Header() {
           <Link href="/" className="relative aspect-[3/1] w-48">
             <Image src="/logo.svg" className="object-contain" fill priority alt="logo" />
           </Link>
-          <div className="w-full animate-pulse rounded-xl bg-white/30 p-8" />
+          <div className="w-full animate-pulse rounded-xl bg-white/10 p-8" />
         </div>
       </header>
     );
