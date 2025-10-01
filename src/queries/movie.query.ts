@@ -1,6 +1,13 @@
 "use client";
 
-import { getGenres, getMovieCredits, getMovieDetail, getMovies } from "@/services/movie.service";
+import {
+  getGenres,
+  getMovieCredits,
+  getMovieDetail,
+  getMovies,
+  getNowPlayingMovies,
+  getPopularMovies,
+} from "@/services/movie.service";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { MovieParams } from "@/types/movie.type";
 
@@ -42,5 +49,21 @@ export function useGenres() {
   return useQuery({
     queryKey: ["genres"],
     queryFn: () => getGenres(),
+  });
+}
+
+// 인기 영화 목록
+export function useGetPopularMovies() {
+  return useQuery({
+    queryKey: ["movies", "popular"],
+    queryFn: () => getPopularMovies(),
+  });
+}
+
+// 상영중인 영화 목록
+export function useGetNowPlayingMovies() {
+  return useQuery({
+    queryKey: ["movies", "now-playing"],
+    queryFn: () => getNowPlayingMovies(),
   });
 }

@@ -24,3 +24,15 @@ export async function getMovieCredits(movieId: number) {
   const res = await get(`/movie/${movieId}/credits`, {}, "tmdb");
   return res.data;
 }
+
+// 인기 영화 목록
+export async function getPopularMovies() {
+  const res = await get("/movie/popular", {}, "tmdb");
+  return res.data.results;
+}
+
+// 상영중인 영화 목록
+export async function getNowPlayingMovies() {
+  const res = await get("/movie/now_playing", { region: "KR" }, "tmdb");
+  return res.data.results;
+}

@@ -19,7 +19,7 @@ interface HeroSectionProps {
 export function HeroSection({ popularData, genres }: HeroSectionProps) {
   return (
     <section>
-      <h2 className="bg-point-color/50 p-8 text-3xl font-bold">오늘의 인기 영화 TOP 3</h2>
+      <h2 className="bg-point-color/50 p-8 text-4xl font-bold">오늘의 인기 영화 TOP 3</h2>
       <Swiper
         spaceBetween={30}
         effect={"fade"}
