@@ -36,8 +36,8 @@ export function Header() {
 
   if (!hasHydrated) {
     return (
-      <header className="bg-header-bg p-8">
-        <div className="mx-auto flex w-full max-w-[1920px] items-center justify-between gap-8">
+      <header className="fixed z-50 flex h-28 w-full items-center justify-center bg-header-bg">
+        <div className="flex w-full max-w-[1920px] items-center gap-8 px-8">
           <Link href="/" className="relative aspect-[3/1] w-48">
             <Image src="/logo.svg" className="object-contain" fill priority alt="logo" />
           </Link>
