@@ -1,8 +1,7 @@
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,11 +11,11 @@ import { MovieGenres, MovieItem } from "@/types/movie.type";
 import { ButtonComponent } from "@/components";
 
 interface HeroSectionProps {
-  popularData: MovieItem[];
+  popularMovies: MovieItem[];
   genres: MovieGenres[];
 }
 
-export function HeroSection({ popularData, genres }: HeroSectionProps) {
+export function HeroSection({ popularMovies, genres }: HeroSectionProps) {
   return (
     <section>
       <h2 className="bg-point-color/50 p-8 text-4xl font-bold">오늘의 인기 영화 TOP 3</h2>
@@ -29,13 +28,10 @@ export function HeroSection({ popularData, genres }: HeroSectionProps) {
           disableOnInteraction: false,
         }}
         navigation={true}
-        pagination={{
-          clickable: true,
-        }}
         fadeEffect={{ crossFade: true }}
-        modules={[Autoplay, EffectFade, Navigation, Pagination]}
+        modules={[Autoplay, EffectFade, Navigation]}
       >
-        {popularData?.map((movie, idx) => (
+        {popularMovies?.map((movie, idx) => (
           <SwiperSlide key={movie.id}>
             <div
               className="absolute inset-0 h-[800px] w-full bg-cover bg-center opacity-40"

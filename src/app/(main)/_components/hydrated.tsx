@@ -26,12 +26,12 @@ export default function Hydrated() {
 
   return (
     <>
-      <HeroSection popularData={popularMoives?.slice(0, 3)} genres={genres?.genres} />
+      <HeroSection popularMovies={popularMoives?.slice(0, 3)} genres={genres?.genres} />
       <SliderSection title="💥 지금 인기있는 영화">
         <Slider>
-          {popularMoives?.map((data: MovieItem) => (
-            <SwiperSlide key={data.id} className="p-4">
-              <MovieCardComponent data={data} />
+          {popularMoives?.map((movie: MovieItem) => (
+            <SwiperSlide key={movie.id} className="p-4">
+              <MovieCardComponent data={movie} />
             </SwiperSlide>
           ))}
         </Slider>
@@ -39,9 +39,9 @@ export default function Hydrated() {
 
       <SliderSection title="🎞️ 극장에서 상영 중인 영화">
         <Slider>
-          {nowPlayingMovies?.map((data: MovieItem) => (
-            <SwiperSlide key={data.id} className="p-4">
-              <MovieCardComponent data={data} />
+          {nowPlayingMovies?.map((movie: MovieItem) => (
+            <SwiperSlide key={movie.id} className="p-4">
+              <MovieCardComponent data={movie} />
             </SwiperSlide>
           ))}
         </Slider>
@@ -49,9 +49,9 @@ export default function Hydrated() {
 
       <SliderSection title="🆕 새로 개봉한 국내 영화">
         <Slider>
-          {newMovies?.results.map((data: MovieItem) => (
-            <SwiperSlide key={data.id} className="p-4">
-              <MovieCardComponent data={data} />
+          {newMovies?.results.map((movie: MovieItem) => (
+            <SwiperSlide key={movie.id} className="p-4">
+              <MovieCardComponent data={movie} />
             </SwiperSlide>
           ))}
         </Slider>
