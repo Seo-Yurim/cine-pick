@@ -26,8 +26,12 @@ export default function Hydrated() {
 
   return (
     <>
-      <HeroSection popularMovies={popularMoives?.slice(0, 3)} genres={genres?.genres} />
-      <SliderSection title="💥 지금 인기있는 영화">
+      <HeroSection
+        popularMovies={popularMoives?.slice(0, 3)}
+        genres={genres?.genres}
+        isLoading={!popularMoives}
+      />
+      <SliderSection title="💥 지금 인기있는 영화" isLoading={!popularMoives}>
         <Slider>
           {popularMoives?.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
@@ -37,7 +41,7 @@ export default function Hydrated() {
         </Slider>
       </SliderSection>
 
-      <SliderSection title="🎞️ 극장에서 상영 중인 영화">
+      <SliderSection title="🎞️ 극장에서 상영 중인 영화" isLoading={!nowPlayingMovies}>
         <Slider>
           {nowPlayingMovies?.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
@@ -47,7 +51,7 @@ export default function Hydrated() {
         </Slider>
       </SliderSection>
 
-      <SliderSection title="🆕 새로 개봉한 국내 영화">
+      <SliderSection title="🆕 새로 개봉한 국내 영화" isLoading={!newMovies}>
         <Slider>
           {newMovies?.results.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
