@@ -109,18 +109,6 @@
         "name": "테스트2",
         "username": "test02"
       }
-    },
-    {
-      "id": "c137",
-      "movieId": 1267319,
-      "userId": "80f1",
-      "rating": 0.5,
-      "content": "최악!",
-      "createdAt": "2025-09-30T09:17:05.721Z",
-      "user": {
-        "name": "테스트3",
-        "username": "test03"
-      }
     }
   ],
   "favorites": [

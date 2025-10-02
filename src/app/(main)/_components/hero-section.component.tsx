@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaCrown } from "react-icons/fa6";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
+import { genresMatch } from "@/utils/genres-match.util";
 import { ButtonComponent } from "@/components";
 
 interface HeroSectionProps {
@@ -76,17 +77,14 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                       <p className="text-lg font-semibold">{movie.release_date}</p>
 
                       <div className="flex flex-wrap gap-2 text-sm text-gray-200">
-                        {movie.genre_ids
-                          .map((id) => genres?.find((genre: MovieGenres) => genre.id === id)?.name)
-                          .filter(Boolean)
-                          .map((name, idx) => (
-                            <span
-                              key={idx}
-                              className="rounded-lg bg-white/20 px-4 py-1 text-lg font-medium"
-                            >
-                              {name}
-                            </span>
-                          ))}
+                        {genresMatch(genres, movie.genre_ids).map((genre: string, idx: number) => (
+                          <span
+                            key={idx}
+                            className="rounded-lg bg-white/20 px-4 py-1 text-sm font-medium"
+                          >
+                            {genre}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   </div>

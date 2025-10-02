@@ -17,7 +17,7 @@ export function MyReviewCard({
 
   return (
     <div className="flex flex-col gap-8">
-      <MovieCardComponent data={movieDetail} />
+      <MovieCardComponent movie={movieDetail} />
 
       {filteredReviewList.map((review) => (
         <div key={review.id} className="flex flex-col gap-6 border-t p-4 last:border-y">

@@ -87,7 +87,7 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
   };
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 px-8 pt-8">
       <div className="flex w-full items-center justify-between gap-8">
         <h1 className="text-nowrap text-2xl font-bold">영화 찾아보기</h1>
         <SearchComponent placeholder="원하는 영화를 찾아보세요!" />

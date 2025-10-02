@@ -35,7 +35,7 @@ export default function Hydrated() {
         <Slider>
           {popularMoives?.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent data={movie} />
+              <MovieCardComponent movie={movie} genres={genres.genres} />
             </SwiperSlide>
           ))}
         </Slider>
@@ -45,7 +45,7 @@ export default function Hydrated() {
         <Slider>
           {nowPlayingMovies?.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent data={movie} />
+              <MovieCardComponent movie={movie} genres={genres.genres} />
             </SwiperSlide>
           ))}
         </Slider>
@@ -55,7 +55,7 @@ export default function Hydrated() {
         <Slider>
           {newMovies?.results.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent data={movie} />
+              <MovieCardComponent movie={movie} genres={genres.genres} />
             </SwiperSlide>
           ))}
         </Slider>

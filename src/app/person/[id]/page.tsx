@@ -59,7 +59,7 @@ export default function PersonDetailPage() {
           <Slider>
             {personMovies.cast?.map((movie: MovieItem) => (
               <SwiperSlide>
-                <MovieCardComponent data={movie} />
+                <MovieCardComponent movie={movie} />
               </SwiperSlide>
             ))}
           </Slider>
@@ -69,7 +69,7 @@ export default function PersonDetailPage() {
           <Slider>
             {personMovies.crew?.map((movie: MovieItem) => (
               <SwiperSlide>
-                <MovieCardComponent data={movie} />
+                <MovieCardComponent movie={movie} />
               </SwiperSlide>
             ))}
           </Slider>

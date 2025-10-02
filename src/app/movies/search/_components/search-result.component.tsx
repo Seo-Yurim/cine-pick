@@ -19,7 +19,7 @@ export default function SearchResultComponent() {
       <SearchComponent defaultValue={query} placeholder="원하는 영화를 찾아보세요!" />
       <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredData?.map((item: MovieItem) => (
-          <MovieCardComponent key={item.id} data={item} />
+          <MovieCardComponent key={item.id} movie={item} />
         ))}
       </section>
     </main>

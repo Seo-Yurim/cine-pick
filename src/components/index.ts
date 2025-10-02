@@ -1,6 +1,6 @@
 export * from "./button/button.component";
 export * from "./checkbox.component";
-export * from "./card-template/movie-card.component";
+export * from "./movie-template/movie-card.component";
 export * from "./search.component";
 export * from "./tag.component";
 export * from "./toggle-button.component";

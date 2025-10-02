@@ -14,7 +14,7 @@ export function CollectionMovieLIst({ movieId, onDeleteMovie }: CollectionMovieL
 
   return (
     <div className="flex flex-col items-center">
-      <MovieCardComponent data={movieDetail} minWidth="412px" />
+      <MovieCardComponent movie={movieDetail} />
       <ButtonComponent onClick={() => onDeleteMovie(movieId)} className="bg-red-500 text-white">
         삭제
       </ButtonComponent>

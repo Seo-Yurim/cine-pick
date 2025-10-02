@@ -5,6 +5,7 @@
     "^react(.*)",
     "^@/types/(.*)$",
     "^@/constants/(.*)$",
+    "^@/utils/(.*)$",
     "^@/stores/(.*)$",
     "^@/hooks/(.*)$",
     "^@/queries/(.*)$",
