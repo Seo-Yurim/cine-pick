@@ -31,6 +31,7 @@ export default function Hydrated() {
         genres={genres?.genres}
         isLoading={!popularMoives}
       />
+
       <SliderSection title="💥 지금 인기있는 영화" isLoading={!popularMoives}>
         <Slider>
           {popularMoives?.map((movie: MovieItem) => (

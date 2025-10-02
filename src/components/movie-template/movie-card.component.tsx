@@ -1,10 +1,10 @@
 "use client";
 
-import { genresMatch } from "@/utils/genres-match.util";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
+import { genresMatch } from "@/utils/genres-match.util";
 
 interface MovieCardProps {
   movie: MovieItem;
@@ -49,7 +49,7 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
         </div>
       </div>
 
-      <div className="absolute left-0 top-0 flex h-full w-full flex-col rounded-xl border bg-text-bg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <div className="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-xl border bg-text-bg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <div className="flex-1 overflow-y-auto p-4 scrollbar-none">
           <div className="flex items-center gap-4 pb-4">
             <h3 className="text-nowrap text-xl font-bold">줄거리</h3>
