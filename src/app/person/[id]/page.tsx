@@ -6,8 +6,11 @@ import { useParams } from "next/navigation";
 import { ReactNode } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { MovieItem } from "@/types/movie.type";
+import { genresMatch } from "@/utils/genres-match.util";
+import { useGenres } from "@/queries/movie.query";
 import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
 import { MovieCardComponent, Slider } from "@/components";
+import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
 import { SliderSection } from "@/components/slider-section/slider-section.component";
 
 const genderMapping: Record<string, ReactNode> = {
@@ -19,6 +22,7 @@ export default function PersonDetailPage() {
   const params = useParams();
   const personId = params.id as string;
 
+  const { data: genres } = useGenres();
   const { data: personData } = usePersonInfo(personId);
   const { data: personMoviesData } = usePersonMovies(personId);
 
@@ -26,7 +30,7 @@ export default function PersonDetailPage() {
   const personMovies = personMoviesData ?? [];
 
   return (
-    <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-12">
+    <>
       <h1 className="text-2xl font-bold">인물 상세 정보</h1>
 
       <section className="flex items-center gap-8 max-lg:flex-col">
@@ -54,27 +58,47 @@ export default function PersonDetailPage() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-4">
-        <SliderSection title="연기 활동">
+      <SliderSection title="연기 활동">
+        {personMovies.cast && genres ? (
           <Slider>
             {personMovies.cast?.map((movie: MovieItem) => (
-              <SwiperSlide>
-                <MovieCardComponent movie={movie} />
+              <SwiperSlide key={movie.id} className="p-4">
+                <MovieCardComponent
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
               </SwiperSlide>
             ))}
           </Slider>
-        </SliderSection>
+        ) : (
+          <div className="flex gap-8 p-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <MovieCardSkeletonComponent key={idx} />
+            ))}
+          </div>
+        )}
+      </SliderSection>
 
-        <SliderSection title="제작 활동">
+      <SliderSection title="제작 활동">
+        {personMovies.crew && genres ? (
           <Slider>
             {personMovies.crew?.map((movie: MovieItem) => (
-              <SwiperSlide>
-                <MovieCardComponent movie={movie} />
+              <SwiperSlide key={movie.id} className="p-4">
+                <MovieCardComponent
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
               </SwiperSlide>
             ))}
           </Slider>
-        </SliderSection>
-      </section>
-    </main>
+        ) : (
+          <div className="flex gap-8 p-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <MovieCardSkeletonComponent key={idx} />
+            ))}
+          </div>
+        )}
+      </SliderSection>
+    </>
   );
 }

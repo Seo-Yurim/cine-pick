@@ -141,6 +141,12 @@
       "movieId": 1267319,
       "userId": "bad7",
       "favorite": true
+    },
+    {
+      "id": "8e68",
+      "movieId": 1267319,
+      "userId": "80f1",
+      "favorite": true
     }
   ],
   "collections": [
@@ -176,6 +182,18 @@
       "description": "테스트입니다.",
       "userId": "bad7",
       "movies": []
+    },
+    {
+      "id": "3ac0",
+      "title": "좋아하는 영화",
+      "description": "좋아하는 영화 컬렉션",
+      "userId": "80f1",
+      "movies": [
+        {
+          "collectionId": "3ac0",
+          "movieId": 1267319
+        }
+      ]
     }
   ],
   "watches": [
@@ -195,6 +213,12 @@
       "id": "5ff5",
       "movieId": 1311031,
       "userId": "bad7",
+      "watched": true
+    },
+    {
+      "id": "7d4f",
+      "movieId": 1267319,
+      "userId": "80f1",
       "watched": true
     }
   ]

@@ -8,7 +8,6 @@ import { useGetCollectionList } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
 import { RatingComponent, Slider } from "@/components";
-import { SkeletonComponent } from "@/components/skeleton/skeleton.component";
 import { SliderSection } from "@/components/slider-section/slider-section.component";
 import { CollectionControlComponent } from "./collection-control.component";
 import { FavoriteControlComponent } from "./favorite-control.component";
@@ -45,96 +44,87 @@ export function MovieInfoSection({ userId, movieData, creditData, rating }: Movi
 
       <div className="flex justify-between gap-8 max-lg:flex-col max-lg:items-center">
         {/* 왼쪽 영역 (영화 포스터 + 컨트롤러 + 평점) */}
-        {Object.keys(movieData).length === 0 ? (
-          <SkeletonComponent className="w-full max-w-[620px]" />
-        ) : (
-          <div className="flex flex-1 flex-col items-center gap-8">
-            {/* 영화 포스터 */}
-            <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[620px] shrink-0">
-              <Image
-                src={
-                  movieData.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
-                    : "/default.svg"
-                }
-                className="absolute h-full w-full rounded-xl bg-white object-contain"
-                fill
-                priority
-                alt={`${movieData.title} 포스터`}
-                sizes="624px"
+        <div className="flex flex-1 flex-col items-center gap-8">
+          {/* 영화 포스터 */}
+          <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[620px] shrink-0">
+            <Image
+              src={
+                movieData.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+                  : "/default.svg"
+              }
+              className="absolute h-full w-full rounded-xl bg-white object-contain"
+              fill
+              priority
+              alt={`${movieData.title} 포스터`}
+              sizes="624px"
+            />
+          </div>
+
+          <div className="flex w-full max-w-[620px] flex-col items-center justify-center gap-6 rounded-xl bg-white/20 p-8">
+            {/* 평균 평점 */}
+            {rating > 0 ? (
+              <div className="flex items-center gap-4">
+                <p className="text-nowrap rounded-xl bg-point-color px-4 py-2 text-xl font-medium">
+                  평점
+                </p>
+                <RatingComponent type="show" defaultValue={rating} />
+                <p className="text-2xl font-semibold">{rating}점</p>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <p className="text-nowrap rounded-xl bg-point-color px-4 py-2 text-xl font-medium">
+                  평점
+                </p>
+                <p className="text-lg text-white/70">아직 등록된 평점이 없습니다.</p>
+              </div>
+            )}
+
+            <div className="w-full border-b" />
+
+            {/* 컨트롤 영역 (즐겨찾기, 컬렉션 추가, 시청기록 추가) */}
+            <div className="flex items-center gap-2">
+              <FavoriteControlComponent
+                defaultValue={!userId ? null : favoriteMovie}
+                movieId={movieData.id}
+              />
+
+              <CollectionControlComponent
+                userId={userId}
+                movieData={movieData}
+                collectionList={collectionList}
+              />
+
+              <WatchedControlComponent
+                defaultValue={!userId ? null : watchedMovie}
+                movieId={movieData.id}
               />
             </div>
-
-            <div className="flex w-full max-w-[620px] flex-col items-center justify-center gap-6 rounded-xl bg-white/20 p-8">
-              {/* 평균 평점 */}
-              {rating > 0 ? (
-                <div className="flex items-center gap-4">
-                  <p className="text-nowrap rounded-xl bg-point-color px-4 py-2 text-xl font-medium">
-                    평점
-                  </p>
-                  <RatingComponent type="show" defaultValue={rating} />
-                  <p className="text-2xl font-semibold">{rating}점</p>
-                </div>
-              ) : (
-                <div className="flex items-center gap-4">
-                  <p className="text-nowrap rounded-xl bg-point-color px-4 py-2 text-xl font-medium">
-                    평점
-                  </p>
-                  <p className="text-lg text-white/70">아직 등록된 평점이 없습니다.</p>
-                </div>
-              )}
-
-              <div className="w-full border-b" />
-
-              {/* 컨트롤 영역 (즐겨찾기, 컬렉션 추가, 시청기록 추가) */}
-              <div className="flex items-center gap-2">
-                <FavoriteControlComponent
-                  defaultValue={!userId ? null : favoriteMovie}
-                  movieId={movieData.id}
-                />
-
-                <CollectionControlComponent
-                  userId={userId}
-                  movieData={movieData}
-                  collectionList={collectionList}
-                />
-
-                <WatchedControlComponent
-                  defaultValue={!userId ? null : watchedMovie}
-                  movieId={movieData.id}
-                />
-              </div>
-            </div>
           </div>
-        )}
+        </div>
 
         {/* 오른쪽 영역 (영화 상세 정보) */}
         <div className="flex max-w-[1000px] flex-col justify-between gap-8 text-lg">
           {/* 기본 정보 */}
-          {!movieData.genres ? (
-            <SkeletonComponent className="h-72 w-full" />
-          ) : (
-            <>
-              <p>{movieData.overview}</p>
 
-              <div className="flex items-center gap-4">
-                <p className="rounded-xl border px-4 py-1">{movieData.release_date}</p>
-                <p className="rounded-xl border px-4 py-1">{movieData.runtime}분</p>
-                <p className="rounded-xl border px-4 py-1">{statusMapping[movieData.status]}</p>
-                <div className="flex items-center gap-2">
-                  {movieData.genres?.map((genre: MovieGenres) => (
-                    <p key={genre.id} className="rounded-xl bg-white/30 px-4 py-1">
-                      {genre.name}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
+          <p>{movieData.overview}</p>
+
+          <div className="flex items-center gap-4">
+            <p className="rounded-xl border px-4 py-1">{movieData.release_date}</p>
+            <p className="rounded-xl border px-4 py-1">{movieData.runtime}분</p>
+            <p className="rounded-xl border px-4 py-1">{statusMapping[movieData.status]}</p>
+            <div className="flex items-center gap-2">
+              {movieData.genres?.map((genre: MovieGenres) => (
+                <p key={genre.id} className="rounded-xl bg-white/30 px-4 py-1">
+                  {genre.name}
+                </p>
+              ))}
+            </div>
+          </div>
 
           {/* 출연진 & 제작진 리스트 */}
           <div className="flex flex-col">
-            <SliderSection title="출연진" isLoading={!creditData.cast}>
+            <SliderSection title="출연진">
               <Slider>
                 {creditData.cast?.map((cast) => (
                   <SwiperSlide>
@@ -144,7 +134,7 @@ export function MovieInfoSection({ userId, movieData, creditData, rating }: Movi
               </Slider>
             </SliderSection>
 
-            <SliderSection title="제작진" isLoading={!creditData.crew}>
+            <SliderSection title="제작진">
               <Slider>
                 {creditData.crew?.map((crew) => (
                   <SwiperSlide>

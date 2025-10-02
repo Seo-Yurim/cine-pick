@@ -2,6 +2,7 @@
 
 import { SwiperSlide } from "swiper/react";
 import { MovieItem } from "@/types/movie.type";
+import { genresMatch } from "@/utils/genres-match.util";
 import {
   useGenres,
   useGetNowPlayingMovies,
@@ -9,6 +10,7 @@ import {
   useMovies,
 } from "@/queries/movie.query";
 import { MovieCardComponent, Slider } from "@/components";
+import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
 import { SliderSection } from "../../../components/slider-section/slider-section.component";
 import { HeroSection } from "./hero-section.component";
 
@@ -32,34 +34,67 @@ export default function Hydrated() {
         isLoading={!popularMoives}
       />
 
-      <SliderSection title="💥 지금 인기있는 영화" isLoading={!popularMoives}>
-        <Slider>
-          {popularMoives?.map((movie: MovieItem) => (
-            <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent movie={movie} genres={genres.genres} />
-            </SwiperSlide>
-          ))}
-        </Slider>
+      <SliderSection title="💥 지금 인기있는 영화">
+        {popularMoives && genres ? (
+          <Slider>
+            {popularMoives.map((movie: MovieItem) => (
+              <SwiperSlide key={movie.id} className="p-4">
+                <MovieCardComponent
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
+              </SwiperSlide>
+            ))}
+          </Slider>
+        ) : (
+          <div className="flex gap-8 p-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <MovieCardSkeletonComponent key={idx} />
+            ))}
+          </div>
+        )}
       </SliderSection>
 
-      <SliderSection title="🎞️ 극장에서 상영 중인 영화" isLoading={!nowPlayingMovies}>
-        <Slider>
-          {nowPlayingMovies?.map((movie: MovieItem) => (
-            <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent movie={movie} genres={genres.genres} />
-            </SwiperSlide>
-          ))}
-        </Slider>
+      <SliderSection title="🎞️ 극장에서 상영 중인 영화">
+        {nowPlayingMovies && genres ? (
+          <Slider>
+            {nowPlayingMovies?.map((movie: MovieItem) => (
+              <SwiperSlide key={movie.id} className="p-4">
+                <MovieCardComponent
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
+              </SwiperSlide>
+            ))}
+          </Slider>
+        ) : (
+          <div className="flex gap-8 p-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <MovieCardSkeletonComponent key={idx} />
+            ))}
+          </div>
+        )}
       </SliderSection>
 
-      <SliderSection title="🆕 새로 개봉한 국내 영화" isLoading={!newMovies}>
-        <Slider>
-          {newMovies?.results.map((movie: MovieItem) => (
-            <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent movie={movie} genres={genres?.genres} />
-            </SwiperSlide>
-          ))}
-        </Slider>
+      <SliderSection title="🆕 새로 개봉한 국내 영화">
+        {newMovies && genres ? (
+          <Slider>
+            {newMovies?.results.map((movie: MovieItem) => (
+              <SwiperSlide key={movie.id} className="p-4">
+                <MovieCardComponent
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
+              </SwiperSlide>
+            ))}
+          </Slider>
+        ) : (
+          <div className="flex gap-8 p-4">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <MovieCardSkeletonComponent key={idx} />
+            ))}
+          </div>
+        )}
       </SliderSection>
     </>
   );

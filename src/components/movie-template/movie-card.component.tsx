@@ -41,9 +41,9 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
         </div>
 
         <div className="flex flex-wrap gap-2 text-sm text-gray-200">
-          {genresMatch(genres, movie.genre_ids).map((genre: string, idx: number) => (
-            <span key={idx} className="truncate rounded-lg bg-text-bg px-2 py-1 text-sm">
-              {genre}
+          {genres.map((genre: MovieGenres) => (
+            <span key={genre.id} className="truncate rounded-lg bg-text-bg px-2 py-1 text-sm">
+              {genre.name}
             </span>
           ))}
         </div>

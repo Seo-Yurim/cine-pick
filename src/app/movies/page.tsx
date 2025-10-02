@@ -3,9 +3,11 @@
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieItem, MovieParams } from "@/types/movie.type";
+import { genresMatch } from "@/utils/genres-match.util";
 import { useGenres, useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
+import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
 import MoviesHeaderComponent from "./_components/movies-header.component";
 import { ScrollToTop } from "./_components/scroll-to-top.component";
 
@@ -37,13 +39,23 @@ export default function MoviesPage() {
         dataLength={movies.length}
         className={`px-8 ${activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"} `}
       >
-        {movies.map((result: MovieItem) =>
-          activeTab === "grid" ? (
-            <MovieCardComponent key={result.id} movie={result} genres={genres.genres} />
-          ) : (
-            <MovieListComponent key={result.id} movie={result} genres={genres.genres} />
-          ),
-        )}
+        {movies && genres
+          ? movies.map((movie: MovieItem) =>
+              activeTab === "grid" ? (
+                <MovieCardComponent
+                  key={movie.id}
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
+              ) : (
+                <MovieListComponent
+                  key={movie.id}
+                  movie={movie}
+                  genres={genresMatch(genres?.genres, movie.genre_ids)}
+                />
+              ),
+            )
+          : Array.from({ length: 20 }).map((_, idx) => <MovieCardSkeletonComponent key={idx} />)}
       </InfiniteScroll>
 
       <ScrollToTop />

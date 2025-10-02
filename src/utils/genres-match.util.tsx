@@ -1,7 +1,7 @@
 import { MovieGenres } from "@/types/movie.type";
 
-export function genresMatch(genres: MovieGenres[], genreIds: number[]): string[] {
+export function genresMatch(genres: MovieGenres[], genreIds: number[]): MovieGenres[] {
   return genreIds
-    .map((id) => genres.find((genre) => genre.id === id)?.name)
-    .filter((name): name is string => Boolean(name));
+    .map((id) => genres.find((genre) => genre.id === id))
+    .filter((genre): genre is MovieGenres => genre !== undefined);
 }

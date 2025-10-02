@@ -5,7 +5,6 @@ import "./slider-section.component.scss";
 interface SliderSectionProps {
   title: string;
   children: ReactNode;
-  isLoading?: boolean;
   bgColor?: string;
   btnText?: string;
   onButtonClick?: () => void;
@@ -15,7 +14,6 @@ interface SliderSectionProps {
 export function SliderSection({
   title,
   children,
-  isLoading = false,
   bgColor,
   btnText = "",
   onButtonClick,

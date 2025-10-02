@@ -114,12 +114,12 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                       <p className="text-lg font-semibold">{movie.release_date}</p>
 
                       <div className="flex flex-wrap gap-2 text-sm text-gray-200">
-                        {genresMatch(genres, movie.genre_ids).map((genre: string, idx: number) => (
+                        {genresMatch(genres, movie.genre_ids).map((genre: MovieGenres) => (
                           <span
-                            key={idx}
+                            key={genre.id}
                             className="rounded-lg bg-white/20 px-4 py-1 text-sm font-medium"
                           >
-                            {genre}
+                            {genre.name}
                           </span>
                         ))}
                       </div>
