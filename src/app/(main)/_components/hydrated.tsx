@@ -56,7 +56,7 @@ export default function Hydrated() {
         <Slider>
           {newMovies?.results.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="p-4">
-              <MovieCardComponent movie={movie} genres={genres.genres} />
+              <MovieCardComponent movie={movie} genres={genres?.genres} />
             </SwiperSlide>
           ))}
         </Slider>

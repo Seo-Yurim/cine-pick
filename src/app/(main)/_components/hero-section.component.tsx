@@ -23,8 +23,45 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
       <h2 className="bg-point-color/50 p-8 text-4xl font-bold">오늘의 인기 영화 TOP 3</h2>
       {isLoading ? (
         <div className="flex h-[700px] w-full items-stretch justify-center gap-8 bg-header-bg/50 p-16">
-          <div className="w-[400px] animate-pulse rounded-xl bg-text-bg shadow-xl" />
-          <div className="w-full animate-pulse rounded-xl bg-text-bg shadow-xl" />
+          {/* 왼쪽 영역 스켈레톤 */}
+          <div className="animate-custom-pulse w-full max-w-[400px] rounded-xl bg-text-bg shadow-xl" />
+
+          {/* 오른쪽 영역 스켈레톤 */}
+          <div className="animate-custom-pulse flex w-full flex-col justify-center gap-12 rounded-xl bg-text-bg/70 px-10 py-16">
+            {/* 제목 + 개봉일 + 장르 */}
+            <div className="flex items-center justify-between">
+              {/* 제목 */}
+              <div className="animate-custom-pulse h-8 w-1/3 rounded bg-gray-400/50" />
+
+              {/* 개봉일 + 장르 */}
+              <div className="flex items-center gap-4">
+                {/* 개봉일 */}
+                <div className="animate-custom-pulse h-6 w-24 rounded bg-gray-400/40" />
+
+                {/* 장르 */}
+                <div className="flex gap-2">
+                  {[...Array(3)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="animate-custom-pulse h-6 w-16 rounded-lg bg-white/20"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 줄거리 */}
+            <div className="space-y-2">
+              <div className="animate-custom-pulse h-5 w-full rounded bg-gray-400/40" />
+              <div className="animate-custom-pulse h-5 w-[90%] rounded bg-gray-400/40" />
+              <div className="animate-custom-pulse h-5 w-[70%] rounded bg-gray-400/40" />
+              <div className="animate-custom-pulse h-5 w-[80%] rounded bg-gray-400/40" />
+              <div className="animate-custom-pulse h-5 w-[60%] rounded bg-gray-400/40" />
+            </div>
+
+            {/* 상세보기 버튼 */}
+            <div className="animate-custom-pulse ml-auto h-12 w-48 rounded bg-gray-400/40" />
+          </div>
         </div>
       ) : (
         <Swiper

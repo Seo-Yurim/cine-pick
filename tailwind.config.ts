@@ -33,6 +33,7 @@ const config = {
       animation: {
         slide: "slide 1.5s ease-in-out infinite",
         "slide-down": "slideDown 0.5s ease-out",
+        "custom-pulse": "custom-pulse 1s ease-in-out infinite",
       },
       keyframes: {
         slide: {
@@ -43,6 +44,10 @@ const config = {
         slideDown: {
           "0%": { opacity: "0", transform: "translateY(-20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "custom-pulse": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.4" },
         },
       },
     },

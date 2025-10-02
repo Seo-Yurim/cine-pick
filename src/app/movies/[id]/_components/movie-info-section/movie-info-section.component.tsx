@@ -1,5 +1,6 @@
 "use client";
 
+import { PersonCard } from "@/app/movies/[id]/_components/person-card.component";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { MovieCreditResponse, MovieDetailItem, MovieGenres } from "@/types/movie.type";
@@ -7,7 +8,6 @@ import { useGetCollectionList } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
 import { RatingComponent, Slider } from "@/components";
-import { PersonCard } from "@/components/movie-template/person-card.component";
 import { SkeletonComponent } from "@/components/skeleton/skeleton.component";
 import { SliderSection } from "@/components/slider-section/slider-section.component";
 import { CollectionControlComponent } from "./collection-control.component";
