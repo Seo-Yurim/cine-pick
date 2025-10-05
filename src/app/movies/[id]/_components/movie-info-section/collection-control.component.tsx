@@ -49,7 +49,7 @@ export function CollectionControlComponent({
   };
 
   return (
-    <div className="relative z-50">
+    <div className="relative">
       <TooltipComponent text="컬렉션 추가" bgColor="#696969">
         <ButtonComponent>
           <div

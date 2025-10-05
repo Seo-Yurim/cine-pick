@@ -24,26 +24,26 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
       {isLoading ? (
         <div className="flex h-[700px] w-full items-stretch justify-center gap-8 bg-header-bg/50 p-16">
           {/* 왼쪽 영역 스켈레톤 */}
-          <div className="animate-custom-pulse w-full max-w-[400px] rounded-xl bg-text-bg shadow-xl" />
+          <div className="w-full max-w-[400px] animate-custom-pulse rounded-xl bg-text-bg shadow-xl" />
 
           {/* 오른쪽 영역 스켈레톤 */}
-          <div className="animate-custom-pulse flex w-full flex-col justify-center gap-12 rounded-xl bg-text-bg/70 px-10 py-16">
+          <div className="flex w-full animate-custom-pulse flex-col justify-center gap-12 rounded-xl bg-text-bg/70 px-10 py-16">
             {/* 제목 + 개봉일 + 장르 */}
             <div className="flex items-center justify-between">
               {/* 제목 */}
-              <div className="animate-custom-pulse h-8 w-1/3 rounded bg-gray-400/50" />
+              <div className="h-8 w-1/3 animate-custom-pulse rounded bg-gray-400/50" />
 
               {/* 개봉일 + 장르 */}
               <div className="flex items-center gap-4">
                 {/* 개봉일 */}
-                <div className="animate-custom-pulse h-6 w-24 rounded bg-gray-400/40" />
+                <div className="h-6 w-24 animate-custom-pulse rounded bg-gray-400/40" />
 
                 {/* 장르 */}
                 <div className="flex gap-2">
                   {[...Array(3)].map((_, idx) => (
                     <div
                       key={idx}
-                      className="animate-custom-pulse h-6 w-16 rounded-lg bg-white/20"
+                      className="h-6 w-16 animate-custom-pulse rounded-lg bg-white/20"
                     />
                   ))}
                 </div>
@@ -52,15 +52,15 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
 
             {/* 줄거리 */}
             <div className="space-y-2">
-              <div className="animate-custom-pulse h-5 w-full rounded bg-gray-400/40" />
-              <div className="animate-custom-pulse h-5 w-[90%] rounded bg-gray-400/40" />
-              <div className="animate-custom-pulse h-5 w-[70%] rounded bg-gray-400/40" />
-              <div className="animate-custom-pulse h-5 w-[80%] rounded bg-gray-400/40" />
-              <div className="animate-custom-pulse h-5 w-[60%] rounded bg-gray-400/40" />
+              <div className="h-5 w-full animate-custom-pulse rounded bg-gray-400/40" />
+              <div className="h-5 w-[90%] animate-custom-pulse rounded bg-gray-400/40" />
+              <div className="h-5 w-[70%] animate-custom-pulse rounded bg-gray-400/40" />
+              <div className="h-5 w-[80%] animate-custom-pulse rounded bg-gray-400/40" />
+              <div className="h-5 w-[60%] animate-custom-pulse rounded bg-gray-400/40" />
             </div>
 
             {/* 상세보기 버튼 */}
-            <div className="animate-custom-pulse ml-auto h-12 w-48 rounded bg-gray-400/40" />
+            <div className="ml-auto h-12 w-48 animate-custom-pulse rounded bg-gray-400/40" />
           </div>
         </div>
       ) : (

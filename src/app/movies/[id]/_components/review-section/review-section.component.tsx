@@ -37,7 +37,7 @@ export function ReviewSection({ userId, movieId, reviewData }: ReviewSectionProp
   };
 
   return (
-    <section className="flex flex-col gap-8 rounded-xl bg-text-bg p-8">
+    <section className="flex h-full max-h-[450px] flex-col gap-8 overflow-y-auto rounded-xl bg-text-bg p-8">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <MdOutlineRateReview className="h-8 w-8" />
@@ -57,9 +57,9 @@ export function ReviewSection({ userId, movieId, reviewData }: ReviewSectionProp
             <p className="text-xl font-medium">아직 작성된 리뷰가 없습니다.</p>
           </div>
         ) : (
-          <div className="grid auto-cols-auto grid-cols-2 gap-8">
+          <div className="flex flex-col gap-8">
             {filteredReview.map((review: ReviewItem) => (
-              <div key={review.id} className="flex flex-col gap-6 border-y border-t py-6">
+              <div key={review.id} className="flex flex-col gap-6 border-t py-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-8">
                     <div className="flex items-center gap-2 rounded-full bg-white px-4 py-1 text-background">

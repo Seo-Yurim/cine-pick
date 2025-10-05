@@ -30,7 +30,7 @@
       "id": "3e34",
       "movieId": 755898,
       "userId": "bad7",
-      "rating": 9,
+      "rating": 4,
       "content": "재밌어요",
       "createdAt": "2025-09-23T07:42:39.217Z",
       "user": {
@@ -42,7 +42,7 @@
       "id": "2439",
       "movieId": 1038392,
       "userId": "bad7",
-      "rating": 9,
+      "rating": 4,
       "content": "진짜 무서와요 ;;  진짜로 ~~ ",
       "createdAt": "2025-09-25T02:54:19.291Z",
       "user": {
@@ -54,7 +54,7 @@
       "id": "5739",
       "movieId": 617126,
       "userId": "bad7",
-      "rating": 9,
+      "rating": 4,
       "content": "재밌다",
       "createdAt": "2025-09-26T01:47:59.943Z",
       "user": {
@@ -66,7 +66,7 @@
       "id": "b9ca",
       "movieId": 1311031,
       "userId": "bad7",
-      "rating": 10,
+      "rating": 5,
       "content": "저의 인생 애니메이션이라고 할 수 있어요. 진짜 재밌어요 다들 꼭 보세요 !",
       "createdAt": "2025-09-30T08:41:19.038Z",
       "user": {
@@ -109,6 +109,30 @@
         "name": "테스트2",
         "username": "test02"
       }
+    },
+    {
+      "id": "6063",
+      "movieId": 1311031,
+      "userId": "1",
+      "rating": 4.5,
+      "content": "좋네요",
+      "createdAt": "2025-10-05T05:36:23.309Z",
+      "user": {
+        "name": "테스트1",
+        "username": "test01"
+      }
+    },
+    {
+      "id": "bcbe",
+      "movieId": 1311031,
+      "userId": "2",
+      "rating": 1.5,
+      "content": "흠 ... 잘 모르겠어요.",
+      "createdAt": "2025-10-05T05:55:50.403Z",
+      "user": {
+        "name": "테스트2",
+        "username": "test02"
+      }
     }
   ],
   "favorites": [
@@ -146,6 +170,12 @@
       "id": "8e68",
       "movieId": 1267319,
       "userId": "80f1",
+      "favorite": true
+    },
+    {
+      "id": "8060",
+      "movieId": 1311031,
+      "userId": "2",
       "favorite": true
     }
   ],
@@ -219,6 +249,12 @@
       "id": "7d4f",
       "movieId": 1267319,
       "userId": "80f1",
+      "watched": true
+    },
+    {
+      "id": "8dc0",
+      "movieId": 1311031,
+      "userId": "2",
       "watched": true
     }
   ]

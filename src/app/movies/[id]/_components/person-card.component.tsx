@@ -11,9 +11,9 @@ export function PersonCard({ type, creditData }: PersonCardProps) {
   return (
     <Link
       href={`/person/${creditData.id}`}
-      className="flex flex-col items-center gap-2 text-nowrap text-center transition-all duration-300 hover:scale-105"
+      className="flex aspect-[2/3] h-full w-full flex-col items-center gap-2 text-nowrap text-center transition-all duration-300 hover:scale-105"
     >
-      <div className="relative aspect-[3/4] w-[100px] xl:w-[120px] 2xl:w-[200px]">
+      <div className="relative aspect-[3/4] w-full min-w-[200px] max-w-[300px]">
         <Image
           src={
             creditData.profile_path
