@@ -5,8 +5,7 @@ import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useDeleteFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
-import { ButtonComponent } from "@/components";
-import { TooltipComponent } from "@/components/tooltip/tooltip.component";
+import { ButtonComponent, TooltipComponent } from "@/components";
 
 interface FavoriteControlComponentProps {
   defaultValue?: FavoriteMovieItem | null;

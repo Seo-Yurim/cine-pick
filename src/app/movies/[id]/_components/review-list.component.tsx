@@ -6,7 +6,7 @@ import { ReviewItem } from "@/types/reviews.type";
 import { useModalStore } from "@/stores/modal.store";
 import { useDeleteReview } from "@/queries/reviews.query";
 import { ButtonComponent, LoginRequiredModalComponent, RatingComponent } from "@/components";
-import { ReviewFormComponent } from "../index";
+import { ReviewFormComponent } from "./review-form.component";
 
 interface ReviewSectionProps {
   userId: string;
@@ -14,7 +14,7 @@ interface ReviewSectionProps {
   reviewData: ReviewItem[];
 }
 
-export function ReviewSection({ userId, movieId, reviewData }: ReviewSectionProps) {
+export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSectionProps) {
   const { modals, openModal, closeModal } = useModalStore();
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
 
@@ -37,7 +37,7 @@ export function ReviewSection({ userId, movieId, reviewData }: ReviewSectionProp
   };
 
   return (
-    <section className="flex h-full max-h-[450px] flex-col gap-8 overflow-y-auto rounded-xl bg-text-bg p-8">
+    <section className="flex h-full flex-col gap-8 overflow-y-auto rounded-xl bg-text-bg p-8">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <MdOutlineRateReview className="h-8 w-8" />

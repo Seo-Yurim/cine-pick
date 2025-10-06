@@ -7,11 +7,8 @@ import { getAvgRating } from "@/utils/avg-rating.util";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMovieCredits, useMovieDetail } from "@/queries/movie.query";
 import { useGetReviews } from "@/queries/reviews.query";
-import { Slider } from "@/components";
-import { PersonCardSkeletonComponent } from "@/components/skeleton/person-card-skeleton.component";
-import { SliderSection } from "@/components/slider-section/slider-section.component";
+import { PersonCard, PersonCardSkeletonComponent, Slider, SliderSection } from "@/components";
 import { MovieInfoSection } from "./_components";
-import { PersonCard } from "./_components/person-card.component";
 
 export default function MoviesDetailPage() {
   const { user } = useAuthStore();
@@ -31,7 +28,7 @@ export default function MoviesDetailPage() {
   const avg = getAvgRating(movieId, reviewList);
 
   return (
-    <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-16 px-8 py-8">
+    <>
       <MovieInfoSection
         userId={userId}
         movieData={movieDetail}
@@ -40,7 +37,7 @@ export default function MoviesDetailPage() {
         rating={avg}
       />
       {/* 출연진 & 제작진 리스트 */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 px-8">
         <SliderSection title="출연진">
           {creditData && creditData.cast ? (
             <Slider slidesPerView={5}>
@@ -77,6 +74,6 @@ export default function MoviesDetailPage() {
           )}
         </SliderSection>
       </div>
-    </main>
+    </>
   );
 }

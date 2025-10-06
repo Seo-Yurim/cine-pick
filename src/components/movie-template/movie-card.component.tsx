@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
-import { genresMatch } from "@/utils/genres-match.util";
 
 interface MovieCardProps {
   movie: MovieItem;
@@ -41,7 +40,7 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
         </div>
 
         <div className="flex flex-wrap gap-2 text-sm text-gray-200">
-          {genres.map((genre: MovieGenres) => (
+          {genres?.map((genre: MovieGenres) => (
             <span key={genre.id} className="truncate rounded-lg bg-text-bg px-2 py-1 text-sm">
               {genre.name}
             </span>

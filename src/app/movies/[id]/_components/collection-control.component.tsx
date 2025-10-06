@@ -5,8 +5,7 @@ import { CollectionList } from "@/types/collections.type";
 import { MovieItem } from "@/types/movie.type";
 import { useModalStore } from "@/stores/modal.store";
 import { usePatchCollectionMovie } from "@/queries/collections.query";
-import { ButtonComponent } from "@/components";
-import { TooltipComponent } from "@/components/tooltip/tooltip.component";
+import { ButtonComponent, TooltipComponent } from "@/components";
 
 interface CollectionControlProps {
   userId: string;

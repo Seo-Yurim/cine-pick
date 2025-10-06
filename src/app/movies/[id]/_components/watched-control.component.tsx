@@ -5,8 +5,7 @@ import { BsBookmarkCheckFill, BsBookmarkPlus } from "react-icons/bs";
 import { WatchesItem } from "@/types/watches.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useDeleteWatchedMovie, usePostWatchedMovie } from "@/queries/watches.query";
-import { ButtonComponent } from "@/components";
-import { TooltipComponent } from "@/components/tooltip/tooltip.component";
+import { ButtonComponent, TooltipComponent } from "@/components";
 
 interface WatchedControlProps {
   defaultValue?: WatchesItem | null;
