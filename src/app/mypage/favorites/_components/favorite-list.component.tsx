@@ -5,5 +5,5 @@ export function FavoriteListComponent({ movieId }: { movieId: number }) {
   const { data } = useMovieDetail(movieId);
   const movieDetail = data ?? {};
 
-  return <MovieCardComponent movie={movieDetail} />;
+  return <MovieCardComponent movie={movieDetail} genres={movieDetail.genres} />;
 }

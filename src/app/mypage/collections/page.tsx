@@ -26,7 +26,7 @@ export default function MyCollectionPage() {
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
+    <>
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">내 컬렉션 목록</h1>
         <ButtonComponent onClick={() => openModal("collectionForm")}>폴더추가</ButtonComponent>
@@ -81,6 +81,6 @@ export default function MyCollectionPage() {
         userId={userId}
         defaultValue={selectedCollection}
       />
-    </main>
+    </>
   );
 }

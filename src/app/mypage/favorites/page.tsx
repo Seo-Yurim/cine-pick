@@ -12,9 +12,9 @@ export default function MyFavoritePage() {
   const { data: favoriteMovies } = useGetMyFavoriteList(userId);
 
   return (
-    <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-8 py-8">
+    <>
       <h1 className="text-2xl font-bold">즐겨찾기 목록</h1>
-      <div className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 md:justify-between lg:grid-cols-4">
+      <div className="grid grid-cols-4 justify-items-center gap-4">
         {favoriteMovies?.length > 0 ? (
           favoriteMovies?.map((favoriteMovie: FavoriteMovieItem) => (
             <FavoriteListComponent key={favoriteMovie.id} movieId={favoriteMovie.movieId} />
@@ -23,6 +23,6 @@ export default function MyFavoritePage() {
           <p>즐겨찾기한 작품이 없습니다.</p>
         )}
       </div>
-    </main>
+    </>
   );
 }
