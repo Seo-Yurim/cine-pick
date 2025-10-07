@@ -7,7 +7,7 @@ export function MovieCardSkeletonComponent() {
       </div>
 
       {/* 텍스트 정보 영역 */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         {/* 제목 + 날짜 */}
         <div className="flex w-full justify-between gap-4">
           <div className="h-6 w-2/3 animate-pulse rounded bg-gray-300" />
@@ -15,11 +15,7 @@ export function MovieCardSkeletonComponent() {
         </div>
 
         {/* 장르 뱃지들 */}
-        <div className="flex flex-wrap gap-2">
-          {[...Array(3)].map((_, idx) => (
-            <div key={idx} className="h-6 w-16 animate-pulse rounded-lg bg-gray-200" />
-          ))}
-        </div>
+        <div className="h-4 w-16 animate-pulse rounded-lg bg-gray-200" />
       </div>
 
       {/* 호버 시 보이는 줄거리 영역 */}

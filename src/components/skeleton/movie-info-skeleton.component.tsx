@@ -2,7 +2,7 @@ import { SkeletonBox } from "./skeleton.component";
 
 export function MovieInfoSkeletonComponent() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-16 py-12">
       <SkeletonBox height="36px" width="360px" />
       <div className="flex justify-between gap-16 max-lg:flex-col max-lg:items-center">
         {/* 포스터 스켈레톤 */}

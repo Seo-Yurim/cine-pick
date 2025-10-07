@@ -20,7 +20,7 @@ export default function RootLayout({
         <QueryClientProvider>
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
-          <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 py-28">
+          <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-16 py-40">
             {children}
           </main>
         </QueryClientProvider>

@@ -133,6 +133,18 @@
         "name": "테스트2",
         "username": "test02"
       }
+    },
+    {
+      "id": "f1bc",
+      "movieId": 941109,
+      "userId": "2",
+      "rating": 4.5,
+      "content": "생각보다 더 재미있는 영화였습니다.",
+      "createdAt": "2025-10-07T06:16:51.649Z",
+      "user": {
+        "name": "테스트2",
+        "username": "test02"
+      }
     }
   ],
   "favorites": [
@@ -175,6 +187,12 @@
     {
       "id": "8060",
       "movieId": 1311031,
+      "userId": "2",
+      "favorite": true
+    },
+    {
+      "id": "09ca",
+      "movieId": 941109,
       "userId": "2",
       "favorite": true
     }
@@ -254,6 +272,12 @@
     {
       "id": "8dc0",
       "movieId": 1311031,
+      "userId": "2",
+      "watched": true
+    },
+    {
+      "id": "a9d0",
+      "movieId": 941109,
       "userId": "2",
       "watched": true
     }

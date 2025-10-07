@@ -16,7 +16,7 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
   return (
     <div
       onClick={() => router.push(`/movies/${movie.id}`)}
-      className="group relative flex aspect-[2/3] h-full w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-[1.02]"
+      className="group relative flex aspect-[2/3] w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-[1.02]"
     >
       <div className="relative aspect-[3/4] w-full min-w-[200px]">
         <Image
@@ -33,15 +33,15 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
         />
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <div className="flex w-full justify-between gap-4">
           <p className="truncate text-xl font-bold text-background">{movie.title}</p>
           <p className="text-nowrap py-1 text-sm text-gray-500">{movie.release_date}</p>
         </div>
 
-        <div className="flex flex-wrap gap-2 text-sm text-gray-200">
+        <div className="flex gap-2 truncate text-sm text-gray-200">
           {genres?.map((genre: MovieGenres) => (
-            <span key={genre.id} className="truncate rounded-lg bg-text-bg px-2 py-1 text-sm">
+            <span key={genre.id} className="rounded-lg bg-text-bg px-2 py-1 text-xs">
               {genre.name}
             </span>
           ))}

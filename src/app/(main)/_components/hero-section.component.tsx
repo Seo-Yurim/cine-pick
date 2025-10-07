@@ -20,7 +20,7 @@ interface HeroSectionProps {
 export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSectionProps) {
   return (
     <section>
-      <h2 className="bg-point-color/50 p-8 text-4xl font-bold">오늘의 인기 영화 TOP 3</h2>
+      <h2 className="pb-8 text-4xl font-bold">👑 오늘의 인기 영화 TOP 3</h2>
       {isLoading ? (
         <div className="flex h-[700px] w-full items-stretch justify-center gap-8 bg-header-bg/50 p-16">
           {/* 왼쪽 영역 스켈레톤 */}

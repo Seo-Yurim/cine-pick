@@ -3,8 +3,6 @@
   flex-direction: column;
   gap: 1rem;
 
-  padding: 0 2rem;
-
   &__header {
     display: flex;
     align-items: center;
@@ -14,7 +12,7 @@
 
   &__title {
     text-wrap: nowrap;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
   }
 

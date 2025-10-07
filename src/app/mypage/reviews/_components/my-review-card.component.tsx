@@ -17,10 +17,10 @@ export function MyReviewCard({
 
   return (
     <div className="flex flex-col gap-8">
-      <MovieCardComponent movie={movieDetail} />
+      <MovieCardComponent movie={movieDetail} genres={movieDetail.genres} />
 
       {filteredReviewList.map((review) => (
-        <div key={review.id} className="flex flex-col gap-6 border-t p-4 last:border-y">
+        <div key={review.id} className="flex flex-col gap-6 border-t pt-8">
           <RatingComponent type="show" defaultValue={review.rating} />
           <p className="text-nowrap text-xl font-bold">작성한 내용</p>
           <p className="rounded-xl bg-foreground/20 p-8 text-lg font-medium">{review.content}</p>

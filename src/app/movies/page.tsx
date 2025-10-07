@@ -37,7 +37,7 @@ export default function MoviesPage() {
         next={fetchNextPage}
         loader={<></>}
         dataLength={movies.length}
-        className={`px-8 ${activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"} `}
+        className={`px-2 ${activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"} `}
       >
         {movies && genres
           ? movies.map((movie: MovieItem) =>

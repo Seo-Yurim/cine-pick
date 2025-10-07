@@ -47,7 +47,7 @@ export function MovieInfoComponent({
   }
 
   return (
-    <section className="flex w-full flex-col gap-8 px-16 py-12">
+    <section className="flex w-full flex-col gap-8">
       {/* 영화 제목 */}
       <div className="flex items-center gap-8">
         <h1 className="text-nowrap text-3xl font-bold">{movieData.title}</h1>
@@ -56,23 +56,23 @@ export function MovieInfoComponent({
 
       <div className="flex justify-between gap-16 max-lg:flex-col max-lg:items-center">
         {/* 왼쪽 영역 (영화 포스터) */}
-        <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[620px] shrink-0">
+        <div className="relative aspect-[3/4] w-full min-w-[350px] max-w-[600px] shrink-0">
           <Image
             src={
               movieData.poster_path
                 ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
                 : "/default.svg"
             }
-            className="absolute h-full w-full rounded-xl bg-white object-contain"
+            className="absolute h-full w-full rounded-xl bg-white object-cover"
             fill
             priority
             alt={`${movieData.title} 포스터`}
-            sizes="624px"
+            sizes="600px"
           />
         </div>
 
         {/* 오른쪽 영역 (영화 상세 정보) */}
-        <div className="flex max-w-[1100px] flex-col items-stretch gap-8 text-lg">
+        <div className="flex w-full max-w-[1100px] flex-col items-stretch gap-8 text-lg">
           {/* 기본 정보 */}
           <div className="flex items-center gap-4 text-sm">
             <p className="rounded-xl border px-4 py-1">{movieData.release_date}</p>
