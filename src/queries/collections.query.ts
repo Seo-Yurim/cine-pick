@@ -55,8 +55,8 @@ export function usePatchCollection() {
       collectionId: string;
       collectionData: Omit<CollectionItem, "id">;
     }) => patchCollection(collectionId, collectionData),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["collections", variables.collectionId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("컬렉션 목록을 수정했어요!");
     },
     onError: (err) => {

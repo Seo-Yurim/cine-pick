@@ -37,7 +37,7 @@ export default function MyCollectionPage() {
           collectionList?.map((collection: CollectionList) => (
             <div
               key={collection.id}
-              className="relative flex min-h-32 flex-col items-center justify-around gap-4 rounded-xl bg-point-color/50 p-4"
+              className="relative flex min-h-32 flex-col items-center justify-around gap-4 rounded-xl bg-point-color/50 p-4 transition-all duration-300 hover:scale-[1.02]"
             >
               <div className="relative ml-auto">
                 <CiMenuKebab
@@ -61,9 +61,16 @@ export default function MyCollectionPage() {
                 )}
               </div>
 
-              <Link href={`/mypage/collections/${collection.id}`} className="p-4">
-                <p className="text-lg font-semibold">{collection.title}</p>
-                <p className="text-lg font-semibold">{collection.description}</p>
+              <Link
+                href={`/mypage/collections/${collection.id}`}
+                className="flex w-full flex-col gap-4 p-4 text-center"
+              >
+                <p className="text-xl font-semibold">
+                  {collection.title} ({collection.movies.length})
+                </p>
+                <p className="rounded-xl bg-white p-2 text-lg font-semibold text-point-color">
+                  {collection.description}
+                </p>
               </Link>
             </div>
           ))

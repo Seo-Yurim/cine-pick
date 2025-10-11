@@ -111,7 +111,10 @@ export function CollectionFormModal({
         }
         label="컬렉션 설명"
       />
-      <ButtonComponent className="text-point-color" onClick={handleSubmit}>
+      <ButtonComponent
+        className="rounded-xl bg-point-color text-white hover:bg-point-color/80"
+        onClick={handleSubmit}
+      >
         {defaultValue ? "컬렉션 수정하기" : "컬렉션 추가하기"}
       </ButtonComponent>
     </ModalComponent>

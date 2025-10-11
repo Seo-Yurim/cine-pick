@@ -230,6 +230,34 @@
           "movieId": 1267319
         }
       ]
+    },
+    {
+      "id": "12ef",
+      "title": "앞으로 볼 영화",
+      "description": "앞으로 꼭 볼 영화 모음집",
+      "userId": "2",
+      "movies": [
+        {
+          "collectionId": "12ef",
+          "movieId": 1311031
+        },
+        {
+          "collectionId": "12ef",
+          "movieId": 1038392
+        },
+        {
+          "collectionId": "12ef",
+          "movieId": 793387
+        },
+        {
+          "collectionId": "12ef",
+          "movieId": 617126
+        },
+        {
+          "collectionId": "12ef",
+          "movieId": 803796
+        }
+      ]
     }
   ],
   "watches": [
