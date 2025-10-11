@@ -1,9 +1,9 @@
 "use client";
 
-import { genresMatch } from "@/utils/genres-match.util";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
+import { genresMatch } from "@/utils/genres-match.util";
 
 interface MovieListProps {
   movie: MovieItem;
@@ -47,9 +47,9 @@ export function MovieListComponent({ movie, genres }: MovieListProps) {
           </div>
           <p className="line-clamp-3 text-gray-200">{movie.overview}</p>
           <div className="flex flex-wrap gap-2 text-sm text-gray-200">
-            {genresMatch(genres, movie.genre_ids).map((genre: string, idx: number) => (
-              <span key={idx} className="rounded-lg bg-white/20 px-4 py-1 text-sm font-medium">
-                {genre}
+            {genres?.map((genre: MovieGenres) => (
+              <span key={genre.id} className="rounded-lg bg-white/20 px-4 py-1 text-sm font-medium">
+                {genre.name}
               </span>
             ))}
           </div>

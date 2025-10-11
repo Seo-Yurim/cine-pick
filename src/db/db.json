@@ -145,6 +145,18 @@
         "name": "테스트2",
         "username": "test02"
       }
+    },
+    {
+      "id": "a6c5",
+      "movieId": 793387,
+      "userId": "2",
+      "rating": 5,
+      "content": "생각보다 더 재밌었어요. 역시 믿고보는 배우 마동석!",
+      "createdAt": "2025-10-11T08:42:05.111Z",
+      "user": {
+        "name": "테스트2",
+        "username": "test02"
+      }
     }
   ],
   "favorites": [
@@ -276,7 +288,7 @@
       "watched": true
     },
     {
-      "id": "a9d0",
+      "id": "a4c1",
       "movieId": 941109,
       "userId": "2",
       "watched": true

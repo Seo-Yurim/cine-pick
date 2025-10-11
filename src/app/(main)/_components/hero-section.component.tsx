@@ -107,7 +107,7 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                   </div>
                 </div>
 
-                <div className="flex flex-col justify-center gap-12 rounded-xl bg-text-bg/70 p-8">
+                <div className="flex w-full flex-col justify-center gap-12 rounded-xl bg-text-bg/70 p-8">
                   <div className="flex flex-wrap items-center justify-between gap-8">
                     <h3 className="text-3xl font-bold">{movie.title}</h3>
                     <div className="flex items-center gap-4">
