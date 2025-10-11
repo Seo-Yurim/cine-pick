@@ -102,9 +102,9 @@
       "id": "0e22",
       "movieId": 1267319,
       "userId": "2",
-      "rating": 3,
-      "content": "그냥 저냥 무난하네요",
-      "createdAt": "2025-09-30T09:13:28.031Z",
+      "rating": 4.5,
+      "content": "오랜만에 정말 재미있게 본 영화였어요!",
+      "createdAt": "2025-10-11T12:23:58.158Z",
       "user": {
         "name": "테스트2",
         "username": "test02"
@@ -120,18 +120,6 @@
       "user": {
         "name": "테스트1",
         "username": "test01"
-      }
-    },
-    {
-      "id": "bcbe",
-      "movieId": 1311031,
-      "userId": "2",
-      "rating": 1.5,
-      "content": "흠 ... 잘 모르겠어요.",
-      "createdAt": "2025-10-05T05:55:50.403Z",
-      "user": {
-        "name": "테스트2",
-        "username": "test02"
       }
     },
     {
@@ -160,12 +148,6 @@
     }
   ],
   "favorites": [
-    {
-      "id": "13a6",
-      "movieId": 755898,
-      "userId": "2",
-      "favorite": true
-    },
     {
       "id": "bc43",
       "movieId": 1311031,
@@ -199,12 +181,6 @@
     {
       "id": "8060",
       "movieId": 1311031,
-      "userId": "2",
-      "favorite": true
-    },
-    {
-      "id": "09ca",
-      "movieId": 941109,
       "userId": "2",
       "favorite": true
     }

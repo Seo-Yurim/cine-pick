@@ -14,12 +14,10 @@ export default function MyReviewsPage() {
   return (
     <>
       <h1 className="text-2xl font-bold">내가 쓴 리뷰 목록</h1>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {reviewList?.length > 0 ? (
           reviewList?.map((review: ReviewItem) => (
-            <div key={review.id} className="rounded-xl bg-text-bg p-8">
-              <MyReviewCard movieId={review.movieId} reviewList={reviewList} />
-            </div>
+            <MyReviewCard key={review.id} movieId={review.movieId} reviewList={reviewList} />
           ))
         ) : (
           <p>아직 작성한 리뷰가 없어요!</p>

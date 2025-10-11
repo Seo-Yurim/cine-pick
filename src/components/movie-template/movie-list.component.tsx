@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
-import { genresMatch } from "@/utils/genres-match.util";
 
 interface MovieListProps {
   movie: MovieItem;

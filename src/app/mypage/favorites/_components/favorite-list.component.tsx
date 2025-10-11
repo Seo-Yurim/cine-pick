@@ -1,9 +1,29 @@
+import { IoIosHeart } from "react-icons/io";
+import { FavoriteMovieItem } from "@/types/users.type";
 import { useMovieDetail } from "@/queries/movie.query";
-import { MovieCardComponent } from "@/components";
+import { ButtonComponent, MovieListComponent } from "@/components";
 
-export function FavoriteListComponent({ movieId }: { movieId: number }) {
-  const { data } = useMovieDetail(movieId);
+interface FavoriteListProps {
+  favoriteMovie: FavoriteMovieItem;
+  onDelete: (favoriteMovie: FavoriteMovieItem) => void;
+}
+
+export function FavoriteListComponent({ favoriteMovie, onDelete }: FavoriteListProps) {
+  const { data } = useMovieDetail(favoriteMovie.movieId);
   const movieDetail = data ?? {};
 
-  return <MovieCardComponent movie={movieDetail} genres={movieDetail.genres} />;
+  return (
+    <div className="flex items-center gap-4">
+      <MovieListComponent movie={movieDetail} genres={movieDetail.genres} />
+      <ButtonComponent
+        onClick={() => onDelete(favoriteMovie)}
+        className="group relative rounded-xl bg-text-bg hover:bg-white/30"
+      >
+        <IoIosHeart size={30} className="text-rose-600" />
+        <div className="absolute left-1/2 top-full mt-2 hidden -translate-x-1/2 rounded-xl bg-text-bg p-4 text-sm transition-all duration-300 group-hover:block">
+          좋아요 취소
+        </div>
+      </ButtonComponent>
+    </div>
+  );
 }
