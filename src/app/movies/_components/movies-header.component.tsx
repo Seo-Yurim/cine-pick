@@ -3,37 +3,28 @@ import { useEffect, useState } from "react";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
 import { MovieParams } from "@/types/movie.type";
+import { sortOptions } from "@/constants/constants";
 import { useModalStore } from "@/stores/modal.store";
 import { useGenres } from "@/queries/movie.query";
 import {
   ButtonComponent,
   CheckboxComponent,
+  DatePickerComponent,
   SearchComponent,
+  SelectComponent,
   TagComponent,
   ToggleButtonComponent,
 } from "@/components";
-import DatePickerComponent from "@/components/date-picker/date-picker.component";
-import { SelectComponent } from "@/components/select/select.component";
-
-// constants
-const sortOptions = [
-  { label: "인기 내림차순", value: "popularity.desc" },
-  { label: "인기 오름차순", value: "popularity.asc" },
-  { label: "출시일 내림차순", value: "primary_release_date.desc" },
-  { label: "출시일 오름차순", value: "primary_release_date.asc" },
-  { label: "제목 내림차순", value: "title.desc" },
-  { label: "제목 오름차순", value: "title.asc" },
-];
 
 const toggleMenus = [
   { label: <CiGrid41 className="h-8 w-8" />, value: "grid" },
   { label: <CiBoxList className="h-8 w-8" />, value: "list" },
 ];
 
-export type DatePickerType = {
+export interface DatePickerType {
   start: Date | null;
   end: Date | null;
-};
+}
 
 interface MoviesHeaderProps {
   tab: string;
@@ -144,9 +135,19 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <ButtonComponent onPress={handleFilterSubmit}>필터링 적용</ButtonComponent>
-            <ButtonComponent onPress={handleFilterReset}>필터링 초기화</ButtonComponent>
+          <div className="flex w-full max-w-[600px] items-center gap-4">
+            <ButtonComponent
+              onPress={handleFilterSubmit}
+              className="flex-1 rounded-xl bg-white text-point-color shadow-xl hover:bg-white/30 hover:text-white"
+            >
+              필터링 적용
+            </ButtonComponent>
+            <ButtonComponent
+              onPress={handleFilterReset}
+              className="flex-1 rounded-xl bg-text-bg/70 shadow-xl hover:bg-text-bg/30"
+            >
+              필터링 초기화
+            </ButtonComponent>
           </div>
         </div>
       )}

@@ -94,7 +94,7 @@ export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: 
 
           <ButtonComponent
             onClick={handleSubmit}
-            className="w-full rounded-xl bg-point-color p-4 text-white"
+            className="w-full rounded-xl bg-point-color p-4 text-white hover:bg-point-color/70"
           >
             {defaultValue ? "수정 완료" : "작성 완료"}
           </ButtonComponent>

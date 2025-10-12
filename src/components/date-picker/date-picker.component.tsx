@@ -32,7 +32,7 @@ const months = [
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 10 }, (_, i) => currentYear - 5 + i);
 
-export default function DatePickerComponent({ onSelectedDate }: DatePickerProps) {
+export function DatePickerComponent({ onSelectedDate }: DatePickerProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
