@@ -78,9 +78,15 @@ export function Header() {
                   </Link>
                 ))}
               </div>
-              <ButtonComponent btnType="link" onClick={logout}>
-                로그아웃
-              </ButtonComponent>
+
+              <div className="flex items-center gap-4">
+                <p className="rounded-xl bg-white px-3 py-1 font-semibold text-black">
+                  {user.name} 님
+                </p>
+                <ButtonComponent btnType="link" onClick={logout}>
+                  로그아웃
+                </ButtonComponent>
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-4">
