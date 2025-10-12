@@ -1,3 +1,4 @@
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoPersonCircleSharp } from "react-icons/io5";
@@ -5,7 +6,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { ReviewItem } from "@/types/reviews.type";
 import { useModalStore } from "@/stores/modal.store";
 import { useDeleteReview } from "@/queries/reviews.query";
-import { ButtonComponent, LoginRequiredModalComponent, RatingComponent } from "@/components";
+import { ButtonComponent, RatingComponent } from "@/components";
 import { ReviewFormComponent } from "./review-form.component";
 
 interface ReviewSectionProps {
@@ -15,6 +16,9 @@ interface ReviewSectionProps {
 }
 
 export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSectionProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const { modals, openModal, closeModal } = useModalStore();
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
 
@@ -30,7 +34,9 @@ export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSecti
     if (alreadyWritten) return toast.error("이미 해당 영화에 리뷰를 작성했습니다.");
 
     if (!userId) {
-      openModal("loginRequire");
+      toast.error("로그인이 필요한 서비스입니다!");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      return;
     } else {
       openModal("reviewForm");
     }
@@ -107,11 +113,6 @@ export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSecti
           setSelectedReview(null);
         }}
         defaultValue={selectedReview}
-      />
-
-      <LoginRequiredModalComponent
-        isOpen={modals.loginRequire}
-        onClose={() => closeModal("loginRequire")}
       />
     </section>
   );

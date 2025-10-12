@@ -18,7 +18,6 @@ export * from "./checkbox.component";
 export * from "./header.component";
 export * from "./loading.component";
 export * from "./rating.component";
-export * from "./require-login-modal.component";
 export * from "./search.component";
 export * from "./tag.component";
 export * from "./toggle-button.component";
