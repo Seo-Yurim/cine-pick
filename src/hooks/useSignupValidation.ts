@@ -1,3 +1,4 @@
+import { getCheckUsername } from "@/services/users.service";
 import { useState } from "react";
 
 interface InitialValuesProps {
@@ -18,37 +19,43 @@ export default function useSingupValidation(initialValues: InitialValuesProps) {
   const [values, setValues] = useState<InitialValuesProps>(initialValues);
   const [errors, setErrors] = useState<Errors>({});
 
-  const validate = () => {
+  const validate = async () => {
     let isValid = true;
-    let newError: Errors = {};
+    let newErrors: Errors = {};
 
-    if (!values.name || !values.name.trim()) {
+    if (!values.name?.trim()) {
+      newErrors.name = "이름을 입력해주세요.";
       isValid = false;
-      newError.name = "이름을 입력해주세요.";
     }
 
-    if (!values.username || !values.username.trim()) {
+    if (!values.username?.trim()) {
+      newErrors.username = "아이디를 입력해주세요.";
       isValid = false;
-      newError.username = "아이디를 입력해주세요.";
+    } else {
+      const isUsernameCheck = await getCheckUsername(values.username);
+      if (!isUsernameCheck) {
+        newErrors.username = "이미 사용 중인 아이디입니다.";
+        isValid = false;
+      }
     }
 
-    if (!values.password || !values.password.trim()) {
+    if (!values.password?.trim()) {
+      newErrors.password = "비밀번호를 입력해주세요.";
       isValid = false;
-      newError.password = "비밀번호를 입력해주세요.";
     } else if (values.password.length < 8) {
+      newErrors.password = "비밀번호는 8자 이상 입력해주세요.";
       isValid = false;
-      newError.password = "비밀번호는 8자 이상 입력해주세요.";
     }
 
-    if (!values.checkPassword || !values.checkPassword.trim()) {
+    if (!values.checkPassword?.trim()) {
+      newErrors.checkPassword = "비밀번호를 입력해주세요.";
       isValid = false;
-      newError.checkPassword = "비밀번호를 입력해주세요.";
     } else if (values.password !== values.checkPassword) {
+      newErrors.checkPassword = "입력하신 비밀번호와 일치하지 않습니다.";
       isValid = false;
-      newError.checkPassword = "입력하신 비밀번호와 일치하지 않습니다.";
     }
 
-    setErrors(newError);
+    setErrors(newErrors);
     return isValid;
   };
 

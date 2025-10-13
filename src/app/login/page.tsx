@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { User } from "@/types/users.type";
 import { useLogin } from "@/queries/users.query";
-import { ButtonComponent, FormComponent, InputComponent } from "@/components";
+import { ButtonComponent, InputComponent } from "@/components";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,7 +25,9 @@ export default function LoginPage() {
     },
   });
 
-  const handleLogin = () => {
+  const handleLogin = (e: FormEvent) => {
+    e.preventDefault();
+
     if (!form.username.trim() || !form.password.trim()) {
       toast.error("아이디와 비밀번호를 입력해주세요!");
       return;
@@ -46,11 +48,9 @@ export default function LoginPage() {
         />
       </Link>
 
-      <FormComponent
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin();
-        }}
+      <form
+        className="flex w-full max-w-[640px] flex-col items-center gap-8"
+        onSubmit={handleLogin}
       >
         <InputComponent
           name="username"
@@ -70,16 +70,16 @@ export default function LoginPage() {
         />
         <ButtonComponent
           type="submit"
-          className="w-full rounded-xl bg-point-color p-4 text-lg font-medium"
+          className="w-full rounded-xl bg-point-color text-lg font-medium"
         >
           로그인
         </ButtonComponent>
-      </FormComponent>
+      </form>
 
       <div className="flex w-full items-center justify-between">
         <p className="font-medium">아직 회원이 아니신가요?</p>
         <Link href="/signup">
-          <ButtonComponent>회원가입</ButtonComponent>
+          <ButtonComponent btnType="link">회원가입</ButtonComponent>
         </Link>
       </div>
     </section>

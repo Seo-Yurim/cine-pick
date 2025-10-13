@@ -1,15 +1,15 @@
 "use client";
 
-import { getCheckUsername } from "@/services/users.service";
 import Image from "next/image";
 import Link from "next/link";
+import { FormEvent } from "react";
 import toast from "react-hot-toast";
 import useSignupValidation from "@/hooks/useSignupValidation";
 import { usePostUser } from "@/queries/users.query";
-import { ButtonComponent, FormComponent, InputComponent } from "@/components";
+import { ButtonComponent, InputComponent } from "@/components";
 
 export default function SignupPage() {
-  const { values, errors, setErrors, handleChange, validate } = useSignupValidation({
+  const { values, errors, handleChange, validate } = useSignupValidation({
     name: "",
     username: "",
     password: "",
@@ -17,15 +17,13 @@ export default function SignupPage() {
   });
 
   const signup = usePostUser();
-  const handleSignup = async () => {
-    if (!validate()) {
-      toast.error("정해진 규칙에 맞게 작성해주세요!");
-      return;
-    }
+  const handleSignup = async (e: FormEvent) => {
+    e.preventDefault();
 
-    const isUsernameCheck = await getCheckUsername(values.username);
-    if (!isUsernameCheck) {
-      setErrors({ username: "이미 사용중인 아이디입니다!" });
+    const isValid = await validate();
+
+    if (!isValid) {
+      toast.error("정해진 규칙에 맞게 작성해주세요!");
       return;
     }
 
@@ -49,11 +47,9 @@ export default function SignupPage() {
         />
       </Link>
 
-      <FormComponent
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSignup();
-        }}
+      <form
+        onSubmit={handleSignup}
+        className="flex w-full max-w-[640px] flex-col items-center gap-8"
       >
         <InputComponent
           name="name"
@@ -93,16 +89,16 @@ export default function SignupPage() {
         />
         <ButtonComponent
           type="submit"
-          className="w-full rounded-xl bg-point-color p-4 text-lg font-medium"
+          className="w-full rounded-xl bg-point-color text-lg font-medium"
         >
           회원가입
         </ButtonComponent>
-      </FormComponent>
+      </form>
 
       <div className="flex w-full items-center justify-between">
         <p className="font-medium">이미 회원이신가요?</p>
         <Link href="/login">
-          <ButtonComponent>로그인</ButtonComponent>
+          <ButtonComponent btnType="link">로그인</ButtonComponent>
         </Link>
       </div>
     </section>

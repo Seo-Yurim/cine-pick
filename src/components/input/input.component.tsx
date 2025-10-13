@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FieldError, Input, Label, TextField, TextFieldProps } from "react-aria-components";
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import { LuMessageSquareWarning } from "react-icons/lu";
 import "./input.component.scss";
 
 interface InputProps extends TextFieldProps {
@@ -31,7 +32,7 @@ export function InputComponent({
   const inputType = isPassword && showPassword ? "text" : type;
 
   return (
-    <TextField {...props} isInvalid={!!errorMessage}>
+    <TextField {...props}>
       <Label>{label}</Label>
 
       <div className="relative">
@@ -55,7 +56,12 @@ export function InputComponent({
         )}
       </div>
 
-      <FieldError>{errorMessage}</FieldError>
+      {errorMessage && (
+        <div className="error">
+          <LuMessageSquareWarning size={24} />
+          <p>{errorMessage}</p>
+        </div>
+      )}
     </TextField>
   );
 }
