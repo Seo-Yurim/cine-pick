@@ -28,6 +28,16 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
   const personInfo = personData ?? {};
   const personMovies = personMoviesData ?? [];
 
+  const filteredCastMovies = personMovies.cast.filter(
+    (movie: MovieItem, idx: number, self: MovieItem[]) =>
+      idx === self.findIndex((m: MovieItem) => m.id === movie.id),
+  );
+
+  const filteredCrewtMovies = personMovies.crew.filter(
+    (movie: MovieItem, idx: number, self: MovieItem[]) =>
+      idx === self.findIndex((m: MovieItem) => m.id === movie.id),
+  );
+
   return (
     <>
       <h1 className="text-3xl font-bold">인물 상세 정보</h1>
@@ -60,9 +70,9 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
 
         <div className="flex max-w-[1100px] flex-col gap-8">
           <SliderSection title="연기 활동">
-            {personMovies.cast && genres ? (
+            {filteredCastMovies && genres ? (
               <Slider>
-                {personMovies.cast?.map((movie: MovieItem) => (
+                {filteredCastMovies?.map((movie: MovieItem) => (
                   <SwiperSlide key={movie.id} className="p-4">
                     <MovieCardComponent
                       movie={movie}
@@ -79,10 +89,11 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
               </div>
             )}
           </SliderSection>
+
           <SliderSection title="제작 활동">
-            {personMovies.crew && genres ? (
+            {filteredCrewtMovies && genres ? (
               <Slider>
-                {personMovies.crew?.map((movie: MovieItem) => (
+                {filteredCrewtMovies?.map((movie: MovieItem) => (
                   <SwiperSlide key={movie.id} className="p-4">
                     <MovieCardComponent
                       movie={movie}
