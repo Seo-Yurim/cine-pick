@@ -1,6 +1,6 @@
 import { getMovies } from "@/services/movie.service";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
-import Hydrated from "./_components/hydrated";
+import HomeClient from "./home-client";
 
 export default async function HomePage() {
   const queryClient = new QueryClient();
@@ -28,7 +28,7 @@ export default async function HomePage() {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <Hydrated />
+      <HomeClient />
     </HydrationBoundary>
   );
 }

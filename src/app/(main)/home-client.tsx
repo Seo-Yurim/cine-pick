@@ -11,10 +11,10 @@ import {
 } from "@/queries/movie.query";
 import { MovieCardComponent, Slider } from "@/components";
 import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
-import { SliderSection } from "../../../components/slider-section/slider-section.component";
-import { HeroSection } from "./hero-section.component";
+import { SliderSection } from "../../components/slider-section/slider-section.component";
+import { HeroSection } from "./_components/hero-section.component";
 
-export default function Hydrated() {
+export default function HomeClient() {
   const today = new Date().toISOString().split("T")[0];
 
   const { data: genres } = useGenres();
