@@ -12,7 +12,8 @@ import { ButtonComponent, InputComponent } from "@/components";
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/";
+  const redirectParam = searchParams.get("redirect");
+  const redirect = redirectParam && redirectParam !== "/signup" ? redirectParam : "/";
 
   const [form, setForm] = useState<Pick<User, "username" | "password">>({
     username: "",
