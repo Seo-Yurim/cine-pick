@@ -1,16 +1,12 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
 import { useGenres } from "@/queries/movie.query";
 import { useSearchResult } from "@/queries/search.query";
 import { MovieCardComponent, SearchComponent } from "@/components";
 
-export default function SearchResultComponent() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query") || "";
-
+export default function SearchResultClient({ query }: { query: string }) {
   const { data: searchResult } = useSearchResult(query);
   const { data: genres } = useGenres();
 
