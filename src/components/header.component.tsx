@@ -21,7 +21,7 @@ export function Header() {
       },
       {
         label: "회원가입",
-        url: "https://www.themoviedb.org/signup",
+        url: "/signup",
       },
     ],
     user: [

@@ -45,7 +45,7 @@ export function RatingComponent({ type, defaultValue = 0, rating = 0, setRating 
   };
 
   return (
-    <div className={`flex ${type === "select" ? "cursor-pointer" : ""} gap-4`}>
+    <div className={`flex ${type === "select" ? "cursor-pointer" : ""} gap-3`}>
       {Array.from({ length: 5 }, (_, idx) => {
         const halfValue = idx + 0.5;
         const fullValue = idx + 1;

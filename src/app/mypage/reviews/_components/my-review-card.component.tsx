@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMovieDetail } from "@/queries/movie.query";
@@ -22,6 +22,14 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editRating, setEditRating] = useState(review.rating);
   const [editContent, setEditContent] = useState(review.content);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (isEditing && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [isEditing]);
 
   const editReview = usePatchReview();
   const deleteReview = useDeleteReview();
@@ -70,7 +78,7 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
             rating={isEditing ? editRating : review.rating}
             setRating={isEditing ? setEditRating : undefined}
           />
-          <p className="text-xl font-semibold">
+          <p className="text-nowrap text-lg font-semibold">
             {isEditing ? `${editRating}점` : `${review.rating}점`}
           </p>
         </div>
@@ -81,9 +89,10 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
 
           {isEditing ? (
             <textarea
+              ref={textareaRef}
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
-              className="h-full resize-none rounded-xl bg-foreground/20 p-8 text-lg"
+              className="h-full resize-none rounded-xl bg-foreground/20 p-8 text-lg focus:outline-point-color"
             />
           ) : (
             <p className="h-full rounded-xl bg-foreground/20 p-8 text-lg font-medium">
