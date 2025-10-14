@@ -23,6 +23,7 @@ export function PersonCard({ type, creditData }: PersonCardProps) {
           className="absolute h-full w-full rounded-xl object-cover"
           fill
           priority
+          fetchPriority="high"
           alt={creditData.name}
           sizes="200px"
         />

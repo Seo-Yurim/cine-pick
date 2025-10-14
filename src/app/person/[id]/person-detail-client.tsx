@@ -28,11 +28,13 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
   const personInfo = personData ?? {};
   const personMovies = personMoviesData ?? [];
 
+  // 출연한 영화 목록 필터링 (중복 제거)
   const filteredCastMovies = personMovies.cast.filter(
     (movie: MovieItem, idx: number, self: MovieItem[]) =>
       idx === self.findIndex((m: MovieItem) => m.id === movie.id),
   );
 
+  // 출연한 영화 목록 필터링 (중복 제거)
   const filteredCrewtMovies = personMovies.crew.filter(
     (movie: MovieItem, idx: number, self: MovieItem[]) =>
       idx === self.findIndex((m: MovieItem) => m.id === movie.id),
@@ -47,8 +49,8 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
           <div className="relative aspect-[3/4] w-full min-w-[400px] max-w-[500px] shrink-0 rounded-xl">
             <Image
               src={
-                personInfo.profile_path
-                  ? `https://image.tmdb.org/t/p/w500${personInfo.profile_path}`
+                personData?.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${personData?.profile_path}`
                   : "/default.svg"
               }
               className="absolute h-full w-full rounded-xl object-cover"
@@ -60,11 +62,11 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
           </div>
           <div className="flex flex-col gap-6 border-l pl-4 text-xl font-semibold">
             <div className="flex h-fit items-center gap-2">
-              <p>이름: {personInfo.name}</p> {genderMapping[personInfo.gender]}
+              <p>이름: {personData?.name}</p> {genderMapping[personData?.gender]}
             </div>
-            <p>전문분야: {personInfo.known_for_department}</p>
-            <p>생년월일: {personInfo.birthday}</p>
-            <p>출생지: {personInfo.place_of_birth}</p>
+            <p>전문분야: {personData?.known_for_department}</p>
+            <p>생년월일: {personData?.birthday}</p>
+            <p>출생지: {personData?.place_of_birth}</p>
           </div>
         </div>
 

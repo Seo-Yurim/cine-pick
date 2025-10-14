@@ -16,6 +16,7 @@ export default function SignupPage() {
     checkPassword: "",
   });
 
+  // 회원가입 처리 함수
   const signup = usePostUser();
   const handleSignup = async (e: FormEvent) => {
     e.preventDefault();

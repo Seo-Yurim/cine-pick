@@ -28,6 +28,7 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
           className="absolute h-full w-full rounded-xl object-cover"
           fill
           priority
+          fetchPriority="high"
           alt={`${movie.title} 포스터`}
           sizes="412px"
         />

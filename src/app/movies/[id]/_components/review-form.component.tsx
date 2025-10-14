@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { usePatchReview, usePostReview } from "@/queries/reviews.query";
-import { ButtonComponent, FormComponent, ModalComponent } from "@/components";
+import { ButtonComponent, ModalComponent } from "@/components";
 import { RatingComponent } from "@/components/rating.component";
 
 interface ReviewFormProps {
@@ -80,7 +80,7 @@ export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: 
       onClose={onClose}
     >
       <div className="flex max-w-[500px] flex-col gap-4">
-        <FormComponent>
+        <form>
           <div className="flex items-center gap-8">
             <RatingComponent type="select" rating={rating} setRating={setRating} />
             <p className="text-xl font-bold">{rating}점</p>
@@ -98,7 +98,7 @@ export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: 
           >
             {defaultValue ? "수정 완료" : "작성 완료"}
           </ButtonComponent>
-        </FormComponent>
+        </form>
       </div>
     </ModalComponent>
   );

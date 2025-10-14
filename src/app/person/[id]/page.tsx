@@ -8,14 +8,19 @@ export default async function PersonDetailPage({ params }: { params: { id: strin
 
   const queryClient = new QueryClient();
 
+  // 영화 장르 목록
   await queryClient.prefetchQuery({
     queryKey: ["genres"],
     queryFn: () => getGenres(),
   });
+
+  // 인물 정보
   await queryClient.prefetchQuery({
     queryKey: ["person-detail", personId],
     queryFn: () => getPersonInfo(personId),
   });
+
+  // 인물이 참여한 영화 목록
   await queryClient.prefetchQuery({
     queryKey: ["person-movies", personId],
     queryFn: () => getPersonMovies(personId),

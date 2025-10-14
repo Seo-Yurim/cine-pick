@@ -10,6 +10,7 @@ export * from "./skeleton/movie-card-skeleton.component";
 export * from "./skeleton/movie-info-skeleton.component";
 export * from "./skeleton/person-card-skeleton.component";
 export * from "./skeleton/skeleton.component";
+export * from "./skeleton/hero-section-skeleton.component";
 export * from "./slider/slider.component";
 export * from "./slider-section/slider-section.component";
 export * from "./tooltip/tooltip.component";

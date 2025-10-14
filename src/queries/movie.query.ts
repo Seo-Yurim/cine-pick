@@ -11,6 +11,7 @@ import {
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { MovieParams } from "@/types/movie.type";
 
+// 영화 목록
 export function useMovies(params: MovieParams) {
   return useQuery({
     queryKey: ["movies", params],
@@ -18,6 +19,7 @@ export function useMovies(params: MovieParams) {
   });
 }
 
+// 영화 목록 (무한스크롤)
 export function useInfinityMovies(params: MovieParams) {
   return useInfiniteQuery({
     queryKey: ["movies", params],
@@ -30,6 +32,7 @@ export function useInfinityMovies(params: MovieParams) {
   });
 }
 
+// 영화 상세 정보
 export function useMovieDetail(movieId: number) {
   return useQuery({
     queryKey: ["movie", movieId],
@@ -38,6 +41,7 @@ export function useMovieDetail(movieId: number) {
   });
 }
 
+// 영화 크레딧 정보
 export function useMovieCredits(movieId: number) {
   return useQuery({
     queryKey: ["movie-credit", movieId],
@@ -45,6 +49,7 @@ export function useMovieCredits(movieId: number) {
   });
 }
 
+// 영화 장르 목록
 export function useGenres() {
   return useQuery({
     queryKey: ["genres"],

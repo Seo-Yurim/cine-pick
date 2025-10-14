@@ -9,14 +9,15 @@ import {
   useGetPopularMovies,
   useMovies,
 } from "@/queries/movie.query";
-import { MovieCardComponent, Slider } from "@/components";
-import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
-import { SliderSection } from "../../components/slider-section/slider-section.component";
+import {
+  MovieCardComponent,
+  MovieCardSkeletonComponent,
+  Slider,
+  SliderSection,
+} from "@/components";
 import { HeroSection } from "./_components/hero-section.component";
 
-export default function HomeClient() {
-  const today = new Date().toISOString().split("T")[0];
-
+export default function HomeClient({ today }: { today: string }) {
   const { data: genres } = useGenres();
   const { data: popularMoives } = useGetPopularMovies();
   const { data: nowPlayingMovies } = useGetNowPlayingMovies();

@@ -9,7 +9,7 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaCrown } from "react-icons/fa6";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
-import { ButtonComponent } from "@/components";
+import { ButtonComponent, HeroSectionSkeleton } from "@/components";
 
 interface HeroSectionProps {
   popularMovies: MovieItem[];
@@ -22,47 +22,7 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
     <section>
       <h2 className="pb-8 text-4xl font-bold">👑 오늘의 인기 영화 TOP 3</h2>
       {isLoading ? (
-        <div className="flex h-[700px] w-full items-stretch justify-center gap-8 bg-header-bg/50 p-16">
-          {/* 왼쪽 영역 스켈레톤 */}
-          <div className="w-full max-w-[400px] animate-custom-pulse rounded-xl bg-text-bg shadow-xl" />
-
-          {/* 오른쪽 영역 스켈레톤 */}
-          <div className="flex w-full animate-custom-pulse flex-col justify-center gap-12 rounded-xl bg-text-bg/70 px-10 py-16">
-            {/* 제목 + 개봉일 + 장르 */}
-            <div className="flex items-center justify-between">
-              {/* 제목 */}
-              <div className="h-8 w-1/3 animate-custom-pulse rounded bg-gray-400/50" />
-
-              {/* 개봉일 + 장르 */}
-              <div className="flex items-center gap-4">
-                {/* 개봉일 */}
-                <div className="h-6 w-24 animate-custom-pulse rounded bg-gray-400/40" />
-
-                {/* 장르 */}
-                <div className="flex gap-2">
-                  {[...Array(3)].map((_, idx) => (
-                    <div
-                      key={idx}
-                      className="h-6 w-16 animate-custom-pulse rounded-lg bg-white/20"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* 줄거리 */}
-            <div className="space-y-2">
-              <div className="h-5 w-full animate-custom-pulse rounded bg-gray-400/40" />
-              <div className="h-5 w-[90%] animate-custom-pulse rounded bg-gray-400/40" />
-              <div className="h-5 w-[70%] animate-custom-pulse rounded bg-gray-400/40" />
-              <div className="h-5 w-[80%] animate-custom-pulse rounded bg-gray-400/40" />
-              <div className="h-5 w-[60%] animate-custom-pulse rounded bg-gray-400/40" />
-            </div>
-
-            {/* 상세보기 버튼 */}
-            <div className="ml-auto h-12 w-48 animate-custom-pulse rounded bg-gray-400/40" />
-          </div>
-        </div>
+        <HeroSectionSkeleton />
       ) : (
         <Swiper
           spaceBetween={30}
@@ -97,6 +57,7 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                       className="absolute h-full w-full rounded-xl object-cover"
                       fill
                       priority
+                      fetchPriority="high"
                       alt={`${movie.title} 포스터`}
                       sizes="400px"
                     />

@@ -33,6 +33,8 @@ export function MovieListComponent({ movie, genres }: MovieListProps) {
                 : "/default.svg"
             }
             fill
+            priority
+            fetchPriority="high"
             className="rounded-lg object-cover"
             alt={`${movie.title} 포스터`}
             sizes="120px"

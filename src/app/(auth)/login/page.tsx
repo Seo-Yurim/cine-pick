@@ -20,12 +20,14 @@ export default function LoginPage() {
     password: "",
   });
 
+  // 로그인 시 이전 페이지로 리다이렉트
   const getLogin = useLogin({
     onSuccess: () => {
       router.push(redirect);
     },
   });
 
+  // 로그인 처리 함수
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
 
