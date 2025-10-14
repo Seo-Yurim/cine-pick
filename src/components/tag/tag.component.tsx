@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button, Input, Tag, TagGroup, TagList } from "react-aria-components";
 import { MdCancel } from "react-icons/md";
+import "./tag.component.scss";
 
 export function TagComponent({
   tagList,
@@ -31,30 +32,20 @@ export function TagComponent({
   };
 
   return (
-    <TagGroup aria-label="태그 추가" {...props} className="flex flex-col gap-4">
+    <TagGroup aria-label="태그 추가" {...props}>
       <Input
         type="text"
-        className="w-full rounded border px-3 py-1 font-semibold text-background"
         placeholder="인물을 입력해주세요."
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <TagList className="flex items-center gap-2">
+      <TagList>
         {tagList.map((tag, idx) => (
-          <Tag
-            key={idx}
-            textValue={tag}
-            className="flex items-center gap-2 rounded-full border bg-foreground px-4 py-1 text-lg font-semibold leading-tight text-background"
-          >
+          <Tag key={idx} textValue={tag}>
             {tag}
-            <Button
-              className="p-0 text-background"
-              slot="remove"
-              aria-label={`${tag} 태그 삭제`}
-              onPress={() => handleRemove(tag)}
-            >
-              <MdCancel className="h-5 w-5" />
+            <Button slot="remove" aria-label={`${tag} 태그 삭제`} onPress={() => handleRemove(tag)}>
+              <MdCancel size={20} />
             </Button>
           </Tag>
         ))}

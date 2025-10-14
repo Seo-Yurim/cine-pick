@@ -1,0 +1,47 @@
+.react-aria-TagGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .react-aria-Input {
+    width: 100%;
+
+    padding: 0.4rem 0.75rem;
+
+    border: 1px solid white;
+    border-radius: 0.25rem;
+
+    color: hsl(var(--background));
+    font-weight: 600;
+  }
+
+  .react-aria-TagList {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .react-aria-Tag {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      padding: 0.25rem 1rem;
+
+      border: 1px solid gray;
+      border-radius: 9999px;
+
+      background-color: hsl(var(--foreground));
+      color: hsl(var(--background));
+      font-size: 1.125rem;
+      line-height: 1.125rem;
+      font-weight: 600;
+
+      .react-aria-Button {
+        width: fit-content;
+        padding: 0;
+
+        color: hsl(var(--background));
+      }
+    }
+  }
+}
