@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth.store";
-import { LoadingComponent } from "@/components";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const { user } = useAuthStore();
@@ -18,11 +17,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   }, [user, router]);
 
   if (user === undefined) {
-    return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
+    return;
   }
 
   if (user) {
-    return <LoadingComponent label="로딩 중 ..." isIndeterminate />;
+    return;
   }
 
   return <>{children}</>;
