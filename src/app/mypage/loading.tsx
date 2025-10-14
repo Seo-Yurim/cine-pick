@@ -13,6 +13,8 @@ export default function Loading() {
     return () => clearTimeout(timeout);
   }, []);
 
+  if (!show) return null;
+
   return (
     <div
       style={{
