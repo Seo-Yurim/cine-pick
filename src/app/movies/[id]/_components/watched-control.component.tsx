@@ -27,6 +27,7 @@ export function WatchedControlComponent({ defaultValue, movieId }: WatchedContro
   const addWatched = usePostWatchedMovie();
   const deleteWatched = useDeleteWatchedMovie();
 
+  // 시청기록 토글 처리 함수
   const handleWatched = () => {
     if (!user) {
       toast.error("로그인이 필요한 서비스입니다!");

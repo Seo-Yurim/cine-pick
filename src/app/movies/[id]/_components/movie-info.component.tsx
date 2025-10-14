@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { ReviewItem } from "@/types/reviews.type";
+import { statusMapping } from "@/constants/constants";
 import { useGetCollectionList } from "@/queries/collections.query";
 import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
@@ -13,15 +14,6 @@ import {
   ReviewListComponent,
   WatchedControlComponent,
 } from "./index";
-
-const statusMapping: Record<string, string> = {
-  Rumored: "제작 미정",
-  Planned: "제작 예정",
-  "In Production": "제작 진행 중",
-  "Post Production": "편집 및 후반 작업 진행 중",
-  Released: "공식 개봉",
-  Canceled: "제작 취소",
-};
 
 interface MovieInfoProps {
   userId: string;

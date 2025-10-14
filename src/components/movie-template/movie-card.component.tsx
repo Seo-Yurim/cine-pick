@@ -40,12 +40,16 @@ export function MovieCardComponent({ movie, genres }: MovieCardProps) {
           <p className="text-nowrap py-1 text-sm text-gray-500">{movie.release_date}</p>
         </div>
 
-        <div className="flex gap-2 truncate text-sm text-gray-200">
-          {genres?.map((genre: MovieGenres) => (
-            <span key={genre.id} className="rounded-lg bg-text-bg px-2 py-1 text-xs">
-              {genre.name}
-            </span>
-          ))}
+        <div className="flex min-h-[24px] gap-2 text-sm text-gray-200">
+          {genres?.length ? (
+            genres.map((genre: MovieGenres) => (
+              <span key={genre.id} className="rounded-lg bg-text-bg px-2 py-1 text-xs">
+                {genre.name}
+              </span>
+            ))
+          ) : (
+            <span className="invisible text-xs">장르 없음</span>
+          )}
         </div>
       </div>
 

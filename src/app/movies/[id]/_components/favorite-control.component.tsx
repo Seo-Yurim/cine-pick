@@ -18,6 +18,8 @@ export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteCont
   const pathname = usePathname();
   const [favorited, setFavorited] = useState<boolean>(defaultValue?.favorite || false);
 
+  // defaultValue는 비동기 데이터로 초기 렌더링 시 undefined일 수 있으므로,
+  // defaultValue가 변경될 때마다 내부 상태를 동기화하기 위해 useEffect를 사용
   useEffect(() => {
     setFavorited(defaultValue?.favorite || false);
   }, [defaultValue]);
@@ -25,6 +27,7 @@ export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteCont
   const addFavorite = usePostFavoriteMovie();
   const toggleFavorite = useDeleteFavoriteMovie();
 
+  // 좋아요 토글 처리 함수
   const handleFavorite = () => {
     if (!user) {
       toast.error("로그인이 필요한 서비스입니다!");

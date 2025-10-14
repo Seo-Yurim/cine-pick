@@ -22,14 +22,18 @@ export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSecti
   const { modals, openModal, closeModal } = useModalStore();
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
 
+  // 리뷰 삭제 처리 함수
   const deleteReview = useDeleteReview();
   const handleDeleteReview = (review: ReviewItem) => {
     deleteReview.mutate({ reviewId: review.id });
   };
 
+  // 해당하는 영화의 리뷰 목록만 보이도록 필터링
   const filteredReview = reviewData?.filter((review: ReviewItem) => review.movieId === movieId);
 
+  // 리뷰 폼 모달 보여주기 처리 함수
   const handleShowModal = () => {
+    // 미리 작성한 리뷰가 있는지 확인
     const alreadyWritten = filteredReview?.some((review) => review.userId === userId);
     if (alreadyWritten) return toast.error("이미 해당 영화에 리뷰를 작성했습니다.");
 
@@ -43,7 +47,7 @@ export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSecti
   };
 
   return (
-    <section className="flex h-full flex-col gap-8 overflow-y-auto rounded-xl bg-text-bg p-8">
+    <section className="flex h-full max-h-[540px] flex-col gap-8 overflow-y-auto rounded-xl bg-text-bg p-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-point-color">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <MdOutlineRateReview className="h-8 w-8" />

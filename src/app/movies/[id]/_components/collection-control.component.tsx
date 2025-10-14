@@ -19,11 +19,14 @@ export function CollectionControlComponent({
   collectionList,
 }: CollectionControlProps) {
   const { modals, openModal, closeModal, toggleModal } = useModalStore();
+
   const addCollectionMovie = usePatchCollectionMovie();
 
+  // 컬렉션에 영화 추가 처리 함수
   const handleSelectCollection = (collection: CollectionList) => {
     if (!collection) return toast.error("영화를 추가할 컬렉션을 선택해주세요!");
 
+    // 중복 검사
     const alreadyExists = collection.movies?.some((movie) => movie.movieId === movieData.id);
 
     if (alreadyExists) {

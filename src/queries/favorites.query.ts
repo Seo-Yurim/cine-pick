@@ -22,7 +22,7 @@ export function useGetMyFavoriteList(userId: string) {
 // 내가 좋아요 한 영화
 export function useGetFavoriteMovie(userId: string, movieId: number) {
   return useQuery({
-    queryKey: ["favorites", userId],
+    queryKey: ["favorites", userId, movieId],
     queryFn: () => getMyFavoriteMovie(userId, movieId),
     enabled: !!movieId,
     staleTime: 0,

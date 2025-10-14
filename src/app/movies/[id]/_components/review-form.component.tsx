@@ -35,6 +35,7 @@ export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: 
   const postReview = usePostReview();
   const patchReview = usePatchReview();
 
+  // 리뷰 처리 함수
   const handleSubmit = () => {
     const reviewData = {
       movieId,
@@ -80,7 +81,7 @@ export function ReviewFormComponent({ isOpen, movieId, onClose, defaultValue }: 
       onClose={onClose}
     >
       <div className="flex max-w-[500px] flex-col gap-4">
-        <form>
+        <form className="flex flex-col gap-4">
           <div className="flex items-center gap-8">
             <RatingComponent type="select" rating={rating} setRating={setRating} />
             <p className="text-xl font-bold">{rating}점</p>

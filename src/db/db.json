@@ -66,9 +66,9 @@
       "id": "2439",
       "movieId": 1038392,
       "userId": "bad7",
-      "rating": 4,
+      "rating": 4.5,
       "content": "진짜 무서와요 ;;  진짜로 ~~ ",
-      "createdAt": "2025-09-25T02:54:19.291Z",
+      "createdAt": "2025-10-14T05:19:34.318Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -169,6 +169,18 @@
         "name": "테스트2",
         "username": "test02"
       }
+    },
+    {
+      "id": "fac5",
+      "movieId": 1267319,
+      "userId": "80f1",
+      "rating": 0.5,
+      "content": "진짜 너무 재미없었어요.",
+      "createdAt": "2025-10-14T05:40:47.246Z",
+      "user": {
+        "name": "테스트3",
+        "username": "test03"
+      }
     }
   ],
   "favorites": [
@@ -181,12 +193,6 @@
     {
       "id": "7446",
       "movieId": 617126,
-      "userId": "bad7",
-      "favorite": true
-    },
-    {
-      "id": "d033",
-      "movieId": 1311031,
       "userId": "bad7",
       "favorite": true
     },
@@ -206,6 +212,18 @@
       "id": "8060",
       "movieId": 1311031,
       "userId": "2",
+      "favorite": true
+    },
+    {
+      "id": "71ae",
+      "movieId": 1038392,
+      "userId": "bad7",
+      "favorite": true
+    },
+    {
+      "id": "cb95",
+      "movieId": 1311031,
+      "userId": "bad7",
       "favorite": true
     }
   ],
@@ -313,6 +331,12 @@
       "id": "8dc0",
       "movieId": 1311031,
       "userId": "2",
+      "watched": true
+    },
+    {
+      "id": "28f2",
+      "movieId": 1038392,
+      "userId": "bad7",
       "watched": true
     }
   ]
