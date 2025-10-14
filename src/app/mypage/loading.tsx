@@ -1,27 +1,17 @@
 "use client";
 
-import { useIsFetching } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export default function Loading() {
-  const isFetching = useIsFetching();
-  const isLoading = isFetching > 0;
-
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (isLoading) {
-      setShow(true);
-    } else {
-      timeout = setTimeout(() => setShow(false), 500);
-    }
+    const timeout = setTimeout(() => {
+      setShow(false);
+    }, 500);
 
     return () => clearTimeout(timeout);
-  }, [isLoading]);
-
-  if (!show) return null;
+  }, []);
 
   return (
     <div

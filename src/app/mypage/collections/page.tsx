@@ -51,10 +51,14 @@ export default function MyCollectionPage() {
                         setSelectedCollection(collection);
                         openModal("collectionForm");
                       }}
+                      className="rounded-xl hover:bg-white/30"
                     >
                       수정
                     </ButtonComponent>
-                    <ButtonComponent onClick={() => handleDeleteCollection(collection)}>
+                    <ButtonComponent
+                      className="rounded-xl hover:bg-white/30"
+                      onClick={() => handleDeleteCollection(collection)}
+                    >
                       삭제
                     </ButtonComponent>
                   </div>

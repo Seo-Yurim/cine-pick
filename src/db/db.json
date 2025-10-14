@@ -248,20 +248,6 @@
       "movies": []
     },
     {
-      "id": "b7ff",
-      "title": "테스트",
-      "description": "테스트요",
-      "userId": "bad7",
-      "movies": []
-    },
-    {
-      "id": "a6c6",
-      "title": "테스트2",
-      "description": "테스트입니다.",
-      "userId": "bad7",
-      "movies": []
-    },
-    {
       "id": "3ac0",
       "title": "좋아하는 영화",
       "description": "좋아하는 영화 컬렉션",

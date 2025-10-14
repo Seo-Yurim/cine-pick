@@ -4,7 +4,6 @@ import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "@/queries/query-client";
 import { Header } from "@/components";
 import "./globals.css";
-import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "시네픽 (Cine Pick)",
@@ -28,7 +27,6 @@ export default function RootLayout({
         <QueryClientProvider>
           <Toaster position="top-center" reverseOrder={false} />
           <Header />
-          <Loading />
           <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-16 py-40">
             {children}
           </main>
