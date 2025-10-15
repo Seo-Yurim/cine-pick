@@ -1,36 +1,52 @@
-import { getGenres } from "@/services/movie.service";
-import { getPersonInfo, getPersonMovies } from "@/services/person.service";
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import PersonDetailClient from "./person-detail-client";
+
+async function genresData() {
+  const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function personDetailData(personId: string) {
+  const res = await fetch(`https://api.themoviedb.org/3/person/${personId}?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function personMoviesData(personId: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/person/${personId}/movie_credits?language=ko`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+      },
+    },
+  );
+
+  return res.json();
+}
 
 export default async function PersonDetailPage({ params }: { params: { id: string } }) {
   const personId = params.id;
 
-  const queryClient = new QueryClient();
-
-  // 영화 장르 목록
-  await queryClient.prefetchQuery({
-    queryKey: ["genres"],
-    queryFn: () => getGenres(),
-  });
-
-  // 인물 정보
-  await queryClient.prefetchQuery({
-    queryKey: ["person-detail", personId],
-    queryFn: () => getPersonInfo(personId),
-  });
-
-  // 인물이 참여한 영화 목록
-  await queryClient.prefetchQuery({
-    queryKey: ["person-movies", personId],
-    queryFn: () => getPersonMovies(personId),
-  });
-
-  const dehydratedState = dehydrate(queryClient);
+  const genres = await genresData();
+  const personDetail = await personDetailData(personId);
+  const personMovies = await personMoviesData(personId);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <PersonDetailClient personId={personId} />
-    </HydrationBoundary>
+    <PersonDetailClient genres={genres} personDetail={personDetail} personMovies={personMovies} />
   );
 }

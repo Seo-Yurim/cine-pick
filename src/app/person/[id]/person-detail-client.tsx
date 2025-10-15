@@ -4,10 +4,8 @@ import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { ReactNode } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
-import { MovieItem } from "@/types/movie.type";
+import { GenresList, MovieItem, PersonItem, PersonMovies } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
-import { useGenres } from "@/queries/movie.query";
-import { usePersonInfo, usePersonMovies } from "@/queries/person.query";
 import {
   MovieCardComponent,
   MovieCardSkeletonComponent,
@@ -20,14 +18,17 @@ const genderMapping: Record<string, ReactNode> = {
   "2": <IoMdMale className="h-6 w-6" />,
 };
 
-export default function PersonDetailClient({ personId }: { personId: string }) {
-  const { data: genres } = useGenres();
-  const { data: personData } = usePersonInfo(personId);
-  const { data: personMoviesData } = usePersonMovies(personId);
+interface PersonDetailClientProps {
+  genres: GenresList;
+  personDetail: PersonItem;
+  personMovies: PersonMovies;
+}
 
-  const personInfo = personData ?? {};
-  const personMovies = personMoviesData ?? [];
-
+export default function PersonDetailClient({
+  genres,
+  personDetail,
+  personMovies,
+}: PersonDetailClientProps) {
   // 출연한 영화 목록 필터링 (중복 제거)
   const filteredCastMovies = personMovies.cast.filter(
     (movie: MovieItem, idx: number, self: MovieItem[]) =>
@@ -49,8 +50,8 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
           <div className="relative aspect-[3/4] w-full min-w-[400px] max-w-[500px] shrink-0 rounded-xl">
             <Image
               src={
-                personData?.profile_path
-                  ? `https://image.tmdb.org/t/p/w500${personData?.profile_path}`
+                personDetail.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${personDetail.profile_path}`
                   : "/default.svg"
               }
               className="absolute h-full w-full rounded-xl object-cover"
@@ -62,11 +63,11 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
           </div>
           <div className="flex flex-col gap-6 border-l pl-4 text-xl font-semibold">
             <div className="flex h-fit items-center gap-2">
-              <p>이름: {personData?.name}</p> {genderMapping[personData?.gender]}
+              <p>이름: {personDetail.name}</p> {genderMapping[personDetail.gender]}
             </div>
-            <p>전문분야: {personData?.known_for_department}</p>
-            <p>생년월일: {personData?.birthday}</p>
-            <p>출생지: {personData?.place_of_birth}</p>
+            <p>전문분야: {personDetail.known_for_department}</p>
+            <p>생년월일: {personDetail.birthday}</p>
+            <p>출생지: {personDetail.place_of_birth}</p>
           </div>
         </div>
 
@@ -74,11 +75,11 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
           <SliderSection title="연기 활동">
             {filteredCastMovies && genres ? (
               <Slider>
-                {filteredCastMovies?.map((movie: MovieItem) => (
-                  <SwiperSlide key={movie.id} className="p-4">
+                {filteredCastMovies.map((movie: MovieItem) => (
+                  <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
                     <MovieCardComponent
                       movie={movie}
-                      genres={genresMatch(genres?.genres, movie.genre_ids)}
+                      genres={genresMatch(genres.genres, movie.genre_ids)}
                     />
                   </SwiperSlide>
                 ))}
@@ -95,11 +96,11 @@ export default function PersonDetailClient({ personId }: { personId: string }) {
           <SliderSection title="제작 활동">
             {filteredCrewtMovies && genres ? (
               <Slider>
-                {filteredCrewtMovies?.map((movie: MovieItem) => (
-                  <SwiperSlide key={movie.id} className="p-4">
+                {filteredCrewtMovies.map((movie: MovieItem) => (
+                  <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
                     <MovieCardComponent
                       movie={movie}
-                      genres={genresMatch(genres?.genres, movie.genre_ids)}
+                      genres={genresMatch(genres.genres, movie.genre_ids)}
                     />
                   </SwiperSlide>
                 ))}

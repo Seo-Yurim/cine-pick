@@ -1,15 +1,14 @@
 "use client";
 
+import { log } from "console";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/stores/auth.store";
-import { useHasHydrated } from "@/hooks/useHasHydration";
 import { ButtonComponent } from "./index";
 
-export function Header() {
+export function Header({ cookieData }: { cookieData: any }) {
   const { user, logout } = useAuthStore();
-  const hasHydrated = useHasHydrated();
 
   const pathname = usePathname();
 
@@ -31,21 +30,7 @@ export function Header() {
       { label: "시청기록", url: "/mypage/watched" },
     ],
   };
-
   const isActive = (url: string) => pathname === url;
-
-  if (!hasHydrated) {
-    return (
-      <header className="fixed z-50 flex h-28 w-full items-center justify-center bg-header-bg">
-        <div className="flex w-full max-w-[1920px] items-center gap-8 px-8">
-          <Link href="/" className="relative aspect-[3/1] w-48">
-            <Image src="/logo.svg" className="object-contain" fill priority alt="logo" />
-          </Link>
-          <div className="w-full animate-pulse rounded-xl bg-white/10 p-8" />
-        </div>
-      </header>
-    );
-  }
 
   return (
     <header className="fixed z-50 flex h-28 w-full items-center justify-center bg-header-bg">
@@ -64,7 +49,7 @@ export function Header() {
             </ButtonComponent>
           </Link>
 
-          {user ? (
+          {cookieData ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
                 {menus.user.map((menu) => (
@@ -81,7 +66,7 @@ export function Header() {
 
               <div className="flex items-center gap-4">
                 <p className="rounded-xl bg-white px-3 py-1 font-semibold text-black">
-                  {user.name} 님
+                  {JSON.parse(cookieData.value).name}님
                 </p>
                 <ButtonComponent btnType="link" onClick={logout}>
                   로그아웃

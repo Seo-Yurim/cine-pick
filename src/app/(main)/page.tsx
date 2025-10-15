@@ -1,53 +1,70 @@
-import { getGenres, getMovies, getNowPlayingMovies } from "@/services/movie.service";
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import HomeClient from "./home-client";
 
-export default async function HomePage() {
-  const queryClient = new QueryClient();
+async function genresData() {
+  const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
 
+  return res.json();
+}
+
+async function popularMoviesData() {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/popular?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function nowPlayingMoviesData() {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=ko&region=KR`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function newMoviesData(today: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=primary_release_date.desc&primary_release_date.lte=${today}&with_origin_country=KR`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+      },
+    },
+  );
+
+  return res.json();
+}
+
+export default async function HomePage() {
   const today = new Date().toISOString().split("T")[0];
 
-  // SSR 시 React Query 캐시에 데이터를 미리 채워서 클라이언트에서 바로 사용할 수 있도록
+  const genres = await genresData();
+  const popularMoives = await popularMoviesData();
+  const nowPlayingMovies = await nowPlayingMoviesData();
+  const newMovies = await newMoviesData(today);
 
-  // 영화 장르 목록
-  await queryClient.prefetchQuery({
-    queryKey: ["genres"],
-    queryFn: () => getGenres(),
-  });
-
-  // 인기 영화 목록
-  await queryClient.prefetchQuery({
-    queryKey: ["movies", { sort_by: "popularity.desc" }],
-    queryFn: () => getMovies({ sort_by: "popularity.desc" }),
-  });
-
-  // 상영 중인 영화 목록
-  await queryClient.prefetchQuery({
-    queryKey: ["movies", "now-playing"],
-    queryFn: () => getNowPlayingMovies(),
-  });
-
-  //최신 개봉 영화 목록
-  await queryClient.prefetchQuery({
-    queryKey: [
-      "movies",
-      { sort_by: "primary_release_date.desc", "primary_release_date.lte": today },
-    ],
-    queryFn: () =>
-      getMovies({
-        sort_by: "primary_release_date.desc",
-        "primary_release_date.lte": today,
-        with_origin_country: "KR",
-      }),
-  });
-
-  // 위에서 prefetch한 데이터를 직렬화(dehydrate)하여 클라이언트에 전달
-  const dehydratedState = dehydrate(queryClient);
-
-  // 클라이언트 컴포넌트에서 HydrationBoundary를 통해 SSR 데이터 재사용
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <HomeClient today={today} />
-    </HydrationBoundary>
+    <HomeClient
+      genres={genres}
+      popularMoives={popularMoives.results}
+      nowPlayingMovies={nowPlayingMovies.results}
+      newMovies={newMovies.results}
+    />
   );
 }

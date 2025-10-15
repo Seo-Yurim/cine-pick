@@ -1,27 +1,34 @@
-import { getGenres } from "@/services/movie.service";
-import { getSearchResult } from "@/services/search.service";
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import SearchResultClient from "./search-result.component";
+
+async function genresData() {
+  const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function searchResultData(query: string) {
+  const res = await fetch(`https://api.themoviedb.org/3/search/multi?language=ko&query=${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
 
 export default async function SearchPage({ searchParams }: { searchParams: { query?: string } }) {
   const query = searchParams.query ?? "";
 
-  const queryClient = new QueryClient();
+  const genres = await genresData();
+  const searchResults = await searchResultData(query);
 
-  await queryClient.prefetchQuery({
-    queryKey: ["search", query],
-    queryFn: () => getSearchResult(query),
-  });
-  await queryClient.prefetchQuery({
-    queryKey: ["genres"],
-    queryFn: () => getGenres(),
-  });
-
-  const dehydratedState = dehydrate(queryClient);
-
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <SearchResultClient query={query} />
-    </HydrationBoundary>
-  );
+  return <SearchResultClient query={query} genres={genres} searchResults={searchResults.results} />;
 }

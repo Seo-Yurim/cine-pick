@@ -28,13 +28,10 @@ export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSecti
     deleteReview.mutate({ reviewId: review.id });
   };
 
-  // 해당하는 영화의 리뷰 목록만 보이도록 필터링
-  const filteredReview = reviewData?.filter((review: ReviewItem) => review.movieId === movieId);
-
   // 리뷰 폼 모달 보여주기 처리 함수
   const handleShowModal = () => {
     // 미리 작성한 리뷰가 있는지 확인
-    const alreadyWritten = filteredReview?.some((review) => review.userId === userId);
+    const alreadyWritten = reviewData?.some((review) => review.userId === userId);
     if (alreadyWritten) return toast.error("이미 해당 영화에 리뷰를 작성했습니다.");
 
     if (!userId) {
@@ -62,13 +59,13 @@ export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSecti
       </div>
 
       <div className="flex w-full flex-col">
-        {filteredReview.length === 0 ? (
+        {reviewData.length === 0 ? (
           <div className="flex items-center justify-center py-16">
             <p className="text-xl font-medium">아직 작성된 리뷰가 없습니다.</p>
           </div>
         ) : (
           <div className="flex flex-col gap-8">
-            {filteredReview.map((review: ReviewItem) => (
+            {reviewData.map((review: ReviewItem) => (
               <div key={review.id} className="flex flex-col gap-6 border-t py-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-8">

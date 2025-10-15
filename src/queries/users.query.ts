@@ -1,5 +1,6 @@
 import { deleteUser, getLogin, getUser, patchUser, postUser } from "@/services/users.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { setCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { User } from "@/types/users.type";
@@ -19,6 +20,7 @@ export function useLogin({ onSuccess }: { onSuccess: () => void }) {
 
       queryClient.invalidateQueries({ queryKey: ["users"] });
       useAuthStore.getState().setUser(data);
+      setCookie("login", data);
       toast.success("로그인 성공!");
 
       onSuccess();

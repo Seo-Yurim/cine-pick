@@ -1,31 +1,51 @@
-import { getMovieCredits, getMovieDetail } from "@/services/movie.service";
-import { getReivews } from "@/services/reviews.service";
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
+import { getAvgRating } from "@/utils/avg-rating.util";
 import MovieDetailClient from "./movie-detail-client";
+
+async function movieDetailData(movieId: number) {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function movieCreditsData(movieId: number) {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function movieReviewData() {
+  const res = await fetch(`http://localhost:3001/reviews`);
+
+  return res.json();
+}
 
 export default async function MoviesDetailPage({ params }: { params: { id: string } }) {
   const movieId = Number(params.id);
 
-  const queryClient = new QueryClient();
+  const movieDetail = await movieDetailData(movieId);
+  const movieCredits = await movieCreditsData(movieId);
+  const movieReviews = await movieReviewData();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["movie", movieId],
-    queryFn: () => getMovieDetail(movieId),
-  });
-  await queryClient.prefetchQuery({
-    queryKey: ["movie-credit", movieId],
-    queryFn: () => getMovieCredits(movieId),
-  });
-  await queryClient.prefetchQuery({
-    queryKey: ["reviews"],
-    queryFn: () => getReivews(),
-  });
-
-  const dehydratedState = dehydrate(queryClient);
+  const ratingAvg = getAvgRating(movieId, movieReviews);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <MovieDetailClient movieId={movieId} />
-    </HydrationBoundary>
+    <MovieDetailClient
+      movieDetail={movieDetail}
+      movieCredits={movieCredits}
+      movieReviews={movieReviews}
+      ratingAvg={ratingAvg}
+    />
   );
 }

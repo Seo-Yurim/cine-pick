@@ -115,3 +115,8 @@ export interface PersonItem {
   popularity: number;
   profile_path: string;
 }
+
+export interface PersonMovies {
+  cast: MovieItem[];
+  crew: MovieItem[];
+}

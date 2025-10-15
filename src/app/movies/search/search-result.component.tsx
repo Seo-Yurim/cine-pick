@@ -1,23 +1,28 @@
 "use client";
 
-import { MovieItem } from "@/types/movie.type";
+import { GenresList, MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
-import { useGenres } from "@/queries/movie.query";
-import { useSearchResult } from "@/queries/search.query";
 import { MovieCardComponent, SearchComponent } from "@/components";
 
-export default function SearchResultClient({ query }: { query: string }) {
-  const { data: searchResult } = useSearchResult(query);
-  const { data: genres } = useGenres();
+interface SearchResultClientProps {
+  query: string;
+  genres: GenresList;
+  searchResults: MovieItem[];
+}
 
-  const filteredData = searchResult?.results?.filter((item: MovieItem) => item.media_type !== "tv");
+export default function SearchResultClient({
+  query,
+  genres,
+  searchResults,
+}: SearchResultClientProps) {
+  const filteredData = searchResults.filter((item: MovieItem) => item.media_type !== "tv");
 
   return (
     <>
       <h1 className="text-2xl font-bold">검색 결과</h1>
       <SearchComponent defaultValue={query} placeholder="원하는 영화를 찾아보세요!" />
       <section className="grid grid-cols-4 gap-4">
-        {filteredData?.map((item: MovieItem) => (
+        {filteredData.map((item: MovieItem) => (
           <MovieCardComponent
             key={item.id}
             movie={item}

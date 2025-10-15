@@ -1,43 +1,45 @@
 "use client";
 
 import { SwiperSlide } from "swiper/react";
-import { MovieCast, MovieCrew } from "@/types/movie.type";
-import { getAvgRating } from "@/utils/avg-rating.util";
+import { MovieCast, MovieCreditResponse, MovieCrew, MovieDetailItem } from "@/types/movie.type";
+import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
-import { useMovieCredits, useMovieDetail } from "@/queries/movie.query";
-import { useGetReviews } from "@/queries/reviews.query";
 import { PersonCard, PersonCardSkeletonComponent, Slider, SliderSection } from "@/components";
 import { MovieInfoComponent } from "./_components";
 
-export default function MovieDetailClient({ movieId }: { movieId: number }) {
+interface MovieDetailClientProps {
+  movieDetail: MovieDetailItem;
+  movieCredits: MovieCreditResponse;
+  movieReviews: ReviewItem[];
+  ratingAvg: number;
+}
+
+export default function MovieDetailClient({
+  movieDetail,
+  movieCredits,
+  movieReviews,
+  ratingAvg,
+}: MovieDetailClientProps) {
   const { user } = useAuthStore();
   const userId = user?.id ?? "";
 
-  const { data: movieData } = useMovieDetail(movieId);
-  const { data: creditData } = useMovieCredits(movieId);
-  const { data: reviewData } = useGetReviews();
-
-  const movieDetail = movieData ?? {};
-  const creditList = creditData ?? [];
-  const reviewList = reviewData ?? [];
-
-  const avg = getAvgRating(movieId, reviewList);
+  const filteredReviews = movieReviews.filter((review) => review.movieId === movieDetail.id);
 
   return (
     <>
       <MovieInfoComponent
         userId={userId}
         movieData={movieDetail}
-        reviewData={reviewList}
-        isMovieLoading={!movieData || !reviewData}
-        rating={avg}
+        reviewData={filteredReviews}
+        isMovieLoading={!movieDetail || !movieReviews}
+        rating={ratingAvg}
       />
 
       <SliderSection title="출연진">
-        {creditList.cast && creditList.cast.length > 0 ? (
+        {movieCredits.cast && movieCredits.cast.length > 0 ? (
           <Slider slidesPerView={5}>
-            {creditList.cast.map((cast: MovieCast) => (
-              <SwiperSlide key={`${cast.id} ${cast.cast_id}`} className="p-3">
+            {movieCredits.cast.map((cast: MovieCast) => (
+              <SwiperSlide key={`${cast.id} ${cast.cast_id}`} className="max-w-[20%] p-3">
                 <PersonCard type="cast" creditData={cast} />
               </SwiperSlide>
             ))}
@@ -52,10 +54,10 @@ export default function MovieDetailClient({ movieId }: { movieId: number }) {
       </SliderSection>
 
       <SliderSection title="제작진">
-        {creditList.crew && creditList.crew.length > 0 ? (
+        {movieCredits.crew && movieCredits.crew.length > 0 ? (
           <Slider slidesPerView={5}>
-            {creditList.crew.map((crew: MovieCrew) => (
-              <SwiperSlide key={`${crew.id} ${crew.credit_id}`} className="p-3">
+            {movieCredits.crew.map((crew: MovieCrew) => (
+              <SwiperSlide key={`${crew.id} ${crew.credit_id}`} className="max-w-[20%] p-3">
                 <PersonCard type="crew" creditData={crew} />
               </SwiperSlide>
             ))}
