@@ -26,6 +26,7 @@ async function getCookieData() {
     console.error(error);
   }
 }
+
 export default async function RootLayout({
   children,
 }: Readonly<{

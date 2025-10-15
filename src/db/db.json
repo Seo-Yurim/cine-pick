@@ -225,6 +225,12 @@
       "movieId": 1311031,
       "userId": "bad7",
       "favorite": true
+    },
+    {
+      "id": "f02a",
+      "movieId": 1038392,
+      "userId": "1",
+      "favorite": true
     }
   ],
   "collections": [
@@ -237,6 +243,10 @@
         {
           "collectionId": "1",
           "movieId": 1311031
+        },
+        {
+          "collectionId": "1",
+          "movieId": 1038392
         }
       ]
     },
@@ -323,6 +333,12 @@
       "id": "28f2",
       "movieId": 1038392,
       "userId": "bad7",
+      "watched": true
+    },
+    {
+      "id": "7234",
+      "movieId": 1038392,
+      "userId": "1",
       "watched": true
     }
   ]
