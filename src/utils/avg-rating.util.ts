@@ -1,8 +1,7 @@
 import { ReviewItem } from "@/types/reviews.type";
 
-export function getAvgRating(movieId: number, reviewList: ReviewItem[]): number {
-  const filteredList = reviewList.filter((review) => review.movieId === movieId);
-  const sum = filteredList.reduce((total, curr) => total + curr.rating, 0);
+export function getAvgRating(reviewList: ReviewItem[]): number {
+  const sum = reviewList?.reduce((total, curr) => total + curr.rating, 0);
 
-  return filteredList.length > 0 ? Number((sum / filteredList.length).toFixed(1)) : 0;
+  return reviewList?.length > 0 ? Number((sum / reviewList?.length).toFixed(1)) : 0;
 }

@@ -1,3 +1,4 @@
+import { deleteCookie } from "cookies-next/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { User } from "@/types/users.type";
@@ -13,7 +14,10 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: undefined,
       setUser: (user) => set({ user }),
-      logout: () => set({ user: null }),
+      logout: () => {
+        set({ user: null });
+        deleteCookie("login");
+      },
     }),
     {
       name: "user-data",

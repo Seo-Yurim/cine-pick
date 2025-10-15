@@ -3,27 +3,28 @@
 import { SwiperSlide } from "swiper/react";
 import { MovieCast, MovieCreditResponse, MovieCrew, MovieDetailItem } from "@/types/movie.type";
 import { ReviewItem } from "@/types/reviews.type";
+import { getAvgRating } from "@/utils/avg-rating.util";
 import { useAuthStore } from "@/stores/auth.store";
+import { useGetReviews } from "@/queries/reviews.query";
 import { PersonCard, PersonCardSkeletonComponent, Slider, SliderSection } from "@/components";
 import { MovieInfoComponent } from "./_components";
 
 interface MovieDetailClientProps {
   movieDetail: MovieDetailItem;
   movieCredits: MovieCreditResponse;
-  movieReviews: ReviewItem[];
-  ratingAvg: number;
 }
 
-export default function MovieDetailClient({
-  movieDetail,
-  movieCredits,
-  movieReviews,
-  ratingAvg,
-}: MovieDetailClientProps) {
+export default function MovieDetailClient({ movieDetail, movieCredits }: MovieDetailClientProps) {
   const { user } = useAuthStore();
   const userId = user?.id ?? "";
 
-  const filteredReviews = movieReviews.filter((review) => review.movieId === movieDetail.id);
+  const { data: movieReviews } = useGetReviews();
+
+  const filteredReviews = movieReviews?.filter(
+    (review: ReviewItem) => review.movieId === movieDetail.id,
+  );
+
+  const ratingAvg = getAvgRating(filteredReviews);
 
   return (
     <>

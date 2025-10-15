@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import MoviesClient from "./movies-client";
 
 async function genresData() {
@@ -29,9 +28,5 @@ export default async function MoviesPage() {
   const genres = await genresData();
   const movies = await moviesData();
 
-  return (
-    <Suspense>
-      <MoviesClient genres={genres} initialMovies={movies} />;
-    </Suspense>
-  );
+  return <MoviesClient genres={genres} initialMovies={movies} />;
 }

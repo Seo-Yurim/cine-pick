@@ -48,7 +48,7 @@ export function Header({ cookieData }: { cookieData: any }) {
             </ButtonComponent>
           </Link>
 
-          {user && cookieData ? (
+          {cookieData ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
                 {menus.user.map((menu) => (

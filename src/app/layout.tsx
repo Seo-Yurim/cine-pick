@@ -16,6 +16,7 @@ const notoSans = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
   display: "swap",
 });
+
 async function getCookieData() {
   const cookieMap = await cookies();
   const cookieData = cookieMap.get("login");
@@ -33,6 +34,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieData = await getCookieData();
+
   return (
     <html lang="ko" className={`dark ${notoSans.variable}`}>
       <body className="font-sans">
