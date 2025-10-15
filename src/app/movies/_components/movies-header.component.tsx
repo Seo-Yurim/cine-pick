@@ -28,7 +28,7 @@ export interface DatePickerType {
 
 interface MoviesHeaderProps {
   tab: string;
-  onTab: React.Dispatch<React.SetStateAction<string>>;
+  onTab: (tab: string) => void;
   onParams: React.Dispatch<React.SetStateAction<MovieParams>>;
 }
 

@@ -9,12 +9,12 @@ interface FavoriteListProps {
 }
 
 export function FavoriteListComponent({ favoriteMovie, onDelete }: FavoriteListProps) {
-  const { data } = useMovieDetail(favoriteMovie.movieId);
+  const { data, isLoading } = useMovieDetail(favoriteMovie.movieId);
   const movieDetail = data ?? {};
 
   return (
     <div className="flex items-center gap-4">
-      <MovieListComponent movie={movieDetail} genres={movieDetail.genres} />
+      <MovieListComponent movie={movieDetail} genres={movieDetail.genres} isLoading={isLoading} />
       <ButtonComponent
         onClick={() => onDelete(favoriteMovie)}
         className="group relative rounded-xl bg-text-bg hover:bg-white/30"

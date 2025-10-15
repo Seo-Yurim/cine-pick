@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import HomeClient from "./home-client";
 
 async function genresData() {
@@ -60,11 +61,13 @@ export default async function HomePage() {
   const newMovies = await newMoviesData(today);
 
   return (
-    <HomeClient
-      genres={genres}
-      popularMoives={popularMoives.results}
-      nowPlayingMovies={nowPlayingMovies.results}
-      newMovies={newMovies.results}
-    />
+    <Suspense>
+      <HomeClient
+        genres={genres}
+        popularMoives={popularMoives.results}
+        nowPlayingMovies={nowPlayingMovies.results}
+        newMovies={newMovies.results}
+      />
+    </Suspense>
   );
 }

@@ -8,12 +8,12 @@ interface WatchedListProps {
 }
 
 export function WatchedListComponent({ watched, onDelete }: WatchedListProps) {
-  const { data } = useMovieDetail(watched.movieId);
+  const { data, isLoading } = useMovieDetail(watched.movieId);
   const movieDetail = data ?? {};
 
   return (
     <div className="flex items-center gap-4">
-      <MovieListComponent movie={movieDetail} genres={movieDetail.genres} />
+      <MovieListComponent movie={movieDetail} genres={movieDetail.genres} isLoading={isLoading} />
       <ButtonComponent
         onClick={() => onDelete(watched)}
         className="rounded-xl bg-text-bg hover:bg-white/30"

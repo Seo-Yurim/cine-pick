@@ -3,14 +3,20 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
+import { MovieListSkeleton } from "../skeleton/movie-list-skeleton.component";
 
 interface MovieListProps {
   movie: MovieItem;
   genres: MovieGenres[];
+  isLoading?: boolean;
 }
 
-export function MovieListComponent({ movie, genres }: MovieListProps) {
+export function MovieListComponent({ movie, genres, isLoading = false }: MovieListProps) {
   const router = useRouter();
+
+  if (isLoading) {
+    return <MovieListSkeleton />;
+  }
 
   return (
     <div

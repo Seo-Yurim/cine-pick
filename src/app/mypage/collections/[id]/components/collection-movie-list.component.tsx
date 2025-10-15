@@ -1,8 +1,7 @@
 "use client";
 
 import { useMovieDetail } from "@/queries/movie.query";
-import { ButtonComponent, MovieCardComponent, MovieListComponent } from "@/components";
-import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
+import { ButtonComponent, MovieListComponent } from "@/components";
 
 interface CollectionMovieListProps {
   movieId: number;
@@ -10,17 +9,13 @@ interface CollectionMovieListProps {
 }
 
 export function CollectionMovieList({ movieId, onDeleteMovie }: CollectionMovieListProps) {
-  const { data } = useMovieDetail(movieId);
+  const { data, isLoading } = useMovieDetail(movieId);
 
   const movieDetail = data ?? {};
 
   return (
     <div className="flex items-center gap-4">
-      {movieDetail ? (
-        <MovieListComponent movie={movieDetail} genres={movieDetail.genres} />
-      ) : (
-        <MovieCardSkeletonComponent />
-      )}
+      <MovieListComponent movie={movieDetail} genres={movieDetail.genres} isLoading={isLoading} />
       <ButtonComponent
         onClick={() => onDeleteMovie(movieId)}
         className="rounded-xl bg-text-bg hover:bg-white/30"

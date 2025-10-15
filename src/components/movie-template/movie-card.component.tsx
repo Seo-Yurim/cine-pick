@@ -4,14 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MovieGenres, MovieItem } from "@/types/movie.type";
+import { MovieCardSkeletonComponent } from "../skeleton/movie-card-skeleton.component";
 
 interface MovieCardProps {
   movie: MovieItem;
   genres: MovieGenres[];
+  isLoading?: boolean;
 }
 
-export function MovieCardComponent({ movie, genres }: MovieCardProps) {
+export function MovieCardComponent({ movie, genres, isLoading = false }: MovieCardProps) {
   const router = useRouter();
+
+  if (isLoading) {
+    return <MovieCardSkeletonComponent />;
+  }
 
   return (
     <div

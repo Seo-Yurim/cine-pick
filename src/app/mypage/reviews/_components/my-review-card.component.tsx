@@ -33,7 +33,7 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
 
   const editReview = usePatchReview();
   const deleteReview = useDeleteReview();
-  const { data } = useMovieDetail(movieId);
+  const { data, isLoading } = useMovieDetail(movieId);
   const movieDetail = data ?? {};
 
   const handleSave = () => {
@@ -66,7 +66,7 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
   return (
     <div className="flex gap-8 rounded-xl bg-text-bg p-8">
       <div className="w-full max-w-[300px]">
-        <MovieCardComponent movie={movieDetail} genres={movieDetail.genres} />
+        <MovieCardComponent movie={movieDetail} genres={movieDetail.genres} isLoading={isLoading} />
       </div>
 
       <div className="flex w-full flex-col justify-between gap-12 py-4">

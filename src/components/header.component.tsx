@@ -1,6 +1,5 @@
 "use client";
 
-import { log } from "console";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -49,7 +48,7 @@ export function Header({ cookieData }: { cookieData: any }) {
             </ButtonComponent>
           </Link>
 
-          {cookieData ? (
+          {user && cookieData ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-4">
                 {menus.user.map((menu) => (
