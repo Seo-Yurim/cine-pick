@@ -29,7 +29,12 @@ export default function MyCollectionPage() {
     <>
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">내 컬렉션 목록</h1>
-        <ButtonComponent onClick={() => openModal("collectionForm")}>폴더추가</ButtonComponent>
+        <ButtonComponent
+          className="rounded-xl bg-point-color"
+          onClick={() => openModal("collectionForm")}
+        >
+          폴더추가
+        </ButtonComponent>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

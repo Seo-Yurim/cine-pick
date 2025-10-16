@@ -42,8 +42,14 @@ const config = {
           "100%": { left: "100%" },
         },
         slideDown: {
-          "0%": { opacity: "0", transform: "translateY(-20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
+          "0%": {
+            opacity: "0",
+            transform: "translateX(-50%) translateY(-20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(-50%) translateY(0)",
+          },
         },
         "custom-pulse": {
           "0%, 100%": { opacity: "1" },

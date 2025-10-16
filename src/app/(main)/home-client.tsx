@@ -7,6 +7,7 @@ import { GenresList, MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
 import { MovieCardComponent, Slider, SliderSection } from "@/components";
 import { HeroSection } from "./_components/hero-section.component";
+import Link from "next/link";
 
 interface HomeClientProps {
   genres: GenresList;
@@ -68,15 +69,24 @@ export default function HomeClient({
         isLoading={!popularMoives}
       />
 
-      <SliderSection title="💥 지금 인기있는 영화">
+      <SliderSection
+        title="💥 전체 영화"
+        controls={<Link href={"/movies?value=vote_count.desc"}>더보기</Link>}
+      >
         <Slider>{popularSlides}</Slider>
       </SliderSection>
 
-      <SliderSection title="🎞️ 극장에서 상영 중인 영화">
+      <SliderSection
+        title="💰 흥행한 영화"
+        controls={<Link href={"/movies?value=revenue.desc"}>더보기</Link>}
+      >
         <Slider>{nowPlayingSlides}</Slider>
       </SliderSection>
 
-      <SliderSection title="🆕 새로 개봉한 국내 영화">
+      <SliderSection
+        title="🆕 새로 개봉한 국내 영화"
+        controls={<Link href={"/movies?value=primary_release_date.desc"}>더보기</Link>}
+      >
         <Slider>{newSlides}</Slider>
       </SliderSection>
     </>

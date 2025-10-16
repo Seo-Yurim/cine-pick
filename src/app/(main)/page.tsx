@@ -15,14 +15,14 @@ async function genresData() {
   return r.json();
 }
 async function popularMoviesData() {
-  const r = await fetch("https://api.themoviedb.org/3/movie/popular?language=ko", {
+  const r = await fetch( `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=vote_count.desc`, {
     headers,
     next: { revalidate: 300, tags: ["tmdb:popular"] },
   });
   return r.json();
 }
 async function nowPlayingMoviesData() {
-  const r = await fetch("https://api.themoviedb.org/3/movie/now_playing?language=ko&region=KR", {
+  const r = await fetch(`https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=revenue.desc`, {
     headers,
     next: { revalidate: 120, tags: ["tmdb:nowplaying"] },
   });

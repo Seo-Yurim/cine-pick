@@ -47,40 +47,34 @@
       "name": "테스트8",
       "username": "test08",
       "password": "test1234"
+    },
+    {
+      "id": "f102",
+      "name": "테스트9",
+      "username": "test09",
+      "password": "test1234"
+    },
+    {
+      "id": "a710",
+      "name": "테스트10",
+      "username": "test10",
+      "password": "test1234"
+    },
+    {
+      "id": "c902",
+      "name": "테스트11",
+      "username": "test11",
+      "password": "test1234"
     }
   ],
   "reviews": [
-    {
-      "id": "3e34",
-      "movieId": 755898,
-      "userId": "bad7",
-      "rating": 4,
-      "content": "재밌어요",
-      "createdAt": "2025-09-23T07:42:39.217Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
-    },
-    {
-      "id": "2439",
-      "movieId": 1038392,
-      "userId": "bad7",
-      "rating": 4.5,
-      "content": "진짜 무서와요 ;;  진짜로 ~~ ",
-      "createdAt": "2025-10-14T05:19:34.318Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
-    },
     {
       "id": "5739",
       "movieId": 617126,
       "userId": "bad7",
       "rating": 4,
       "content": "재밌다",
-      "createdAt": "2025-09-26T01:47:59.943Z",
+      "createdAt": "2025-10-16T02:26:56.575Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -92,7 +86,7 @@
       "userId": "bad7",
       "rating": 5,
       "content": "저의 인생 애니메이션이라고 할 수 있어요. 진짜 재밌어요 다들 꼭 보세요 !",
-      "createdAt": "2025-09-30T08:41:19.038Z",
+      "createdAt": "2025-10-16T02:22:05.854Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -181,6 +175,78 @@
         "name": "테스트3",
         "username": "test03"
       }
+    },
+    {
+      "id": "d001",
+      "movieId": 803796,
+      "userId": "f102",
+      "rating": 3,
+      "content": "중간 정도 재미네요.",
+      "createdAt": "2025-10-13T11:15:22.100Z",
+      "user": {
+        "name": "테스트9",
+        "username": "test09"
+      }
+    },
+    {
+      "id": "d002",
+      "movieId": 941109,
+      "userId": "a710",
+      "rating": 4,
+      "content": "스토리가 괜찮았어요!",
+      "createdAt": "2025-10-10T10:01:59.010Z",
+      "user": {
+        "name": "테스트10",
+        "username": "test10"
+      }
+    },
+    {
+      "id": "d003",
+      "movieId": 1038392,
+      "userId": "c902",
+      "rating": 2.5,
+      "content": "생각보다 별로였어요...",
+      "createdAt": "2025-10-09T15:22:31.010Z",
+      "user": {
+        "name": "테스트11",
+        "username": "test11"
+      }
+    },
+    {
+      "id": "d004",
+      "movieId": 793387,
+      "userId": "f102",
+      "rating": 5,
+      "content": "완전 대박입니다!",
+      "createdAt": "2025-10-12T07:50:45.900Z",
+      "user": {
+        "name": "테스트9",
+        "username": "test09"
+      }
+    },
+    {
+      "id": "d005",
+      "movieId": 617126,
+      "userId": "a710",
+      "rating": 3.5,
+      "content": "기대보다는 덜했지만 볼만했어요.",
+      "createdAt": "2025-10-13T22:12:33.800Z",
+      "user": {
+        "name": "테스트10",
+        "username": "test10"
+      }
+    },
+    {
+      "id": "8159",
+      "movieId": 27205,
+      "userId": "bad7",
+      "rating": 5,
+      "content": "너무 재미있게 봤어요.",
+      "createdAt": "2025-10-16T02:30:47.550Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
+      }
     }
   ],
   "favorites": [
@@ -188,12 +254,6 @@
       "id": "bc43",
       "movieId": 1311031,
       "userId": "1",
-      "favorite": true
-    },
-    {
-      "id": "7446",
-      "movieId": 617126,
-      "userId": "bad7",
       "favorite": true
     },
     {
@@ -231,6 +291,42 @@
       "movieId": 1038392,
       "userId": "1",
       "favorite": true
+    },
+    {
+      "id": "fa91",
+      "movieId": 803796,
+      "userId": "f102",
+      "favorite": true
+    },
+    {
+      "id": "fa92",
+      "movieId": 941109,
+      "userId": "a710",
+      "favorite": true
+    },
+    {
+      "id": "fa93",
+      "movieId": 1038392,
+      "userId": "c902",
+      "favorite": true
+    },
+    {
+      "id": "fa94",
+      "movieId": 793387,
+      "userId": "f102",
+      "favorite": true
+    },
+    {
+      "id": "fa95",
+      "movieId": 617126,
+      "userId": "a710",
+      "favorite": true
+    },
+    {
+      "id": "7feb",
+      "movieId": 27205,
+      "userId": "bad7",
+      "favorite": true
     }
   ],
   "collections": [
@@ -249,13 +345,6 @@
           "movieId": 1038392
         }
       ]
-    },
-    {
-      "id": "cb3a",
-      "title": "컬렉션",
-      "description": "컬렉션이에요",
-      "userId": "bad7",
-      "movies": []
     },
     {
       "id": "3ac0",
@@ -296,6 +385,54 @@
           "movieId": 803796
         }
       ]
+    },
+    {
+      "id": "col9",
+      "title": "테스트9의 추천",
+      "description": "믿고 보는 영화들!",
+      "userId": "f102",
+      "movies": [
+        {
+          "collectionId": "col9",
+          "movieId": 803796
+        },
+        {
+          "collectionId": "col9",
+          "movieId": 793387
+        }
+      ]
+    },
+    {
+      "id": "col10",
+      "title": "테스트10의 TOP3",
+      "description": "개인적으로 최고였던 영화들!",
+      "userId": "a710",
+      "movies": [
+        {
+          "collectionId": "col10",
+          "movieId": 941109
+        },
+        {
+          "collectionId": "col10",
+          "movieId": 617126
+        },
+        {
+          "collectionId": "col10",
+          "movieId": 1311031
+        }
+      ]
+    },
+    {
+      "id": "48e5",
+      "title": "test",
+      "description": "test",
+      "userId": "bad7",
+      "movies": [
+        {
+          "collectionId": "48e5",
+          "movieId": 27205
+        }
+      ]
     }
   ],
   "watches": [
@@ -312,12 +449,6 @@
       "watched": true
     },
     {
-      "id": "5ff5",
-      "movieId": 1311031,
-      "userId": "bad7",
-      "watched": true
-    },
-    {
       "id": "7d4f",
       "movieId": 1267319,
       "userId": "80f1",
@@ -330,15 +461,45 @@
       "watched": true
     },
     {
-      "id": "28f2",
+      "id": "7234",
       "movieId": 1038392,
+      "userId": "1",
+      "watched": true
+    },
+    {
+      "id": "w001",
+      "movieId": 803796,
+      "userId": "f102",
+      "watched": true
+    },
+    {
+      "id": "w002",
+      "movieId": 941109,
+      "userId": "a710",
+      "watched": true
+    },
+    {
+      "id": "w003",
+      "movieId": 1038392,
+      "userId": "c902",
+      "watched": false
+    },
+    {
+      "id": "w004",
+      "movieId": 617126,
+      "userId": "a710",
+      "watched": true
+    },
+    {
+      "id": "32a4",
+      "movieId": 1311031,
       "userId": "bad7",
       "watched": true
     },
     {
-      "id": "7234",
-      "movieId": 1038392,
-      "userId": "1",
+      "id": "06d3",
+      "movieId": 27205,
+      "userId": "bad7",
       "watched": true
     }
   ]

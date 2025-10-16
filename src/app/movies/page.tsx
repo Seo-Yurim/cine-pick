@@ -18,6 +18,7 @@ async function genresData() {
   return res.json();
 }
 
+/*
 async function moviesData() {
   const res = await fetch("https://api.themoviedb.org/3/discover/movie?language=ko", {
     headers,
@@ -25,8 +26,9 @@ async function moviesData() {
   });
   return res.json();
 }
+*/
 
 export default async function MoviesPage() {
-  const [genres, movies] = await Promise.all([genresData(), moviesData()]);
-  return <MoviesClient genres={genres} initialMovies={movies} />;
+  const [genres] = await Promise.all([genresData(), moviesData()]);
+  return <MoviesClient genres={genres} />;
 }

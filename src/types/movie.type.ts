@@ -1,6 +1,6 @@
 export interface MovieParams {
   page?: number;
-  sort_by?: string;
+  sort_by?: string | null;
   region?: string;
   with_genres?: string;
   with_people?: string;

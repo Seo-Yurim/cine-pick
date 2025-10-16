@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import { getAvgRating } from "@/utils/avg-rating.util";
 import MovieDetailClient from "./movie-detail-client";
 
 async function movieDetailData(movieId: number) {
@@ -26,29 +24,11 @@ async function movieCreditsData(movieId: number) {
   return res.json();
 }
 
-async function movieReviewData() {
-  const res = await fetch(`http://localhost:3001/reviews`);
-
-  return res.json();
-}
-
 export default async function MoviesDetailPage({ params }: { params: { id: number } }) {
   const movieId = params.id;
 
   const movieDetail = await movieDetailData(movieId);
   const movieCredits = await movieCreditsData(movieId);
-  const movieReviews = await movieReviewData();
 
-  const ratingAvg = getAvgRating(movieId, movieReviews);
-
-  return (
-    <Suspense>
-      <MovieDetailClient
-        movieDetail={movieDetail}
-        movieCredits={movieCredits}
-        movieReviews={movieReviews}
-        ratingAvg={ratingAvg}
-      />
-    </Suspense>
-  );
+  return <MovieDetailClient movieDetail={movieDetail} movieCredits={movieCredits} />;
 }

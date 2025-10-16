@@ -24,7 +24,7 @@ export function MovieCardComponent({ movie, genres, isLoading = false }: MovieCa
       onClick={() => router.push(`/movies/${movie.id}`)}
       className="group relative flex aspect-[2/3] w-full flex-col gap-4 rounded-xl bg-white p-4 shadow-lg transition-all duration-300 hover:scale-[1.02]"
     >
-      <div className="relative aspect-[3/4] w-full min-w-[200px]">
+      <div className="relative aspect-[3/4] w-full">
         <Image
           src={
             movie.poster_path
@@ -46,10 +46,10 @@ export function MovieCardComponent({ movie, genres, isLoading = false }: MovieCa
           <p className="text-nowrap py-1 text-sm text-gray-500">{movie.release_date}</p>
         </div>
 
-        <div className="flex min-h-[24px] gap-2 text-sm text-gray-200">
+        <div className="flex min-h-[24px] gap-2 overflow-hidden text-sm text-gray-200">
           {genres?.length ? (
             genres.map((genre: MovieGenres) => (
-              <span key={genre.id} className="rounded-lg bg-text-bg px-2 py-1 text-xs">
+              <span key={genre.id} className="text-nowrap rounded-lg bg-text-bg px-2 py-1 text-xs">
                 {genre.name}
               </span>
             ))
