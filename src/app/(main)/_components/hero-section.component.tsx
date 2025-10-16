@@ -43,12 +43,19 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
             return (
               <SwiperSlide key={movie.id}>
                 <div className="relative h-[700px] w-full overflow-hidden rounded-xl">
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-cover bg-center opacity-40"
-                    style={{
-                      backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`,
-                    }}
+                  <Image
+                    src={
+                      movie.backdrop_path
+                        ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
+                        : "/default-bg.svg"
+                    }
+                    alt={`${movie.title} 배경`}
+                    fill
+                    className="object-cover opacity-40"
+                    sizes="100vw"
+                    priority={isFirst}
+                    fetchPriority={isFirst ? "high" : "auto"}
+                    loading={isFirst ? "eager" : "lazy"}
                   />
 
                   <div className="relative z-10 flex h-full items-stretch justify-center gap-8 p-16">
@@ -82,7 +89,6 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                         <h3 className="text-3xl font-bold">{movie.title}</h3>
                         <div className="flex items-center gap-4">
                           <p className="text-lg font-semibold">{movie.release_date}</p>
-
                           <div className="flex flex-wrap gap-2 text-sm text-gray-200">
                             {movieGenres.map((genre) => (
                               <span

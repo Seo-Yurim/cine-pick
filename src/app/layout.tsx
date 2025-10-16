@@ -35,6 +35,9 @@ export default async function RootLayout({
   const cookieData = await getCookieData();
   return (
     <html lang="ko" className={`dark ${notoSans.variable}`}>
+    <head>
+
+    </head>
       <body className="font-sans">
         <ProvidersComponent>
           <Toaster position="top-center" reverseOrder={false} />
