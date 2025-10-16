@@ -13,20 +13,23 @@ async function genresData() {
 }
 
 async function popularMoviesData() {
-  const res = await fetch(`https://api.themoviedb.org/3/movie/popular?language=ko`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+  const res = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=vote_count.desc`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+      },
     },
-  });
+  );
 
   return res.json();
 }
 
 async function nowPlayingMoviesData() {
   const res = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=vote_average.desc`,
+    `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=revenue.desc`,
     {
       method: "GET",
       headers: {

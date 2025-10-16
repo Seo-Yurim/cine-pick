@@ -41,7 +41,7 @@ export default async function RootLayout({
         <QueryClientProvider>
           <Toaster position="top-center" reverseOrder={false} />
           <Header cookieData={cookieData} />
-          <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-16 py-40">
+          <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-16 py-20">
             {children}
           </main>
         </QueryClientProvider>

@@ -4,7 +4,7 @@ import { SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import { GenresList, MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
-import { ButtonComponent, MovieCardComponent, Slider, SliderSection } from "@/components";
+import { MovieCardComponent, Slider, SliderSection } from "@/components";
 import { HeroSection } from "./_components/hero-section.component";
 
 interface HomeClientProps {
@@ -29,8 +29,8 @@ export default function HomeClient({
       />
 
       <SliderSection
-        title="💥 지금 인기있는 영화"
-        controls={<Link href={"/movies?value=popularity.desc"}>더보기</Link>}
+        title="💥 전체 영화"
+        controls={<Link href={"/movies?value=vote_count.desc"}>더보기</Link>}
       >
         <Slider>
           {popularMoives.map((movie: MovieItem) => (
@@ -45,8 +45,8 @@ export default function HomeClient({
       </SliderSection>
 
       <SliderSection
-        title="🎞️ 극장에서 상영 중인 영화"
-        controls={<Link href={"/movies?value=vote_average.desc"}>더보기</Link>}
+        title="💰 흥행한 영화"
+        controls={<Link href={"/movies?value=revenue.desc"}>더보기</Link>}
       >
         <Slider>
           {nowPlayingMovies.map((movie: MovieItem) => (
