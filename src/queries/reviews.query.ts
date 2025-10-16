@@ -74,7 +74,7 @@ export function usePatchReview(movieId: number) {
 }
 
 // 리뷰 삭제
-export function useDeleteReview(movieId: number) {
+export function useDeleteReview(movieId?: number) {
   return useMutation({
     mutationFn: ({ reviewId }: { reviewId: string }) => deleteReview(reviewId),
     onSuccess: () => {

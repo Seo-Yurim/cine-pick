@@ -16,7 +16,7 @@ export default function MyReviewsPage() {
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
 
   const { data: reviewList } = useGetMyReviews(userId);
-  const deleteReview = useDeleteReview();
+  const deleteReview = useDeleteReview(selectedReview?.movieId);
 
   const handleDelete = () => {
     if (!selectedReview) return;

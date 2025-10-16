@@ -10,7 +10,7 @@ interface CollectionFormModalProps {
   onClose: () => void;
   userId: string;
   defaultValue: CollectionList | null;
-  onCollection: (item?: CollectionList, type?: string) => void;
+  onCollection?: (item?: CollectionList, type?: string) => void;
 }
 
 export function CollectionFormModal({
@@ -66,7 +66,7 @@ export function CollectionFormModal({
         },
         {
           onSuccess: (item) => {
-            onCollection(item, "edit");
+            onCollection?.(item, "edit");
             onClose();
 
             setCollectionFormData({
@@ -88,7 +88,7 @@ export function CollectionFormModal({
         },
         {
           onSuccess: (item) => {
-            onCollection(item);
+            onCollection?.(item);
             onClose();
 
             setCollectionFormData({
