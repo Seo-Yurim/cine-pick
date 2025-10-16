@@ -10,6 +10,7 @@ import { HeroSection } from "./_components/hero-section.component";
 interface HomeClientProps {
   genres: GenresList;
   popularMoives: MovieItem[];
+  allMovies: MovieItem[];
   nowPlayingMovies: MovieItem[];
   newMovies: MovieItem[];
 }
@@ -17,13 +18,14 @@ interface HomeClientProps {
 export default function HomeClient({
   genres,
   popularMoives,
+  allMovies,
   nowPlayingMovies,
   newMovies,
 }: HomeClientProps) {
   return (
     <>
       <HeroSection
-        popularMovies={popularMoives?.slice(0, 3)}
+        popularMovies={popularMoives?.slice(0, 10)}
         genres={genres.genres}
         isLoading={!popularMoives}
       />
@@ -33,7 +35,7 @@ export default function HomeClient({
         controls={<Link href={"/movies?value=vote_count.desc"}>더보기</Link>}
       >
         <Slider>
-          {popularMoives.map((movie: MovieItem) => (
+          {allMovies.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
               <MovieCardComponent
                 movie={movie}

@@ -2,30 +2,27 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MdDelete, MdEdit, MdSave } from "react-icons/md";
-import { RiErrorWarningFill } from "react-icons/ri";
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { useMovieDetail } from "@/queries/movie.query";
-import { useDeleteReview, usePatchReview } from "@/queries/reviews.query";
-import { ButtonComponent, MovieCardComponent, RatingComponent } from "@/components";
+import { usePatchReview } from "@/queries/reviews.query";
+import { MovieCardComponent, RatingComponent } from "@/components";
 
 interface MyReviewCardProps {
   movieId: number;
-  reviewList: ReviewItem[];
+  review: ReviewItem;
+  onSelect: (review: ReviewItem) => void;
 }
 
 const iconStyle = "cursor-pointer rounded-full p-2 transition-colors duration-300";
 
-export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
+export function MyReviewCard({ movieId, review, onSelect }: MyReviewCardProps) {
   const { user } = useAuthStore();
-  const { modals, openModal, closeModal } = useModalStore();
+  const { openModal } = useModalStore();
   const userId = user?.id as string;
   const name = user?.name as string;
   const username = user?.username as string;
-
-  const filteredReviewList = reviewList.filter((review) => review.movieId === movieId);
-  const review = filteredReviewList[0];
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editRating, setEditRating] = useState<number>(review.rating);
@@ -41,7 +38,6 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
   }, [isEditing]);
 
   const editReview = usePatchReview();
-  const deleteReview = useDeleteReview();
 
   const { data, isLoading } = useMovieDetail(movieId);
   const movieDetail = data ?? {};
@@ -63,13 +59,9 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
     setIsEditing(false);
   };
 
-  const handleDelete = () => {
-    deleteReview.mutate({ reviewId: review.id });
-  };
-
   return (
     <>
-      <div className="flex gap-8 rounded-xl bg-text-bg p-8">
+      <div className="test flex gap-8 rounded-xl bg-text-bg p-8">
         <div className="w-full max-w-[200px]">
           <MovieCardComponent
             movie={movieDetail}
@@ -110,16 +102,26 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
 
           {/* 버튼 */}
           <div className="flex items-center justify-end gap-4">
-            <div className={`${iconStyle} bg-sky-700 hover:bg-sky-500`}>
-              <MdEdit onClick={() => setIsEditing(!isEditing)} size={24} />
+            <div
+              onClick={() => setIsEditing(!isEditing)}
+              className={`${iconStyle} bg-sky-700 hover:bg-sky-500`}
+            >
+              <MdEdit size={24} />
             </div>
             <div
-              className={`${isEditing ? "bg-green-700 hover:bg-green-500" : "bg-zinc-600"} ${iconStyle}`}
+              onClick={isEditing ? handleSave : () => {}}
+              className={`${isEditing ? "bg-green-700 hover:bg-green-500" : "cursor-default bg-zinc-600"} ${iconStyle}`}
             >
-              <MdSave onClick={handleSave} size={24} />
+              <MdSave size={24} />
             </div>
-            <div className={`${iconStyle} bg-rose-600 hover:bg-rose-400`}>
-              <MdDelete onClick={() => openModal("confirm")} size={24} />
+            <div
+              onClick={() => {
+                openModal("confirm");
+                onSelect(review);
+              }}
+              className={`${iconStyle} bg-rose-600 hover:bg-rose-400`}
+            >
+              <MdDelete size={24} />
             </div>
           </div>
         </div>

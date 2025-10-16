@@ -13,6 +13,18 @@ async function genresData() {
 }
 
 async function popularMoviesData() {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/popular?language=ko`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+    },
+  });
+
+  return res.json();
+}
+
+async function allMoviesData() {
   const res = await fetch(
     `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=vote_count.desc`,
     {
@@ -62,6 +74,7 @@ export default async function HomePage() {
 
   const genres = await genresData();
   const popularMoives = await popularMoviesData();
+  const allMovies = await allMoviesData();
   const nowPlayingMovies = await nowPlayingMoviesData();
   const newMovies = await newMoviesData(today);
 
@@ -69,6 +82,7 @@ export default async function HomePage() {
     <HomeClient
       genres={genres}
       popularMoives={popularMoives.results}
+      allMovies={allMovies.results}
       nowPlayingMovies={nowPlayingMovies.results}
       newMovies={newMovies.results}
     />
