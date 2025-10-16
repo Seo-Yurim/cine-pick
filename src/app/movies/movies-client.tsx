@@ -1,13 +1,12 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { GenresList, MovieItem, MovieParams, MovieResponse } from "@/types/movie.type";
+import { GenresList, MovieItem, MovieParams } from "@/types/movie.type";
 import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
-import MoviesHeaderComponent from "./_components/movies-header.component";
 import { ScrollToTop } from "./_components/scroll-to-top.component";
 
 interface MoviesClientProps {
@@ -16,10 +15,8 @@ interface MoviesClientProps {
 
 export default function MoviesClient({ genres }: MoviesClientProps) {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const initialTab = searchParams.get("view") ?? "grid";
-  const [sort, setSort] = useState(searchParams.get("value"));
-
+  const [sort] = useState(searchParams.get("value"));
   const [activeTab, setActiveTab] = useState<string>(initialTab);
   const [params, setParams] = useState<MovieParams>({
     page: 1,
@@ -31,14 +28,11 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
     "primary_release_date.lte": "",
   });
 
-
   const { data, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfinityMovies(params);
-
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
 
   useEffect(() => {
     const viewParam = searchParams.get("view");
-
     if (viewParam === "grid" || viewParam === "list") {
       setActiveTab(viewParam);
     }
@@ -58,16 +52,12 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
 
   return (
     <>
-      {/* <MoviesHeaderComponent tab={activeTab} onTab={handleTabChange} onParams={setParams} /> */}
-
       <InfiniteScroll
         hasMore={hasNextPage}
         next={fetchNextPage}
         loader={<></>}
         dataLength={movies.length}
-        className={`px-2 ${
-          activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"
-        }`}
+        className={`px-2 ${activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"}`}
       >
         {movies.map((movie: MovieItem) => {
           const movieGenres = movie.genre_ids
@@ -76,6 +66,7 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
               return name ? { id, name } : null;
             })
             .filter((g): g is { id: number; name: string } => g !== null);
+
           return activeTab === "grid" ? (
             <MovieCardComponent
               key={movie.id}
