@@ -39,8 +39,10 @@ async function personMoviesData(personId: string) {
   return res.json();
 }
 
-export default async function PersonDetailPage({ params }: { params: { id: string } }) {
-  const personId = params.id;
+export default async function PersonDetailPage({params}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id: personId } = await params;
 
   const genres = await genresData();
   const personDetail = await personDetailData(personId);

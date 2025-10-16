@@ -24,8 +24,10 @@ async function searchResultData(query: string) {
   return res.json();
 }
 
-export default async function SearchPage({ searchParams }: { searchParams: { query?: string } }) {
-  const query = searchParams.query ?? "";
+export default async function SearchPage({ searchParams}: {
+  searchParams: Promise<{ query?: string }>;
+}) {
+  const { query = "" } = await searchParams;
 
   const genres = await genresData();
   const searchResults = await searchResultData(query);

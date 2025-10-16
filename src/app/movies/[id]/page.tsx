@@ -38,9 +38,7 @@ async function MovieDetailSection({ id }: { id: string }) {
   return <MovieDetailClient movieDetail={movieDetail} movieCredits={movieCredits} />;
 }
 
-export default async function MoviesDetailPage({
-                                                 params,
-                                               }: {
+export default async function MoviesDetailPage({params,}: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
