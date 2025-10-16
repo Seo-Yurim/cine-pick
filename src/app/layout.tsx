@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import { cookies } from "next/headers";
 import { Toaster } from "react-hot-toast";
-import { QueryClientProvider } from "@/queries/query-client";
 import { Header } from "@/components";
 import "./globals.css";
+import ProvidersComponent from "@/components/providers.component";
 
 export const metadata: Metadata = {
   title: "시네픽 (Cine Pick)",
@@ -37,14 +37,14 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={`dark ${notoSans.variable}`}>
-      <body>
-        <QueryClientProvider>
+      <body className="font-sans">
+        <ProvidersComponent>
           <Toaster position="top-center" reverseOrder={false} />
           <Header cookieData={cookieData} />
           <main className="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-16 py-20">
             {children}
           </main>
-        </QueryClientProvider>
+        </ProvidersComponent>
       </body>
     </html>
   );
