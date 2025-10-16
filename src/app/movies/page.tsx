@@ -29,6 +29,6 @@ async function moviesData() {
 */
 
 export default async function MoviesPage() {
-  const [genres] = await Promise.all([genresData(), moviesData()]);
+  const [genres] = await Promise.all([genresData()]);
   return <MoviesClient genres={genres} />;
 }
