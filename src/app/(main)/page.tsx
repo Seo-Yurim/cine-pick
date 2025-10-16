@@ -15,21 +15,28 @@ async function genresData() {
   return r.json();
 }
 async function popularMoviesData() {
+  const r = await fetch(`https://api.themoviedb.org/3/movie/popular?language=ko`, {
+    headers,
+    next: { revalidate: 300, tags: ["tmdb:popular"] },
+  });
+  return r.json();
+}
+async function allMoviesData() {
   const r = await fetch(
     `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=vote_count.desc`,
     {
       headers,
-      next: { revalidate: 300, tags: ["tmdb:popular"] },
+      next: { revalidate: 300, tags: ["tmdb:all"] },
     },
   );
   return r.json();
 }
-async function nowPlayingMoviesData() {
+async function revenueMoviesData() {
   const r = await fetch(
     `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=revenue.desc`,
     {
       headers,
-      next: { revalidate: 120, tags: ["tmdb:nowplaying"] },
+      next: { revalidate: 120, tags: ["tmdb:revenue"] },
     },
   );
   return r.json();
@@ -44,10 +51,11 @@ async function newMoviesData(today: string) {
 
 export default async function HomePage() {
   const today = new Date().toISOString().split("T")[0];
-  const [genres, popular, nowPlaying, latest] = await Promise.all([
+  const [genres, popular, all, revenue, latest] = await Promise.all([
     genresData(),
     popularMoviesData(),
-    nowPlayingMoviesData(),
+    allMoviesData(),
+    revenueMoviesData(),
     newMoviesData(today),
   ]);
 
@@ -55,7 +63,8 @@ export default async function HomePage() {
     <HomeClient
       genres={genres}
       popularMoives={popular.results}
-      nowPlayingMovies={nowPlaying.results}
+      allMovies={all.results}
+      revenueMovies={revenue.results}
       newMovies={latest.results}
     />
   );
