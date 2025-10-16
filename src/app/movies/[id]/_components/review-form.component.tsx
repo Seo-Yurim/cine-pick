@@ -1,6 +1,5 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { usePostReview } from "@/queries/reviews.query";
 import { ButtonComponent, ModalComponent } from "@/components";
@@ -9,11 +8,10 @@ import { RatingComponent } from "@/components/rating.component";
 interface ReviewFormProps {
   isOpen: boolean;
   movieId: number;
-  onContent: (item: ReviewItem) => void;
   onClose: () => void;
 }
 
-export function ReviewFormComponent({ isOpen, movieId, onContent, onClose }: ReviewFormProps) {
+export function ReviewFormComponent({ isOpen, movieId, onClose }: ReviewFormProps) {
   const { user } = useAuthStore();
   const userId = user?.id as string;
   const name = user?.name as string;
@@ -22,12 +20,11 @@ export function ReviewFormComponent({ isOpen, movieId, onContent, onClose }: Rev
   const [rating, setRating] = useState<number>(0);
   const [content, setContent] = useState<string>("");
 
-  const postReview = usePostReview(movieId);
+  const postReview = usePostReview();
 
-  // 리뷰 처리 함수
+  // 리뷰 작성
   const handleSubmit = () => {
     const reviewData = {
-      id: new Date().toISOString(),
       movieId,
       userId,
       rating,
@@ -43,11 +40,7 @@ export function ReviewFormComponent({ isOpen, movieId, onContent, onClose }: Rev
     if (reviewData.content === "") return toast.error("리뷰를 작성해주세요!");
 
     postReview.mutate(reviewData, {
-      onSuccess: (data) => {
-        onContent({
-          ...reviewData,
-          id: data.id,
-        });
+      onSuccess: () => {
         setContent("");
         setRating(0);
         onClose();

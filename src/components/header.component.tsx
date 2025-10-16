@@ -37,7 +37,7 @@ export function Header({ cookieData }: { cookieData: any }) {
         </Link>
 
         <nav className="flex w-full items-center justify-between gap-4 text-nowrap">
-          {cookieData || user ? (
+          {cookieData && user ? (
             <div className="flex w-full items-center justify-end gap-8">
               <div className="relative">
                 <FaUserCircle
@@ -46,29 +46,36 @@ export function Header({ cookieData }: { cookieData: any }) {
                   className="cursor-pointer"
                 />
                 {modals.myMenu && (
-                  <div className="absolute left-1/2 top-full z-50 mt-2 flex w-40 -translate-x-1/2 flex-col gap-4 rounded-xl border-2 border-point-color bg-background p-3">
-                    <p className="text-center text-xl font-semibold text-point-color">
-                      {user?.name} 님
-                    </p>
-                    <div className="flex flex-col">
-                      {myMenus.map((menu) => (
-                        <Link
-                          key={menu.url}
-                          href={menu.url}
-                          onClick={() => closeModal("myMenu")}
-                          className="rounded-lg p-1 transition-colors duration-300 hover:bg-white/30"
-                        >
-                          {menu.label}
-                        </Link>
-                      ))}
-                    </div>
-                    <Button
-                      className="rounded-lg bg-point-color p-1 font-medium text-white transition-colors duration-300 hover:bg-point-color/70"
-                      onClick={handleLogout}
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => closeModal("myMenu")} />
+
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      className="absolute left-1/2 top-full z-50 mt-2 flex w-40 -translate-x-1/2 flex-col gap-4 rounded-xl border-2 border-point-color bg-background p-3"
                     >
-                      로그아웃
-                    </Button>
-                  </div>
+                      <p className="text-center text-xl font-semibold text-point-color">
+                        {user?.name} 님
+                      </p>
+                      <div className="flex flex-col">
+                        {myMenus.map((menu) => (
+                          <Link
+                            key={menu.url}
+                            href={menu.url}
+                            onClick={() => closeModal("myMenu")}
+                            className="rounded-lg p-1 transition-colors duration-300 hover:bg-white/30"
+                          >
+                            {menu.label}
+                          </Link>
+                        ))}
+                      </div>
+                      <Button
+                        className="rounded-lg bg-point-color p-1 font-medium text-white transition-colors duration-300 hover:bg-point-color/70"
+                        onClick={handleLogout}
+                      >
+                        로그아웃
+                      </Button>
+                    </div>
+                  </>
                 )}
               </div>
             </div>

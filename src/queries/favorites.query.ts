@@ -37,7 +37,6 @@ export function usePostFavoriteMovie() {
     mutationFn: (favoriteData: Omit<FavoriteMovieItem, "id">) => postFavoriteMovie(favoriteData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["favorites", "add"] });
-      toast.success("좋아요를 눌렀습니다!");
     },
     onError: (err) => {
       console.error("좋아요 실패: ", err.message);
@@ -57,11 +56,10 @@ export function usePatchFavoriteMovie() {
       favoriteData: Omit<FavoriteMovieItem, "id">;
     }) => patchFavoriteMovie(favoriteId, favoriteData),
     onSuccess: () => {
-      toast.success("좋아요를 해제했습니다.");
       queryClient.invalidateQueries({ queryKey: ["favorites", "patch"] });
     },
     onError: (err) => {
-      console.error("좋아요 실패: ", err.message);
+      console.error("좋아요 수정 실패: ", err.message);
     },
   });
 }

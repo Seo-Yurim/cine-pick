@@ -37,7 +37,7 @@ export function MyReviewCard({ movieId, review, onSelect }: MyReviewCardProps) {
     }
   }, [isEditing]);
 
-  const editReview = usePatchReview(movieId);
+  const editReview = usePatchReview();
 
   const { data, isLoading } = useMovieDetail(movieId);
   const movieDetail = data ?? {};
@@ -55,8 +55,14 @@ export function MyReviewCard({ movieId, review, onSelect }: MyReviewCardProps) {
       },
     };
 
-    editReview.mutate({ reviewId: review.id, reviewData });
-    setIsEditing(false);
+    editReview.mutate(
+      { reviewId: review.id, reviewData },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      },
+    );
   };
 
   return (

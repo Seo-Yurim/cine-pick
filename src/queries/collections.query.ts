@@ -94,7 +94,9 @@ export function usePatchCollectionMovie() {
       collectionMovie: CollectionMovie[];
     }) => patchCollectionMovie(collectionId, collectionMovie),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["collections"] });
+      queryClient.invalidateQueries({
+        queryKey: ["collections"],
+      });
     },
     onError: (err) => {
       console.error("영화 추가 실패: ", err.message);

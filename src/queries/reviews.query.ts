@@ -38,11 +38,11 @@ export function useGetReviewDetail(reviewId: string) {
 }
 
 // 리뷰 작성
-export function usePostReview(movieId: number) {
+export function usePostReview() {
   return useMutation({
-    mutationFn: (reviewData: ReviewItem) => postReview(reviewData),
+    mutationFn: (reviewData: Omit<ReviewItem, "id">) => postReview(reviewData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast.success("리뷰를 작성했습니다.");
     },
     onError: (err) => {
@@ -53,7 +53,7 @@ export function usePostReview(movieId: number) {
 }
 
 // 리뷰 수정
-export function usePatchReview(movieId: number) {
+export function usePatchReview() {
   return useMutation({
     mutationFn: ({
       reviewId,
@@ -63,7 +63,7 @@ export function usePatchReview(movieId: number) {
       reviewData: Omit<ReviewItem, "id" | "user">;
     }) => patchReview(reviewId, reviewData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast.success("리뷰를 수정했습니다.");
     },
     onError: (err) => {
@@ -74,11 +74,11 @@ export function usePatchReview(movieId: number) {
 }
 
 // 리뷰 삭제
-export function useDeleteReview(movieId?: number) {
+export function useDeleteReview() {
   return useMutation({
     mutationFn: ({ reviewId }: { reviewId: string }) => deleteReview(reviewId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast.success("리뷰를 삭제했습니다.");
     },
     onError: (err) => {

@@ -93,18 +93,6 @@
       }
     },
     {
-      "id": "3b82",
-      "movieId": 1267319,
-      "userId": "1",
-      "rating": 2,
-      "content": "그냥 그랬어요",
-      "createdAt": "2025-09-30T09:09:09.672Z",
-      "user": {
-        "name": "테스트1",
-        "username": "test01"
-      }
-    },
-    {
       "id": "0e22",
       "movieId": 1267319,
       "userId": "2",
@@ -114,18 +102,6 @@
       "user": {
         "name": "테스트2",
         "username": "test02"
-      }
-    },
-    {
-      "id": "6063",
-      "movieId": 1311031,
-      "userId": "1",
-      "rating": 4.5,
-      "content": "좋네요",
-      "createdAt": "2025-10-05T05:36:23.309Z",
-      "user": {
-        "name": "테스트1",
-        "username": "test01"
       }
     },
     {
@@ -223,18 +199,6 @@
         "name": "테스트10",
         "username": "test10"
       }
-    },
-    {
-      "id": "2025-10-16T13:47:56.063Z",
-      "movieId": 597,
-      "userId": "bad7",
-      "rating": 4.5,
-      "content": "ㅇ",
-      "createdAt": "2025-10-16T13:47:56.063Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
     }
   ],
   "favorites": [
@@ -243,6 +207,24 @@
       "movieId": 1038392,
       "userId": "bad7",
       "favorite": false
+    },
+    {
+      "id": "b3e9",
+      "movieId": 1038392,
+      "userId": "1",
+      "favorite": true
+    },
+    {
+      "id": "709d",
+      "movieId": 155,
+      "userId": "1",
+      "favorite": true
+    },
+    {
+      "id": "fb72",
+      "movieId": 1086910,
+      "userId": "1",
+      "favorite": true
     }
   ],
   "collections": [
@@ -252,10 +234,6 @@
       "title": "My Collections",
       "description": "제 컬렉션이에요.",
       "movies": [
-        {
-          "collectionId": "1",
-          "movieId": 1311031
-        },
         {
           "collectionId": "1",
           "movieId": 1038392
@@ -373,7 +351,30 @@
           "movieId": 76600
         }
       ]
+    },
+    {
+      "id": "0b44",
+      "title": "나중에 꼭 볼 영화",
+      "description": "나중에 꼭 볼 영화만 넣어놓기",
+      "userId": "1",
+      "movies": [
+        {
+          "collectionId": "0b44",
+          "movieId": 1038392
+        },
+        {
+          "collectionId": "0b44",
+          "movieId": 24428
+        }
+      ]
     }
   ],
-  "watches": []
+  "watches": [
+    {
+      "id": "58e0",
+      "movieId": 1038392,
+      "userId": "1",
+      "watched": true
+    }
+  ]
 }

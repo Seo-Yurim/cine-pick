@@ -34,17 +34,18 @@ export function CollectionControlComponent({
     }
 
     const collectionMovie = {
-      collectionId: collection.id ?? "",
+      collectionId: collection.id,
       movieId: movieData.id,
     };
 
     const updatedMovies = [...collection.movies, collectionMovie];
 
     addCollectionMovie.mutate(
-      { collectionId: collection.id ?? "", collectionMovie: updatedMovies },
+      { collectionId: collection.id, collectionMovie: updatedMovies },
       {
         onSuccess: () => {
           toast.success("컬렉션에 영화를 추가했어요!");
+          closeModal("collectionList");
         },
       },
     );

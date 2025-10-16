@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
-import { CollectionItem, CollectionList } from "@/types/collections.type";
+import { CollectionList } from "@/types/collections.type";
 import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { useDeleteCollection, useGetCollectionList } from "@/queries/collections.query";
@@ -20,44 +20,15 @@ export default function MyCollectionPage() {
 
   const deleteCollection = useDeleteCollection();
 
-  const [collectionStateList, setCollectionStateList] = useState(collectionList);
-
   const handleDeleteCollection = () => {
     if (!selectedCollection) return;
     deleteCollection.mutate(
       { collectionId: selectedCollection.id ?? "" },
       {
         onSuccess: () => {
-          setCollectionStateList((prev: CollectionList[]) =>
-            prev.filter((collection: CollectionItem) => collection.id !== selectedCollection.id),
-          );
           closeModal("confirm");
         },
       },
-    );
-  };
-
-  useEffect(() => {
-    setCollectionStateList(collectionList);
-  }, [collectionList]);
-
-  const onModify = (item?: CollectionList, type?: string) => {
-    if (type === "edit") {
-      handlEditCollection(item);
-    } else {
-      setCollectionStateList((prev: CollectionList[]) => [...(prev ?? []), item]);
-    }
-  };
-
-  const handlEditCollection = (item?: CollectionList) => {
-    setCollectionStateList((prev: CollectionList[]) =>
-      prev.map((m) => {
-        if (m.id === item?.id) {
-          return item;
-        } else {
-          return m;
-        }
-      }),
     );
   };
 
@@ -74,8 +45,8 @@ export default function MyCollectionPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        {collectionStateList?.length > 0 ? (
-          collectionStateList?.map((collection: CollectionList) => (
+        {collectionList?.length > 0 ? (
+          collectionList?.map((collection: CollectionList) => (
             <div
               key={collection.id}
               className="relative flex min-h-32 flex-col items-center justify-around gap-4 rounded-xl bg-point-color/50 p-4 transition-all duration-300 hover:scale-[1.02]"
@@ -137,7 +108,6 @@ export default function MyCollectionPage() {
         }}
         userId={userId}
         defaultValue={selectedCollection}
-        onCollection={onModify}
       />
 
       <ConfirmModalComponent

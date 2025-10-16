@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { ReviewItem } from "@/types/reviews.type";
-import { statusMapping } from "@/constants/constants";
 import { useGetCollectionList } from "@/queries/collections.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
 import { MovieInfoSkeletonComponent } from "@/components/skeleton/movie-info-skeleton.component";
@@ -14,13 +13,22 @@ import {
   WatchedControlComponent,
 } from "./index";
 
+// 영화 개봉 상태
+const statusMapping: Record<string, string> = {
+  Rumored: "제작 미정",
+  Planned: "제작 예정",
+  "In Production": "제작 진행 중",
+  "Post Production": "편집 및 후반 작업 진행 중",
+  Released: "공식 개봉",
+  Canceled: "제작 취소",
+};
+
 interface MovieInfoProps {
   userId: string;
   movieData: MovieDetailItem;
   reviewData: ReviewItem[];
   rating: number;
   isMovieLoading: boolean;
-  setRatingAvg: any;
 }
 
 export function MovieInfoComponent({
@@ -29,7 +37,6 @@ export function MovieInfoComponent({
   reviewData,
   rating,
   isMovieLoading,
-  setRatingAvg,
 }: MovieInfoProps) {
   const { data: collectionList } = useGetCollectionList(userId);
   const { data: watchedMovie } = useGetWatchedDetail(userId, movieData.id);
@@ -78,10 +85,10 @@ export function MovieInfoComponent({
               ))}
             </div>
           </div>
-          <p>{movieData.overview}</p>
+          <p>{movieData.overview || "아직 등록된 줄거리가 없습니다."}</p>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <FavoriteControlComponent key={Math.random()} movieData={movieData} />
+              <FavoriteControlComponent movieData={movieData} />
 
               <CollectionControlComponent
                 userId={userId}
@@ -111,12 +118,7 @@ export function MovieInfoComponent({
               </div>
             )}
           </div>
-          <ReviewListComponent
-            setRatingAvg={setRatingAvg}
-            userId={userId}
-            reviewData={reviewData}
-            movieId={movieData.id}
-          />
+          <ReviewListComponent userId={userId} reviewData={reviewData} movieId={movieData.id} />
         </div>
       </div>
     </section>

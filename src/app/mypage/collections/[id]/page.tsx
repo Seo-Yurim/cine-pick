@@ -14,20 +14,18 @@ export default function CollectionDetailPage() {
 
   const { data: collectionDetail } = useGetCollectionDetail(collectionId);
 
-  const collectionMovies = collectionDetail?.movies ?? [];
-
   return (
     <section className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold">{collectionDetail?.title}</h1>
 
-      {collectionMovies && collectionMovies.length > 0 ? (
+      {collectionDetail?.movies && collectionDetail?.movies.length > 0 ? (
         <div className="flex flex-col gap-4">
-          {collectionMovies.map((movie: CollectionMovie) => (
+          {collectionDetail?.movies.map((movie: CollectionMovie) => (
             <CollectionMovieList
               key={movie.movieId}
               movieId={movie.movieId}
               onDeleteMovie={(movieId) => {
-                const updatedMovies = collectionMovies.filter(
+                const updatedMovies = collectionDetail?.movies.filter(
                   (movie: CollectionMovie) => movie.movieId !== movieId,
                 );
 

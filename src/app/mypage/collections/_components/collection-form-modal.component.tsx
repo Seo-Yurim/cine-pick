@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { CollectionItem, CollectionList } from "@/types/collections.type";
+import { CollectionList } from "@/types/collections.type";
 import { usePatchCollection, usePostCollection } from "@/queries/collections.query";
 import { ButtonComponent, ModalComponent } from "@/components";
 import { InputComponent } from "@/components/input/input.component";
@@ -10,7 +10,6 @@ interface CollectionFormModalProps {
   onClose: () => void;
   userId: string;
   defaultValue: CollectionList | null;
-  onCollection?: (item?: CollectionList, type?: string) => void;
 }
 
 export function CollectionFormModal({
@@ -18,7 +17,6 @@ export function CollectionFormModal({
   onClose,
   userId,
   defaultValue,
-  onCollection,
 }: CollectionFormModalProps) {
   const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionList, "id">>({
     title: "",
@@ -65,8 +63,7 @@ export function CollectionFormModal({
           },
         },
         {
-          onSuccess: (item) => {
-            onCollection?.(item, "edit");
+          onSuccess: () => {
             onClose();
 
             setCollectionFormData({
@@ -87,8 +84,7 @@ export function CollectionFormModal({
           movies: [],
         },
         {
-          onSuccess: (item) => {
-            onCollection?.(item);
+          onSuccess: () => {
             onClose();
 
             setCollectionFormData({

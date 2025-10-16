@@ -14,17 +14,11 @@ interface ReviewSectionProps {
   userId: string;
   movieId: number;
   reviewData: ReviewItem[];
-  setRatingAvg: any;
 }
 
 const iconStyle = "cursor-pointer rounded-full p-2 transition-colors duration-300";
 
-export function ReviewListComponent({
-  setRatingAvg,
-  userId,
-  movieId,
-  reviewData,
-}: ReviewSectionProps) {
+export function ReviewListComponent({ userId, movieId, reviewData }: ReviewSectionProps) {
   const { user } = useAuthStore();
   const name = user?.name as string;
   const username = user?.username as string;
@@ -38,12 +32,11 @@ export function ReviewListComponent({
   const [editingReviewId, setEditingReviewId] = useState<string>("");
   const [editRating, setEditRating] = useState<number>(selectedReview?.rating || 0);
   const [editContent, setEditContent] = useState<string>(selectedReview?.content || "");
-  const [contentData, setContentData] = useState(
-    [...reviewData].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    ),
-  );
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const sortedReviews = reviewData.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
   useEffect(() => {
     if (editingReviewId && textareaRef.current) {
@@ -51,9 +44,10 @@ export function ReviewListComponent({
     }
   }, [editingReviewId]);
 
-  const patchReview = usePatchReview(movieId);
-  const deleteReview = useDeleteReview(movieId);
+  const patchReview = usePatchReview();
+  const deleteReview = useDeleteReview();
 
+  // 리뷰 수정
   const handleSave = () => {
     if (!selectedReview) return;
 
@@ -80,16 +74,13 @@ export function ReviewListComponent({
       {
         onSuccess: () => {
           setEditingReviewId("");
-          setContentData((prev) =>
-            [...prev.filter((review) => review.id !== selectedReview.id), reviewData].sort(
-              (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-            ),
-          );
+          setSelectedReview(null);
         },
       },
     );
   };
 
+  // 리뷰 삭제
   const handleDeleteReview = () => {
     if (!selectedReview) return;
 
@@ -97,8 +88,6 @@ export function ReviewListComponent({
       { reviewId: selectedReview.id },
       {
         onSuccess: () => {
-          setContentData((prev) => prev.filter((review) => review.id !== selectedReview.id));
-
           setSelectedReview(null);
           closeModal("confirm");
         },
@@ -106,13 +95,9 @@ export function ReviewListComponent({
     );
   };
 
-  useEffect(() => {
-    console.log(contentData);
-    if (contentData.length === 0) setRatingAvg(0);
-  }, [contentData, selectedReview]);
-
+  // 리뷰 작성 폼 열기
   const handleShowModal = () => {
-    const alreadyWritten = contentData?.some((review) => review.userId === userId);
+    const alreadyWritten = sortedReviews?.some((review) => review.userId === userId);
     if (alreadyWritten) return toast.error("이미 해당 영화에 리뷰를 작성했습니다.");
 
     if (!userId) {
@@ -122,17 +107,6 @@ export function ReviewListComponent({
     } else {
       openModal("reviewForm");
     }
-  };
-
-  const sortData = (item: ReviewItem) => {
-    setContentData((prev) => {
-      const newData = [...prev, item];
-      const sorted = [...newData].sort(
-        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
-      if (contentData.length === 0) setRatingAvg(item.rating);
-      return sorted;
-    });
   };
 
   return (
@@ -151,13 +125,13 @@ export function ReviewListComponent({
       </div>
 
       <div className="flex w-full flex-col">
-        {contentData.length === 0 ? (
+        {sortedReviews.length === 0 ? (
           <div className="flex items-center justify-center py-16">
             <p className="text-xl font-medium">아직 작성된 리뷰가 없습니다.</p>
           </div>
         ) : (
           <div className="flex flex-col gap-8">
-            {contentData.map((review: ReviewItem) => (
+            {sortedReviews.map((review: ReviewItem) => (
               <div key={review.userId} className="flex flex-col gap-6 border-t py-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-8">
@@ -238,7 +212,6 @@ export function ReviewListComponent({
       <ReviewFormComponent
         isOpen={modals.reviewForm}
         movieId={movieId}
-        onContent={sortData}
         onClose={() => {
           closeModal("reviewForm");
           setSelectedReview(null);

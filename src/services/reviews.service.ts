@@ -20,7 +20,7 @@ export async function getReviewDetail(reviewId: string) {
 }
 
 // 리뷰 작성
-export async function postReview(reviewData: ReviewItem) {
+export async function postReview(reviewData: Omit<ReviewItem, "id">) {
   const res = await post("/reviews", reviewData);
   return res.data;
 }

@@ -1,12 +1,10 @@
 import { usePathname, useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { MovieDetailItem } from "@/types/movie.type";
-import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
 import {
-  useDeleteFavoriteMovie,
   useGetFavoriteMovie,
   usePatchFavoriteMovie,
   usePostFavoriteMovie,
@@ -15,24 +13,21 @@ import { ButtonComponent, TooltipComponent } from "@/components";
 
 interface FavoriteControlComponentProps {
   movieData: MovieDetailItem;
-  type?: string;
 }
 
-export function FavoriteControlComponent({ movieData, type }: FavoriteControlComponentProps) {
+export function FavoriteControlComponent({ movieData }: FavoriteControlComponentProps) {
   const { user } = useAuthStore();
   const { data: favoriteMovie } = useGetFavoriteMovie(user?.id ?? "", movieData?.id);
 
   const router = useRouter();
   const pathname = usePathname();
   const [favorited, setFavorited] = useState<boolean>(favoriteMovie?.favorite ?? false);
-  // defaultValue는 비동기 데이터로 초기 렌더링 시 undefined일 수 있으므로,
-  // defaultValue가 변경될 때마다 내부 상태를 동기화하기 위해 useEffect를 사용
+
   useEffect(() => {
     setFavorited(favoriteMovie?.favorite);
   }, [favoriteMovie]);
 
   const addFavorite = usePostFavoriteMovie();
-  const deleteFavorite = useDeleteFavoriteMovie();
   const patchFavorite = usePatchFavoriteMovie();
 
   // 좋아요 토글 처리 함수
@@ -45,33 +40,31 @@ export function FavoriteControlComponent({ movieData, type }: FavoriteControlCom
 
     const favoriteData = { movieId: movieData.id, userId: user.id, favorite: !favorited };
 
-    if (type === "edit") {
+    if (favoriteMovie) {
       patchFavorite.mutate(
-        { favoriteId: favoriteMovie.id, favoriteData },
+        {
+          favoriteId: favoriteMovie.id,
+          favoriteData,
+        },
         {
           onSuccess: () => {
             setFavorited(!favorited);
-          },
-        },
-      );
-      return;
-    }
-
-    if (!favorited) {
-      addFavorite.mutate(
-        { movieId: movieData.id, userId: user.id, favorite: true },
-        {
-          onSuccess: (a) => {
-            setFavorited(a.favorite);
+            toast.success(`즐겨찾기를 ${!favorited ? "추가" : "해제"}했어요.`);
           },
         },
       );
     } else {
-      deleteFavorite.mutate(
-        { favoriteId: favoriteMovie.id },
+      // 존재하지 않으면 새로 생성
+      addFavorite.mutate(
         {
-          onSuccess: () => {
-            setFavorited(false);
+          movieId: movieData.id,
+          userId: user.id,
+          favorite: true,
+        },
+        {
+          onSuccess: (newFavorite) => {
+            setFavorited(newFavorite.favorite);
+            toast.success("즐겨찾기에 추가했어요.");
           },
         },
       );
