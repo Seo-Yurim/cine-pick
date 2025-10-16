@@ -1,9 +1,10 @@
 "use client";
 
 import { SwiperSlide } from "swiper/react";
+import Link from "next/link";
 import { GenresList, MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
-import { MovieCardComponent, Slider, SliderSection } from "@/components";
+import { ButtonComponent, MovieCardComponent, Slider, SliderSection } from "@/components";
 import { HeroSection } from "./_components/hero-section.component";
 
 interface HomeClientProps {
@@ -27,7 +28,10 @@ export default function HomeClient({
         isLoading={!popularMoives}
       />
 
-      <SliderSection title="💥 지금 인기있는 영화">
+      <SliderSection
+        title="💥 지금 인기있는 영화"
+        controls={<Link href={"/movies?value=popularity.desc"}>더보기</Link>}
+      >
         <Slider>
           {popularMoives.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
@@ -40,7 +44,10 @@ export default function HomeClient({
         </Slider>
       </SliderSection>
 
-      <SliderSection title="🎞️ 극장에서 상영 중인 영화">
+      <SliderSection
+        title="🎞️ 극장에서 상영 중인 영화"
+        controls={<Link href={"/movies?value=vote_average.desc"}>더보기</Link>}
+      >
         <Slider>
           {nowPlayingMovies.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
@@ -53,7 +60,10 @@ export default function HomeClient({
         </Slider>
       </SliderSection>
 
-      <SliderSection title="🆕 새로 개봉한 국내 영화">
+      <SliderSection
+        title="🆕 새로 개봉한 국내 영화"
+        controls={<Link href={"/movies?value=primary_release_date.desc"}>더보기</Link>}
+      >
         <Slider>
           {newMovies.map((movie: MovieItem) => (
             <SwiperSlide key={movie.id} className="max-w-[25%] p-4">

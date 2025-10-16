@@ -12,21 +12,21 @@ async function genresData() {
   return res.json();
 }
 
-async function moviesData() {
-  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?language=ko`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
-    },
-  });
+// async function moviesData() {
+//   const res = await fetch(`https://api.themoviedb.org/3/discover/movie?language=ko`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+//     },
+//   });
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 export default async function MoviesPage() {
   const genres = await genresData();
-  const movies = await moviesData();
+  // const movies = await moviesData();
 
-  return <MoviesClient genres={genres} initialMovies={movies} />;
+  return <MoviesClient genres={genres} />;
 }

@@ -3,7 +3,19 @@ import { get } from "./method";
 
 // 영화 목록
 export async function getMovies(params?: MovieParams) {
-  const res = await get("/discover/movie", params, "tmdb");
+  let res;
+  const today = new Date().toISOString().split("T")[0];
+
+  // 파라미터 객체가 없다면 초기화
+  const queryParams = { ...params };
+
+  if (queryParams?.sort_by === "primary_release_date.desc") {
+    queryParams["primary_release_date.lte"] = today;
+    queryParams.with_origin_country = "KR";
+  }
+
+  res = await get(`/discover/movie`, queryParams, "tmdb");
+
   return res.data;
 }
 

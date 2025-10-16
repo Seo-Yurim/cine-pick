@@ -25,13 +25,16 @@ async function popularMoviesData() {
 }
 
 async function nowPlayingMoviesData() {
-  const res = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=ko&region=KR`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+  const res = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=vote_average.desc`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
+      },
     },
-  });
+  );
 
   return res.json();
 }

@@ -15,7 +15,7 @@ export const useAuthStore = create<AuthState>()(
       user: undefined,
       setUser: (user) => set({ user }),
       logout: () => {
-        set({ user: null });
+        set({ user: undefined });
         deleteCookie("login");
       },
     }),

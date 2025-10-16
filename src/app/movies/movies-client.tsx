@@ -1,5 +1,6 @@
 "use client";
 
+import { log } from "console";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -8,40 +9,37 @@ import { genresMatch } from "@/utils/genres-match.util";
 import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
-import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
 import MoviesHeaderComponent from "./_components/movies-header.component";
 import { ScrollToTop } from "./_components/scroll-to-top.component";
 
 interface MoviesClientProps {
   genres: GenresList;
-  initialMovies: MovieResponse;
 }
 
-export default function MoviesClient({ genres, initialMovies }: MoviesClientProps) {
+export default function MoviesClient({ genres }: MoviesClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialTab = searchParams.get("view") ?? "grid";
+  const [sort, setSort] = useState(searchParams.get("value"));
 
   const [activeTab, setActiveTab] = useState<string>(initialTab);
   const [params, setParams] = useState<MovieParams>({
     page: 1,
-    sort_by: "popularity.desc",
     with_genres: "",
     with_people: "",
+    sort_by: sort,
     primary_release_year: "",
     "primary_release_date.gte": "",
     "primary_release_date.lte": "",
   });
 
-  const { data, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfinityMovies(
-    params,
-    initialMovies,
-  );
+  const { data, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfinityMovies(params);
 
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
 
   useEffect(() => {
     const viewParam = searchParams.get("view");
+
     if (viewParam === "grid" || viewParam === "list") {
       setActiveTab(viewParam);
     }
@@ -58,7 +56,7 @@ export default function MoviesClient({ genres, initialMovies }: MoviesClientProp
 
   return (
     <>
-      <MoviesHeaderComponent tab={activeTab} onTab={handleTabChange} onParams={setParams} />
+      {/* <MoviesHeaderComponent tab={activeTab} onTab={handleTabChange} onParams={setParams} /> */}
 
       <InfiniteScroll
         hasMore={hasNextPage}
