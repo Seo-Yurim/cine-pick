@@ -1,30 +1,38 @@
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
+import { MovieDetailItem } from "@/types/movie.type";
 import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
-import { usePatchFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
+import {
+  useDeleteFavoriteMovie,
+  useGetFavoriteMovie,
+  usePatchFavoriteMovie,
+  usePostFavoriteMovie,
+} from "@/queries/favorites.query";
 import { ButtonComponent, TooltipComponent } from "@/components";
 
 interface FavoriteControlComponentProps {
-  defaultValue?: FavoriteMovieItem | null;
-  movieId: number;
+  movieData: MovieDetailItem;
+  type?: string;
 }
 
-export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteControlComponentProps) {
+export function FavoriteControlComponent({ movieData, type }: FavoriteControlComponentProps) {
   const { user } = useAuthStore();
+  const { data: favoriteMovie } = useGetFavoriteMovie(user?.id ?? "", movieData?.id);
+
   const router = useRouter();
   const pathname = usePathname();
-  const [favorited, setFavorited] = useState<boolean>(defaultValue?.favorite || false);
-
+  const [favorited, setFavorited] = useState<boolean>(favoriteMovie?.favorite ?? false);
   // defaultValue는 비동기 데이터로 초기 렌더링 시 undefined일 수 있으므로,
   // defaultValue가 변경될 때마다 내부 상태를 동기화하기 위해 useEffect를 사용
   useEffect(() => {
-    setFavorited(defaultValue?.favorite || false);
-  }, [defaultValue]);
+    setFavorited(favoriteMovie?.favorite);
+  }, [favoriteMovie]);
 
   const addFavorite = usePostFavoriteMovie();
+  const deleteFavorite = useDeleteFavoriteMovie();
   const patchFavorite = usePatchFavoriteMovie();
 
   // 좋아요 토글 처리 함수
@@ -35,34 +43,39 @@ export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteCont
       return;
     }
 
-    const favoriteData = { movieId, userId: user.id, favorite: !favorited };
+    const favoriteData = { movieId: movieData.id, userId: user.id, favorite: !favorited };
 
-    if (!defaultValue?.favorite || defaultValue.id === undefined) {
-      addFavorite.mutate(favoriteData, {
-        onSuccess: () => {
-          setFavorited(!favorited);
-        },
-      });
-    } else {
+    if (type === "edit") {
       patchFavorite.mutate(
-        { favoriteId: defaultValue.id, favoriteData },
+        { favoriteId: favoriteMovie.id, favoriteData },
         {
           onSuccess: () => {
             setFavorited(!favorited);
           },
         },
       );
+      return;
     }
-    // } else {
-    //   toggleFavorite.mutate(
-    //     { favoriteId: defaultValue.id },
-    //     {
-    //       onSuccess: () => {
-    //         setFavorited(!favorited);
-    //       },
-    //     },
-    //   );
-    // }
+
+    if (!favorited) {
+      addFavorite.mutate(
+        { movieId: movieData.id, userId: user.id, favorite: true },
+        {
+          onSuccess: (a) => {
+            setFavorited(a.favorite);
+          },
+        },
+      );
+    } else {
+      deleteFavorite.mutate(
+        { favoriteId: favoriteMovie.id },
+        {
+          onSuccess: () => {
+            setFavorited(false);
+          },
+        },
+      );
+    }
   };
 
   return (

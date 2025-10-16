@@ -15,6 +15,8 @@ export function useGetWatchedList(userId: string) {
     queryKey: ["watches", userId],
     queryFn: () => getWatchedList(userId),
     enabled: !!userId,
+    gcTime: 0,
+    staleTime: 0,
   });
 }
 

@@ -1,17 +1,12 @@
 "use client";
 
 import { SwiperSlide } from "swiper/react";
-import { MovieCast, MovieCrew, MovieCreditResponse, MovieDetailItem } from "@/types/movie.type";
-import { ReviewItem } from "@/types/reviews.type";
+import { useEffect, useState } from "react";
+import { MovieCast, MovieCreditResponse, MovieCrew, MovieDetailItem } from "@/types/movie.type";
 import { getAvgRating } from "@/utils/avg-rating.util";
 import { useAuthStore } from "@/stores/auth.store";
 import { useGetReviews } from "@/queries/reviews.query";
-import {
-  PersonCard,
-  PersonCardSkeletonComponent,
-  Slider,
-  SliderSection,
-} from "@/components";
+import { PersonCard, PersonCardSkeletonComponent, Slider, SliderSection } from "@/components";
 import { MovieInfoComponent } from "./_components";
 
 interface MovieDetailClientProps {
@@ -25,7 +20,12 @@ export default function MovieDetailClient({ movieDetail, movieCredits }: MovieDe
 
   const { data: movieReviews } = useGetReviews(movieDetail.id);
 
-  const ratingAvg = getAvgRating(movieReviews);
+  const rating = getAvgRating(movieReviews);
+  const [ratingAvg, setRatingAvg] = useState(rating);
+
+  useEffect(() => {
+    console.log(rating);
+  }, [rating, ratingAvg]);
 
   return (
     <>
@@ -35,6 +35,7 @@ export default function MovieDetailClient({ movieDetail, movieCredits }: MovieDe
         reviewData={movieReviews}
         isMovieLoading={!movieDetail || !movieReviews}
         rating={ratingAvg}
+        setRatingAvg={setRatingAvg}
       />
 
       <SliderSection title="출연진">

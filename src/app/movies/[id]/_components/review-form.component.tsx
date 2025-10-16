@@ -48,6 +48,8 @@ export function ReviewFormComponent({ isOpen, movieId, onContent, onClose }: Rev
           ...reviewData,
           id: data.id,
         });
+        setContent("");
+        setRating(0);
         onClose();
       },
     });

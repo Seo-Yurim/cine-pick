@@ -5,7 +5,6 @@ import { MovieDetailItem, MovieGenres } from "@/types/movie.type";
 import { ReviewItem } from "@/types/reviews.type";
 import { statusMapping } from "@/constants/constants";
 import { useGetCollectionList } from "@/queries/collections.query";
-import { useGetFavoriteMovie } from "@/queries/favorites.query";
 import { useGetWatchedDetail } from "@/queries/watches.query";
 import { MovieInfoSkeletonComponent } from "@/components/skeleton/movie-info-skeleton.component";
 import {
@@ -21,6 +20,7 @@ interface MovieInfoProps {
   reviewData: ReviewItem[];
   rating: number;
   isMovieLoading: boolean;
+  setRatingAvg: any;
 }
 
 export function MovieInfoComponent({
@@ -29,8 +29,8 @@ export function MovieInfoComponent({
   reviewData,
   rating,
   isMovieLoading,
+  setRatingAvg,
 }: MovieInfoProps) {
-  const { data: favoriteMovie } = useGetFavoriteMovie(userId, movieData.id);
   const { data: collectionList } = useGetCollectionList(userId);
   const { data: watchedMovie } = useGetWatchedDetail(userId, movieData.id);
 
@@ -81,10 +81,7 @@ export function MovieInfoComponent({
           <p>{movieData.overview}</p>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <FavoriteControlComponent
-                defaultValue={!userId ? null : favoriteMovie}
-                movieId={movieData.id}
-              />
+              <FavoriteControlComponent key={Math.random()} movieData={movieData} />
 
               <CollectionControlComponent
                 userId={userId}
@@ -114,7 +111,12 @@ export function MovieInfoComponent({
               </div>
             )}
           </div>
-          <ReviewListComponent userId={userId} reviewData={reviewData} movieId={movieData.id} />
+          <ReviewListComponent
+            setRatingAvg={setRatingAvg}
+            userId={userId}
+            reviewData={reviewData}
+            movieId={movieData.id}
+          />
         </div>
       </div>
     </section>

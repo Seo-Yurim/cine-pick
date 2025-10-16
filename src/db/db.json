@@ -223,78 +223,24 @@
         "name": "테스트10",
         "username": "test10"
       }
+    },
+    {
+      "id": "2025-10-16T13:47:56.063Z",
+      "movieId": 597,
+      "userId": "bad7",
+      "rating": 4.5,
+      "content": "ㅇ",
+      "createdAt": "2025-10-16T13:47:56.063Z",
+      "user": {
+        "name": "테스트4",
+        "username": "test04"
+      }
     }
   ],
   "favorites": [
     {
-      "id": "bc43",
-      "movieId": 1311031,
-      "userId": "1",
-      "favorite": true
-    },
-    {
-      "id": "8e68",
-      "movieId": 1267319,
-      "userId": "80f1",
-      "favorite": true
-    },
-    {
-      "id": "8060",
-      "movieId": 1311031,
-      "userId": "2",
-      "favorite": true
-    },
-    {
-      "id": "71ae",
+      "id": "089d",
       "movieId": 1038392,
-      "userId": "bad7",
-      "favorite": false
-    },
-    {
-      "id": "f02a",
-      "movieId": 1038392,
-      "userId": "1",
-      "favorite": true
-    },
-    {
-      "id": "fa91",
-      "movieId": 803796,
-      "userId": "f102",
-      "favorite": true
-    },
-    {
-      "id": "fa92",
-      "movieId": 941109,
-      "userId": "a710",
-      "favorite": true
-    },
-    {
-      "id": "fa93",
-      "movieId": 1038392,
-      "userId": "c902",
-      "favorite": true
-    },
-    {
-      "id": "fa94",
-      "movieId": 793387,
-      "userId": "f102",
-      "favorite": true
-    },
-    {
-      "id": "fa95",
-      "movieId": 617126,
-      "userId": "a710",
-      "favorite": true
-    },
-    {
-      "id": "8c30",
-      "movieId": 27205,
-      "userId": "bad7",
-      "favorite": false
-    },
-    {
-      "id": "f36b",
-      "movieId": 27205,
       "userId": "bad7",
       "favorite": false
     }
@@ -393,93 +339,41 @@
       ]
     },
     {
-      "id": "ec41",
-      "title": "ㅇㅇㅇ",
-      "description": "ㅇㅇㅇㅇㅇ",
-      "userId": "bad7",
-      "movies": []
-    },
-    {
-      "id": "097d",
-      "title": "９９９",
-      "description": "６６６９９９９",
-      "userId": "bad7",
-      "movies": []
-    },
-    {
       "id": "755f",
       "title": "ㅊㅌㅍㅌㅊㅍㅌㅊㅍ",
       "description": "ㅌㅊㅍㅌㅍㅊ",
       "userId": "bad7",
-      "movies": []
+      "movies": [
+        {
+          "collectionId": "755f",
+          "movieId": 1038392
+        },
+        {
+          "collectionId": "755f",
+          "movieId": 24428
+        },
+        {
+          "collectionId": "755f",
+          "movieId": 597
+        }
+      ]
+    },
+    {
+      "id": "59b4",
+      "title": "ㄴㅇㄹㄴㅇㄹ",
+      "description": "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ",
+      "userId": "bad7",
+      "movies": [
+        {
+          "collectionId": "59b4",
+          "movieId": 597
+        },
+        {
+          "collectionId": "59b4",
+          "movieId": 76600
+        }
+      ]
     }
   ],
-  "watches": [
-    {
-      "id": "34a2",
-      "movieId": 1311031,
-      "userId": "1",
-      "watched": true
-    },
-    {
-      "id": "a478",
-      "movieId": 617126,
-      "userId": "1",
-      "watched": true
-    },
-    {
-      "id": "7d4f",
-      "movieId": 1267319,
-      "userId": "80f1",
-      "watched": true
-    },
-    {
-      "id": "8dc0",
-      "movieId": 1311031,
-      "userId": "2",
-      "watched": true
-    },
-    {
-      "id": "7234",
-      "movieId": 1038392,
-      "userId": "1",
-      "watched": true
-    },
-    {
-      "id": "w001",
-      "movieId": 803796,
-      "userId": "f102",
-      "watched": true
-    },
-    {
-      "id": "w002",
-      "movieId": 941109,
-      "userId": "a710",
-      "watched": true
-    },
-    {
-      "id": "w003",
-      "movieId": 1038392,
-      "userId": "c902",
-      "watched": false
-    },
-    {
-      "id": "w004",
-      "movieId": 617126,
-      "userId": "a710",
-      "watched": true
-    },
-    {
-      "id": "32a4",
-      "movieId": 1311031,
-      "userId": "bad7",
-      "watched": true
-    },
-    {
-      "id": "06d3",
-      "movieId": 27205,
-      "userId": "bad7",
-      "watched": true
-    }
-  ]
+  "watches": []
 }

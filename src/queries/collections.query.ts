@@ -17,6 +17,8 @@ export function useGetCollectionList(userId: string) {
     queryKey: ["collections", userId],
     queryFn: () => getCollectionList(userId),
     enabled: !!userId,
+    staleTime: 0,
+    gcTime: 0,
   });
 }
 

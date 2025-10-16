@@ -14,7 +14,7 @@ export function FavoriteListComponent({ favoriteMovie }: FavoriteListProps) {
   return (
     <div className="flex items-center gap-4">
       <MovieListComponent movie={movieDetail} genres={movieDetail.genres} isLoading={isLoading} />
-      <FavoriteControlComponent defaultValue={favoriteMovie} movieId={movieDetail.id} />
+      <FavoriteControlComponent movieData={data} type="edit" />
     </div>
   );
 }
