@@ -2,6 +2,7 @@ export * from "./button/button.component";
 export * from "./date-picker/date-picker.component";
 export * from "./input/input.component";
 export * from "./modal/modal.component";
+export * from "./modal/confirm-modal.component";
 export * from "./movie-template/movie-card.component";
 export * from "./movie-template/movie-list.component";
 export * from "./movie-template/person-card.component";

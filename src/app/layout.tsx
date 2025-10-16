@@ -37,7 +37,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={`dark ${notoSans.variable}`}>
-      <body className="font-sans">
+      <body>
         <QueryClientProvider>
           <Toaster position="top-center" reverseOrder={false} />
           <Header cookieData={cookieData} />

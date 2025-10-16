@@ -45,7 +45,7 @@ export function Header({ cookieData }: { cookieData: any }) {
                   size={48}
                   className="cursor-pointer"
                 />
-                {!modals.myMenu && (
+                {modals.myMenu && (
                   <div className="absolute left-1/2 top-full z-50 mt-2 flex w-40 -translate-x-1/2 flex-col gap-4 rounded-xl border-2 border-point-color bg-background p-3">
                     <p className="text-center text-xl font-semibold text-point-color">
                       {user?.name} 님

@@ -1,6 +1,11 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
+import { MdDelete, MdEdit, MdSave } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 import { ReviewItem } from "@/types/reviews.type";
 import { useAuthStore } from "@/stores/auth.store";
+import { useModalStore } from "@/stores/modal.store";
 import { useMovieDetail } from "@/queries/movie.query";
 import { useDeleteReview, usePatchReview } from "@/queries/reviews.query";
 import { ButtonComponent, MovieCardComponent, RatingComponent } from "@/components";
@@ -10,8 +15,11 @@ interface MyReviewCardProps {
   reviewList: ReviewItem[];
 }
 
+const iconStyle = "cursor-pointer rounded-full p-2 transition-colors duration-300";
+
 export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
   const { user } = useAuthStore();
+  const { modals, openModal, closeModal } = useModalStore();
   const userId = user?.id as string;
   const name = user?.name as string;
   const username = user?.username as string;
@@ -19,12 +27,13 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
   const filteredReviewList = reviewList.filter((review) => review.movieId === movieId);
   const review = filteredReviewList[0];
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [editRating, setEditRating] = useState(review.rating);
-  const [editContent, setEditContent] = useState(review.content);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editRating, setEditRating] = useState<number>(review.rating);
+  const [editContent, setEditContent] = useState<string>(review.content);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // 수정 시 자동으로 textarea 포커스
   useEffect(() => {
     if (isEditing && textareaRef.current) {
       textareaRef.current.focus();
@@ -33,6 +42,7 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
 
   const editReview = usePatchReview();
   const deleteReview = useDeleteReview();
+
   const { data, isLoading } = useMovieDetail(movieId);
   const movieDetail = data ?? {};
 
@@ -53,89 +63,67 @@ export function MyReviewCard({ movieId, reviewList }: MyReviewCardProps) {
     setIsEditing(false);
   };
 
-  const handleCancel = () => {
-    setEditRating(review.rating);
-    setEditContent(review.content);
-    setIsEditing(false);
-  };
-
   const handleDelete = () => {
     deleteReview.mutate({ reviewId: review.id });
   };
 
   return (
-    <div className="flex gap-8 rounded-xl bg-text-bg p-8">
-      <div className="w-full max-w-[300px]">
-        <MovieCardComponent movie={movieDetail} genres={movieDetail.genres} isLoading={isLoading} />
-      </div>
-
-      <div className="flex w-full flex-col justify-between gap-12 py-4">
-        {/* 평점 */}
-        <div className="flex items-center gap-4">
-          <RatingComponent
-            type={isEditing ? "select" : "show"}
-            defaultValue={isEditing ? editRating : review.rating}
-            rating={isEditing ? editRating : review.rating}
-            setRating={isEditing ? setEditRating : undefined}
+    <>
+      <div className="flex gap-8 rounded-xl bg-text-bg p-8">
+        <div className="w-full max-w-[200px]">
+          <MovieCardComponent
+            movie={movieDetail}
+            genres={movieDetail.genres}
+            isLoading={isLoading}
           />
-          <p className="text-nowrap text-lg font-semibold">
-            {isEditing ? `${editRating}점` : `${review.rating}점`}
-          </p>
         </div>
 
-        {/* 리뷰 내용 */}
-        <div className="flex h-full flex-col gap-4">
-          <p className="text-nowrap text-xl font-bold">작성한 내용</p>
-
-          {isEditing ? (
-            <textarea
-              ref={textareaRef}
-              value={editContent}
-              onChange={(e) => setEditContent(e.target.value)}
-              className="h-full resize-none rounded-xl bg-foreground/20 p-8 text-lg focus:outline-point-color"
+        <div className="flex w-full flex-col justify-between gap-12 py-4">
+          {/* 평점 */}
+          <div className="flex items-center gap-4">
+            <RatingComponent
+              type={isEditing ? "select" : "show"}
+              defaultValue={isEditing ? editRating : review.rating}
+              rating={isEditing ? editRating : review.rating}
+              setRating={isEditing ? setEditRating : undefined}
             />
-          ) : (
-            <p className="h-full rounded-xl bg-foreground/20 p-8 text-lg font-medium">
-              {review.content}
+            <p className="text-nowrap text-lg font-semibold">
+              {isEditing ? `${editRating}점` : `${review.rating}점`}
             </p>
-          )}
-        </div>
+          </div>
 
-        {/* 버튼 */}
-        <div className="flex items-center gap-4">
-          {isEditing ? (
-            <>
-              <ButtonComponent
-                onClick={handleSave}
-                className="flex-1 rounded-xl bg-point-color hover:bg-point-color/50"
-              >
-                저장
-              </ButtonComponent>
-              <ButtonComponent
-                onClick={handleCancel}
-                className="flex-1 rounded-xl bg-white/30 hover:bg-white/10"
-              >
-                취소
-              </ButtonComponent>
-            </>
-          ) : (
-            <>
-              <ButtonComponent
-                onClick={() => setIsEditing(true)}
-                className="flex-1 rounded-xl bg-point-color hover:bg-point-color/50"
-              >
-                수정
-              </ButtonComponent>
-              <ButtonComponent
-                onClick={handleDelete}
-                className="flex-1 rounded-xl bg-white/30 hover:bg-white/10"
-              >
-                삭제
-              </ButtonComponent>
-            </>
-          )}
+          {/* 리뷰 내용 */}
+          <div className="flex h-full flex-col gap-4">
+            <p className="text-nowrap text-lg font-bold">작성한 내용</p>
+
+            {isEditing ? (
+              <textarea
+                ref={textareaRef}
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                className="h-full resize-none rounded-xl bg-foreground/20 p-4 focus:outline-point-color"
+              />
+            ) : (
+              <p className="h-full rounded-xl bg-foreground/20 p-4 font-medium">{review.content}</p>
+            )}
+          </div>
+
+          {/* 버튼 */}
+          <div className="flex items-center justify-end gap-4">
+            <div className={`${iconStyle} bg-sky-700 hover:bg-sky-500`}>
+              <MdEdit onClick={() => setIsEditing(!isEditing)} size={24} />
+            </div>
+            <div
+              className={`${isEditing ? "bg-green-700 hover:bg-green-500" : "bg-zinc-600"} ${iconStyle}`}
+            >
+              <MdSave onClick={handleSave} size={24} />
+            </div>
+            <div className={`${iconStyle} bg-rose-600 hover:bg-rose-400`}>
+              <MdDelete onClick={() => openModal("confirm")} size={24} />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

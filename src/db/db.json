@@ -74,7 +74,7 @@
       "userId": "bad7",
       "rating": 4,
       "content": "재밌다",
-      "createdAt": "2025-09-26T01:47:59.943Z",
+      "createdAt": "2025-10-16T02:26:56.575Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -86,7 +86,7 @@
       "userId": "bad7",
       "rating": 5,
       "content": "저의 인생 애니메이션이라고 할 수 있어요. 진짜 재밌어요 다들 꼭 보세요 !",
-      "createdAt": "2025-10-15T06:37:55.191Z",
+      "createdAt": "2025-10-16T02:22:05.854Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -237,12 +237,12 @@
       }
     },
     {
-      "id": "ac83",
-      "movieId": 1038392,
+      "id": "8159",
+      "movieId": 27205,
       "userId": "bad7",
-      "rating": 4.5,
-      "content": "dsfsdfdsf",
-      "createdAt": "2025-10-15T07:48:10.424Z",
+      "rating": 5,
+      "content": "너무 재미있게 봤어요.",
+      "createdAt": "2025-10-16T02:30:47.550Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -320,6 +320,12 @@
       "id": "fa95",
       "movieId": 617126,
       "userId": "a710",
+      "favorite": true
+    },
+    {
+      "id": "7feb",
+      "movieId": 27205,
+      "userId": "bad7",
       "favorite": true
     }
   ],
@@ -421,7 +427,12 @@
       "title": "test",
       "description": "test",
       "userId": "bad7",
-      "movies": []
+      "movies": [
+        {
+          "collectionId": "48e5",
+          "movieId": 27205
+        }
+      ]
     }
   ],
   "watches": [
@@ -482,6 +493,12 @@
     {
       "id": "32a4",
       "movieId": 1311031,
+      "userId": "bad7",
+      "watched": true
+    },
+    {
+      "id": "06d3",
+      "movieId": 27205,
       "userId": "bad7",
       "watched": true
     }
