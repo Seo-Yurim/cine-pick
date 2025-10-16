@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { FavoriteMovieItem } from "@/types/users.type";
 import { useAuthStore } from "@/stores/auth.store";
-import { useDeleteFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
+import { usePatchFavoriteMovie, usePostFavoriteMovie } from "@/queries/favorites.query";
 import { ButtonComponent, TooltipComponent } from "@/components";
 
 interface FavoriteControlComponentProps {
@@ -25,7 +25,7 @@ export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteCont
   }, [defaultValue]);
 
   const addFavorite = usePostFavoriteMovie();
-  const toggleFavorite = useDeleteFavoriteMovie();
+  const patchFavorite = usePatchFavoriteMovie();
 
   // 좋아요 토글 처리 함수
   const handleFavorite = () => {
@@ -37,22 +37,32 @@ export function FavoriteControlComponent({ defaultValue, movieId }: FavoriteCont
 
     const favoriteData = { movieId, userId: user.id, favorite: !favorited };
 
-    if (!defaultValue || defaultValue.id === undefined) {
+    if (!defaultValue?.favorite || defaultValue.id === undefined) {
       addFavorite.mutate(favoriteData, {
         onSuccess: () => {
-          setFavorited(true);
+          setFavorited(!favorited);
         },
       });
     } else {
-      toggleFavorite.mutate(
-        { favoriteId: defaultValue.id },
+      patchFavorite.mutate(
+        { favoriteId: defaultValue.id, favoriteData },
         {
           onSuccess: () => {
-            setFavorited(false);
+            setFavorited(!favorited);
           },
         },
       );
     }
+    // } else {
+    //   toggleFavorite.mutate(
+    //     { favoriteId: defaultValue.id },
+    //     {
+    //       onSuccess: () => {
+    //         setFavorited(!favorited);
+    //       },
+    //     },
+    //   );
+    // }
   };
 
   return (

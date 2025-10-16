@@ -5,10 +5,9 @@ export const revalidate = 60;
 
 const headers = {
   "Content-Type": "application/json",
-  Authorization:
-    process.env.NEXT_PUBLIC_TMDB_API_KEY?.startsWith("Bearer ")
-      ? process.env.NEXT_PUBLIC_TMDB_API_KEY
-      : `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY ?? ""}`,
+  Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY?.startsWith("Bearer ")
+    ? process.env.NEXT_PUBLIC_TMDB_API_KEY
+    : `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY ?? ""}`,
 };
 
 async function genresData() {

@@ -1,35 +1,34 @@
 "use client";
 
-import { useMemo } from "react";
-import { SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { SwiperSlide } from "swiper/react";
+import Link from "next/link";
+import { useMemo } from "react";
 import { GenresList, MovieItem } from "@/types/movie.type";
 import { genresMatch } from "@/utils/genres-match.util";
 import { MovieCardComponent, Slider, SliderSection } from "@/components";
 import { HeroSection } from "./_components/hero-section.component";
-import Link from "next/link";
 
 interface HomeClientProps {
   genres: GenresList;
   popularMoives: MovieItem[];
-  nowPlayingMovies: MovieItem[];
+  allMovies: MovieItem[];
+  revenueMovies: MovieItem[];
   newMovies: MovieItem[];
 }
 
 export default function HomeClient({
-                                     genres,
-                                     popularMoives,
-                                     nowPlayingMovies,
-                                     newMovies,
-                                   }: HomeClientProps) {
-  const popularSlides = useMemo(
+  genres,
+  popularMoives,
+  allMovies,
+  revenueMovies,
+  newMovies,
+}: HomeClientProps) {
+  const allSlides = useMemo(
     () =>
-      popularMoives.map((movie) => (
+      allMovies.map((movie) => (
         <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
-          <MovieCardComponent
-            movie={movie}
-            genres={genresMatch(genres.genres, movie.genre_ids)}
-          />
+          <MovieCardComponent movie={movie} genres={genresMatch(genres.genres, movie.genre_ids)} />
         </SwiperSlide>
       )),
     [popularMoives, genres],
@@ -37,25 +36,19 @@ export default function HomeClient({
 
   const nowPlayingSlides = useMemo(
     () =>
-      nowPlayingMovies.map((movie) => (
+      revenueMovies.map((movie) => (
         <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
-          <MovieCardComponent
-            movie={movie}
-            genres={genresMatch(genres.genres, movie.genre_ids)}
-          />
+          <MovieCardComponent movie={movie} genres={genresMatch(genres.genres, movie.genre_ids)} />
         </SwiperSlide>
       )),
-    [nowPlayingMovies, genres],
+    [revenueMovies, genres],
   );
 
   const newSlides = useMemo(
     () =>
       newMovies.map((movie) => (
         <SwiperSlide key={movie.id} className="max-w-[25%] p-4">
-          <MovieCardComponent
-            movie={movie}
-            genres={genresMatch(genres.genres, movie.genre_ids)}
-          />
+          <MovieCardComponent movie={movie} genres={genresMatch(genres.genres, movie.genre_ids)} />
         </SwiperSlide>
       )),
     [newMovies, genres],
@@ -64,7 +57,7 @@ export default function HomeClient({
   return (
     <>
       <HeroSection
-        popularMovies={popularMoives.slice(0, 3)}
+        popularMovies={popularMoives.slice(0, 10)}
         genres={genres.genres}
         isLoading={!popularMoives}
       />
@@ -73,7 +66,7 @@ export default function HomeClient({
         title="💥 전체 영화"
         controls={<Link href={"/movies?value=vote_count.desc"}>더보기</Link>}
       >
-        <Slider>{popularSlides}</Slider>
+        <Slider>{allSlides}</Slider>
       </SliderSection>
 
       <SliderSection

@@ -22,19 +22,17 @@ interface MovieDetailClientProps {
 export default function MovieDetailClient({ movieDetail, movieCredits }: MovieDetailClientProps) {
   const { user } = useAuthStore();
   const userId = user?.id ?? "";
-  const { data: movieReviews } = useGetReviews();
 
-  const filteredReviews = movieReviews?.filter(
-    (review: ReviewItem) => review.movieId === movieDetail.id
-  );
-  const ratingAvg = getAvgRating(filteredReviews);
+  const { data: movieReviews } = useGetReviews(movieDetail.id);
+
+  const ratingAvg = getAvgRating(movieReviews);
 
   return (
     <>
       <MovieInfoComponent
         userId={userId}
         movieData={movieDetail}
-        reviewData={filteredReviews}
+        reviewData={movieReviews}
         isMovieLoading={!movieDetail || !movieReviews}
         rating={ratingAvg}
       />
@@ -61,15 +59,15 @@ export default function MovieDetailClient({ movieDetail, movieCredits }: MovieDe
         {movieCredits.crew?.length ? (
           <Slider slidesPerView={5}>
             {movieCredits.crew.map((crew: MovieCrew) => (
-              <SwiperSlide key={`${crew.id}-${crew.credit_id}`} className="max-w-[20%] p-3">
+              <SwiperSlide key={`${crew.id} ${crew.credit_id}`} className="max-w-[20%] p-3">
                 <PersonCard type="crew" creditData={crew} />
               </SwiperSlide>
             ))}
           </Slider>
         ) : (
           <div className="flex gap-8 p-4">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <PersonCardSkeletonComponent key={i} />
+            {Array.from({ length: 5 }).map((_, idx) => (
+              <PersonCardSkeletonComponent key={idx} />
             ))}
           </div>
         )}

@@ -12,10 +12,10 @@ import { ReviewItem } from "@/types/reviews.type";
 import { queryClient } from "./query-client";
 
 // 리뷰 목록
-export function useGetReviews() {
+export function useGetReviews(movieId: number) {
   return useQuery({
-    queryKey: ["reviews"],
-    queryFn: () => getReivews(),
+    queryKey: ["reviews", movieId],
+    queryFn: () => getReivews(movieId),
   });
 }
 
@@ -38,11 +38,11 @@ export function useGetReviewDetail(reviewId: string) {
 }
 
 // 리뷰 작성
-export function usePostReview() {
+export function usePostReview(movieId: number) {
   return useMutation({
-    mutationFn: (reviewData: Omit<ReviewItem, "id">) => postReview(reviewData),
+    mutationFn: (reviewData: ReviewItem) => postReview(reviewData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
       toast.success("리뷰를 작성했습니다.");
     },
     onError: (err) => {
@@ -53,7 +53,7 @@ export function usePostReview() {
 }
 
 // 리뷰 수정
-export function usePatchReview() {
+export function usePatchReview(movieId: number) {
   return useMutation({
     mutationFn: ({
       reviewId,
@@ -63,7 +63,7 @@ export function usePatchReview() {
       reviewData: Omit<ReviewItem, "id" | "user">;
     }) => patchReview(reviewId, reviewData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
       toast.success("리뷰를 수정했습니다.");
     },
     onError: (err) => {
@@ -74,11 +74,11 @@ export function usePatchReview() {
 }
 
 // 리뷰 삭제
-export function useDeleteReview() {
+export function useDeleteReview(movieId: number) {
   return useMutation({
     mutationFn: ({ reviewId }: { reviewId: string }) => deleteReview(reviewId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
       toast.success("리뷰를 삭제했습니다.");
     },
     onError: (err) => {

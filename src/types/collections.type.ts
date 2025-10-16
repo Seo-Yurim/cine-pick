@@ -1,5 +1,5 @@
 export interface CollectionItem {
-  id: string;
+  id?: string;
   userId: string;
   title: string;
   description: string;
@@ -11,7 +11,7 @@ export interface CollectionMovie {
 }
 
 export interface CollectionList extends CollectionItem {
-  id: string;
+  id?: string;
   userId: string;
   title: string;
   description: string;

@@ -74,7 +74,7 @@
       "userId": "bad7",
       "rating": 4,
       "content": "재밌다",
-      "createdAt": "2025-10-16T02:26:56.575Z",
+      "createdAt": "2025-10-16T05:20:50.212Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -86,19 +86,7 @@
       "userId": "bad7",
       "rating": 5,
       "content": "저의 인생 애니메이션이라고 할 수 있어요. 진짜 재밌어요 다들 꼭 보세요 !",
-      "createdAt": "2025-10-16T02:22:05.854Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
-    },
-    {
-      "id": "8fb9",
-      "movieId": 1267319,
-      "userId": "bad7",
-      "rating": 5,
-      "content": "너무 재밌는 영화.",
-      "createdAt": "2025-09-30T09:08:49.137Z",
+      "createdAt": "2025-10-16T05:19:56.610Z",
       "user": {
         "name": "테스트4",
         "username": "test04"
@@ -235,18 +223,6 @@
         "name": "테스트10",
         "username": "test10"
       }
-    },
-    {
-      "id": "8159",
-      "movieId": 27205,
-      "userId": "bad7",
-      "rating": 5,
-      "content": "너무 재미있게 봤어요.",
-      "createdAt": "2025-10-16T02:30:47.550Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
     }
   ],
   "favorites": [
@@ -254,12 +230,6 @@
       "id": "bc43",
       "movieId": 1311031,
       "userId": "1",
-      "favorite": true
-    },
-    {
-      "id": "6572",
-      "movieId": 1267319,
-      "userId": "bad7",
       "favorite": true
     },
     {
@@ -278,13 +248,7 @@
       "id": "71ae",
       "movieId": 1038392,
       "userId": "bad7",
-      "favorite": true
-    },
-    {
-      "id": "cb95",
-      "movieId": 1311031,
-      "userId": "bad7",
-      "favorite": true
+      "favorite": false
     },
     {
       "id": "f02a",
@@ -323,10 +287,16 @@
       "favorite": true
     },
     {
-      "id": "7feb",
+      "id": "8c30",
       "movieId": 27205,
       "userId": "bad7",
-      "favorite": true
+      "favorite": false
+    },
+    {
+      "id": "f36b",
+      "movieId": 27205,
+      "userId": "bad7",
+      "favorite": false
     }
   ],
   "collections": [
@@ -423,16 +393,25 @@
       ]
     },
     {
-      "id": "48e5",
-      "title": "test",
-      "description": "test",
+      "id": "ec41",
+      "title": "ㅇㅇㅇ",
+      "description": "ㅇㅇㅇㅇㅇ",
       "userId": "bad7",
-      "movies": [
-        {
-          "collectionId": "48e5",
-          "movieId": 27205
-        }
-      ]
+      "movies": []
+    },
+    {
+      "id": "097d",
+      "title": "９９９",
+      "description": "６６６９９９９",
+      "userId": "bad7",
+      "movies": []
+    },
+    {
+      "id": "755f",
+      "title": "ㅊㅌㅍㅌㅊㅍㅌㅊㅍ",
+      "description": "ㅌㅊㅍㅌㅍㅊ",
+      "userId": "bad7",
+      "movies": []
     }
   ],
   "watches": [

@@ -75,12 +75,18 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                           fetchPriority={isFirst ? "high" : undefined}
                           loading={isFirst ? "eager" : "lazy"}
                         />
-                        <FaCrown
-                          size={72}
-                          className={`absolute bottom-full left-1/2 -translate-x-1/2 ${
-                            idx === 0 ? "text-yellow-500" : idx === 1 ? "text-gray-500" : "text-yellow-800"
-                          }`}
-                        />
+                        {idx < 3 && (
+                          <FaCrown
+                            size={72}
+                            className={`absolute bottom-full left-1/2 -translate-x-1/2 ${
+                              idx === 0
+                                ? "text-yellow-500"
+                                : idx === 1
+                                  ? "text-gray-500"
+                                  : "text-yellow-800"
+                            }`}
+                          />
+                        )}
                       </div>
                     </div>
 
@@ -102,7 +108,9 @@ export function HeroSection({ popularMovies, genres, isLoading = false }: HeroSe
                         </div>
                       </div>
 
-                      <p className="text-lg font-medium line-clamp-5">{movie.overview}</p>
+                      <p className="line-clamp-5 text-lg font-medium">
+                        {movie.overview || "아직 등록된 줄거리가 없습니다."}
+                      </p>
 
                       <Link href={`/movies/${movie.id}`} className="ml-auto">
                         <ButtonComponent className="flex items-center gap-4 text-2xl font-semibold transition-colors duration-300 hover:text-point-color">

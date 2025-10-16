@@ -8,6 +8,7 @@ import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
 import { ScrollToTop } from "./_components/scroll-to-top.component";
+import MoviesHeaderComponent from "./_components/movies-header.component";
 
 interface MoviesClientProps {
   genres: GenresList;
@@ -45,13 +46,30 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
     window.history.replaceState(null, "", url.toString());
   };
 
-  const genreMap = useMemo(
-    () => new Map(genres?.genres?.map((g) => [g.id, g.name])),
-    [genres]
-  );
+  const genreMap = useMemo(() => new Map(genres?.genres?.map((g) => [g.id, g.name])), [genres]);
+
+  const titleMap = () => {
+    if (sort === "vote_count.desc") {
+      return "🎬 전체 영화 목록";
+    } else if (sort === "revenue.desc") {
+      return "💰 흥행한 영화 목록";
+    } else if (sort === "primary_release_date.desc") {
+      return "🆕 최신 국내 개봉 영화 목록";
+    } else {
+      return "🍿 영화 목록";
+    }
+  };
 
   return (
     <>
+      <MoviesHeaderComponent
+        title={titleMap}
+        tab={activeTab}
+        onTab={handleTabChange}
+        onParams={setParams}
+        sort={sort}
+      />
+
       <InfiniteScroll
         hasMore={hasNextPage}
         next={fetchNextPage}
