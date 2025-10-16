@@ -93,18 +93,6 @@
       }
     },
     {
-      "id": "8fb9",
-      "movieId": 1267319,
-      "userId": "bad7",
-      "rating": 5,
-      "content": "너무 재밌는 영화.",
-      "createdAt": "2025-10-16T04:50:17.513Z",
-      "user": {
-        "name": "테스트4",
-        "username": "test04"
-      }
-    },
-    {
       "id": "3b82",
       "movieId": 1267319,
       "userId": "1",
@@ -245,12 +233,6 @@
       "favorite": true
     },
     {
-      "id": "6572",
-      "movieId": 1267319,
-      "userId": "bad7",
-      "favorite": true
-    },
-    {
       "id": "8e68",
       "movieId": 1267319,
       "userId": "80f1",
@@ -266,13 +248,7 @@
       "id": "71ae",
       "movieId": 1038392,
       "userId": "bad7",
-      "favorite": true
-    },
-    {
-      "id": "cb95",
-      "movieId": 1311031,
-      "userId": "bad7",
-      "favorite": true
+      "favorite": false
     },
     {
       "id": "f02a",
@@ -311,10 +287,16 @@
       "favorite": true
     },
     {
-      "id": "7feb",
+      "id": "8c30",
       "movieId": 27205,
       "userId": "bad7",
-      "favorite": true
+      "favorite": false
+    },
+    {
+      "id": "f36b",
+      "movieId": 27205,
+      "userId": "bad7",
+      "favorite": false
     }
   ],
   "collections": [
@@ -411,16 +393,25 @@
       ]
     },
     {
-      "id": "48e5",
-      "title": "test",
-      "description": "test",
+      "id": "ec41",
+      "title": "ㅇㅇㅇ",
+      "description": "ㅇㅇㅇㅇㅇ",
       "userId": "bad7",
-      "movies": [
-        {
-          "collectionId": "48e5",
-          "movieId": 27205
-        }
-      ]
+      "movies": []
+    },
+    {
+      "id": "097d",
+      "title": "９９９",
+      "description": "６６６９９９９",
+      "userId": "bad7",
+      "movies": []
+    },
+    {
+      "id": "755f",
+      "title": "ㅊㅌㅍㅌㅊㅍㅌㅊㅍ",
+      "description": "ㅌㅊㅍㅌㅍㅊ",
+      "userId": "bad7",
+      "movies": []
     }
   ],
   "watches": [

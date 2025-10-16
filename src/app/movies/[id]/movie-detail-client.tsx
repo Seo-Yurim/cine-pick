@@ -18,20 +18,16 @@ export default function MovieDetailClient({ movieDetail, movieCredits }: MovieDe
   const { user } = useAuthStore();
   const userId = user?.id ?? "";
 
-  const { data: movieReviews } = useGetReviews();
+  const { data: movieReviews } = useGetReviews(movieDetail.id);
 
-  const filteredReviews = movieReviews?.filter(
-    (review: ReviewItem) => review.movieId === movieDetail.id,
-  );
-
-  const ratingAvg = getAvgRating(filteredReviews);
+  const ratingAvg = getAvgRating(movieReviews);
 
   return (
     <>
       <MovieInfoComponent
         userId={userId}
         movieData={movieDetail}
-        reviewData={filteredReviews}
+        reviewData={movieReviews}
         isMovieLoading={!movieDetail || !movieReviews}
         rating={ratingAvg}
       />

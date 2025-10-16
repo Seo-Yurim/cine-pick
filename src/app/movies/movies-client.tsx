@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { GenresList, MovieItem, MovieParams, MovieResponse } from "@/types/movie.type";
+import { GenresList, MovieItem, MovieParams } from "@/types/movie.type";
 import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
@@ -16,7 +16,6 @@ interface MoviesClientProps {
 
 export default function MoviesClient({ genres }: MoviesClientProps) {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const initialTab = searchParams.get("view") ?? "grid";
   const [sort, setSort] = useState(searchParams.get("value"));
 
@@ -30,7 +29,6 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
     "primary_release_date.gte": "",
     "primary_release_date.lte": "",
   });
-
 
   const { data, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfinityMovies(params);
 
@@ -51,14 +49,29 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
     window.history.replaceState(null, "", url.toString());
   };
 
-  const genreMap = useMemo(
-    () => new Map(genres?.genres?.map((g) => [g.id, g.name])),
-    [genres]
-  );
+  const genreMap = useMemo(() => new Map(genres?.genres?.map((g) => [g.id, g.name])), [genres]);
+
+  const titleMap = () => {
+    if (sort === "vote_count.desc") {
+      return "🎬 전체 영화 목록";
+    } else if (sort === "revenue.desc") {
+      return "💰 흥행한 영화 목록";
+    } else if (sort === "primary_release_date.desc") {
+      return "🆕 최신 국내 개봉 영화 목록";
+    } else {
+      return "🍿 영화 목록";
+    }
+  };
 
   return (
     <>
-      {/* <MoviesHeaderComponent tab={activeTab} onTab={handleTabChange} onParams={setParams} /> */}
+      <MoviesHeaderComponent
+        title={titleMap}
+        tab={activeTab}
+        onTab={handleTabChange}
+        onParams={setParams}
+        sort={sort}
+      />
 
       <InfiniteScroll
         hasMore={hasNextPage}

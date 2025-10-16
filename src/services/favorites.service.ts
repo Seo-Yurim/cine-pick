@@ -1,5 +1,5 @@
 import { FavoriteMovieItem } from "@/types/users.type";
-import { get, post, remove } from "./method";
+import { get, patch, post, remove } from "./method";
 
 // 내가 좋아요 한 영화 목록
 export async function getMyFavoriteList(userId: string) {
@@ -16,6 +16,15 @@ export async function getMyFavoriteMovie(userId: string, movieId: number) {
 // 좋아요
 export async function postFavoriteMovie(favoriteData: Omit<FavoriteMovieItem, "id">) {
   const res = await post(`/favorites`, favoriteData);
+  return res.data;
+}
+
+// 좋아요 수정
+export async function patchFavoriteMovie(
+  favoriteId: string,
+  favoriteData: Omit<FavoriteMovieItem, "id">,
+) {
+  const res = await patch(`/favorites/${favoriteId}`, favoriteData);
   return res.data;
 }
 

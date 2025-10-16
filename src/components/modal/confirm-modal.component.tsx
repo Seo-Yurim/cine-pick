@@ -9,10 +9,9 @@ interface ConfirmModalProps {
 }
 
 export function ConfirmModalComponent({ isOpen, onClose, onDelete }: ConfirmModalProps) {
-  console.log("1111");
   return (
     <ModalComponent isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col items-center gap-6" onClick={() => console.log("11111")}>
+      <div className="flex flex-col items-center gap-6">
         <RiErrorWarningFill size={64} className="text-rose-700" />
         <p className="text-xl font-bold">삭제하시겠습니까?</p>
         <div className="flex w-full items-center gap-4 text-white">

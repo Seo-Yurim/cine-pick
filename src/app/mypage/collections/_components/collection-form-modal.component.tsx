@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { CollectionList } from "@/types/collections.type";
+import { CollectionItem, CollectionList } from "@/types/collections.type";
 import { usePatchCollection, usePostCollection } from "@/queries/collections.query";
 import { ButtonComponent, ModalComponent } from "@/components";
 import { InputComponent } from "@/components/input/input.component";
@@ -10,6 +10,7 @@ interface CollectionFormModalProps {
   onClose: () => void;
   userId: string;
   defaultValue: CollectionList | null;
+  onCollection: (item?: CollectionList, type?: string) => void;
 }
 
 export function CollectionFormModal({
@@ -17,6 +18,7 @@ export function CollectionFormModal({
   onClose,
   userId,
   defaultValue,
+  onCollection,
 }: CollectionFormModalProps) {
   const [collectionFormData, setCollectionFormData] = useState<Omit<CollectionList, "id">>({
     title: "",
@@ -55,7 +57,7 @@ export function CollectionFormModal({
     if (defaultValue) {
       editCollection.mutate(
         {
-          collectionId: defaultValue.id,
+          collectionId: defaultValue.id ?? "",
           collectionData: {
             title: collectionFormData.title,
             description: collectionFormData.description,
@@ -63,8 +65,16 @@ export function CollectionFormModal({
           },
         },
         {
-          onSuccess: () => {
+          onSuccess: (item) => {
+            onCollection(item, "edit");
             onClose();
+
+            setCollectionFormData({
+              title: "",
+              description: "",
+              userId: "",
+              movies: [],
+            });
           },
         },
       );
@@ -77,8 +87,10 @@ export function CollectionFormModal({
           movies: [],
         },
         {
-          onSuccess: () => {
+          onSuccess: (item) => {
+            onCollection(item);
             onClose();
+
             setCollectionFormData({
               title: "",
               description: "",
@@ -90,6 +102,7 @@ export function CollectionFormModal({
       );
     }
   };
+
   return (
     <ModalComponent isOpen={isOpen} onClose={onClose}>
       <h2 className="text-2xl font-bold"> {defaultValue ? "컬렉션 수정" : "컬렉션 추가"}</h2>

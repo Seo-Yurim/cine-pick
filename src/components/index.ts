@@ -6,7 +6,6 @@ export * from "./modal/confirm-modal.component";
 export * from "./movie-template/movie-card.component";
 export * from "./movie-template/movie-list.component";
 export * from "./movie-template/person-card.component";
-export * from "./select/select.component";
 export * from "./skeleton/movie-card-skeleton.component";
 export * from "./skeleton/movie-info-skeleton.component";
 export * from "./skeleton/person-card-skeleton.component";

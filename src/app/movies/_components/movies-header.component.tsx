@@ -1,9 +1,8 @@
 import { getPersonIds } from "@/services/search.service";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CiBoxList, CiGrid41 } from "react-icons/ci";
 import { RiFilterFill } from "react-icons/ri";
 import { MovieParams } from "@/types/movie.type";
-import { sortOptions } from "@/constants/constants";
 import { useModalStore } from "@/stores/modal.store";
 import { useGenres } from "@/queries/movie.query";
 import {
@@ -11,7 +10,6 @@ import {
   CheckboxComponent,
   DatePickerComponent,
   SearchComponent,
-  SelectComponent,
   TagComponent,
   ToggleButtonComponent,
 } from "@/components";
@@ -27,14 +25,25 @@ export interface DatePickerType {
 }
 
 interface MoviesHeaderProps {
+  title: () =>
+    | "🎬 전체 영화 목록"
+    | "💰 흥행한 영화 목록"
+    | "🆕 최신 국내 개봉 영화 목록"
+    | "🍿 영화 목록";
   tab: string;
   onTab: (tab: string) => void;
   onParams: React.Dispatch<React.SetStateAction<MovieParams>>;
+  sort: string | null;
 }
 
-export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHeaderProps) {
+export default function MoviesHeaderComponent({
+  title,
+  tab,
+  onTab,
+  onParams,
+  sort,
+}: MoviesHeaderProps) {
   const { modals, toggleModal } = useModalStore();
-  const [sortOption, setSortOption] = useState<{ label: string; value: string }>(sortOptions[0]);
   const [genreSelected, setGenreSelected] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<DatePickerType>({
     start: null,
@@ -44,18 +53,11 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
 
   const { data: genres } = useGenres();
 
-  useEffect(() => {
-    onParams((prevParams) => ({
-      ...prevParams,
-      sort_by: sortOption.value,
-    }));
-  }, [sortOption, onParams]);
-
   const handleFilterSubmit = async () => {
     const personIds = await getPersonIds(tagList);
 
     onParams({
-      sort_by: sortOption.value,
+      sort_by: sort,
       with_genres: genreSelected.join("|"),
       with_people: personIds.join("|"),
       "primary_release_date.gte": selectedDate.start?.toString(),
@@ -65,7 +67,7 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
 
   const handleFilterReset = () => {
     onParams({
-      sort_by: sortOption.value,
+      sort_by: sort,
       with_genres: "",
       with_people: "",
       "primary_release_date.gte": "",
@@ -80,18 +82,12 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
   return (
     <section className="flex flex-col gap-4">
       <div className="flex w-full items-center justify-between gap-8">
-        <h1 className="text-nowrap text-2xl font-bold">영화 찾아보기</h1>
+        <h1 className="text-nowrap text-2xl font-bold">{title()}</h1>
         <SearchComponent placeholder="원하는 영화를 찾아보세요!" />
         <ToggleButtonComponent
           toggleMenus={toggleMenus}
           activeTab={tab}
           onChange={(tab) => onTab(tab)}
-        />
-
-        <SelectComponent
-          value={sortOption}
-          options={sortOptions}
-          onSelect={(option: { label: string; value: string }) => setSortOption(option)}
         />
 
         <div
@@ -104,7 +100,7 @@ export default function MoviesHeaderComponent({ tab, onTab, onParams }: MoviesHe
 
       {modals.filterMenu && (
         <div
-          className={`flex flex-col items-center rounded-xl bg-point-color p-4 ${modals.filterMenu ? "scale-100 animate-slide-down opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
+          className={`flex flex-col items-center rounded-xl bg-point-color p-4 ${modals.filterMenu ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
         >
           <div className={`grid grid-cols-2 gap-4`}>
             <div className="flex flex-col">
