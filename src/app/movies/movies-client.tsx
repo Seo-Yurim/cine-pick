@@ -1,14 +1,12 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GenresList, MovieItem, MovieParams, MovieResponse } from "@/types/movie.type";
-import { genresMatch } from "@/utils/genres-match.util";
 import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
-import { MovieCardSkeletonComponent } from "@/components/skeleton/movie-card-skeleton.component";
 import MoviesHeaderComponent from "./_components/movies-header.component";
 import { ScrollToTop } from "./_components/scroll-to-top.component";
 
@@ -35,7 +33,7 @@ export default function MoviesClient({ genres, initialMovies }: MoviesClientProp
 
   const { data, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfinityMovies(
     params,
-    initialMovies,
+    initialMovies
   );
 
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
@@ -49,43 +47,52 @@ export default function MoviesClient({ genres, initialMovies }: MoviesClientProp
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("view", tab);
-
-    router.push(`?${params.toString()}`);
+    const url = new URL(window.location.href);
+    url.searchParams.set("view", tab);
+    window.history.replaceState(null, "", url.toString());
   };
+
+  const genreMap = useMemo(
+    () => new Map(genres?.genres?.map((g) => [g.id, g.name])),
+    [genres]
+  );
 
   return (
     <>
       <MoviesHeaderComponent tab={activeTab} onTab={handleTabChange} onParams={setParams} />
-
       <InfiniteScroll
         hasMore={hasNextPage}
         next={fetchNextPage}
         loader={<></>}
         dataLength={movies.length}
-        className={`px-2 ${activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"} `}
+        className={`px-2 ${
+          activeTab === "grid" ? "grid grid-cols-4 gap-6 py-4" : "flex flex-col gap-4"
+        }`}
       >
-        {movies.map((movie: MovieItem) =>
-          activeTab === "grid" ? (
+        {movies.map((movie: MovieItem) => {
+          const movieGenres = movie.genre_ids
+            .map((id) => {
+              const name = genreMap.get(id);
+              return name ? { id, name } : null;
+            })
+            .filter((g): g is { id: number; name: string } => g !== null);
+          return activeTab === "grid" ? (
             <MovieCardComponent
               key={movie.id}
               movie={movie}
-              genres={genresMatch(genres?.genres, movie.genre_ids)}
+              genres={movieGenres}
               isLoading={!data || isLoading || isFetching}
             />
           ) : (
             <MovieListComponent
               key={movie.id}
               movie={movie}
-              genres={genresMatch(genres?.genres, movie.genre_ids)}
+              genres={movieGenres}
               isLoading={!data || isLoading || isFetching}
             />
-          ),
-        )}
+          );
+        })}
       </InfiniteScroll>
-
       <ScrollToTop />
     </>
   );

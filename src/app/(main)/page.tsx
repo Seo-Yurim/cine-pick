@@ -1,73 +1,56 @@
-import { Suspense } from "react";
 import HomeClient from "./home-client";
 
+export const revalidate = 60;
+
+const headers = {
+  "Content-Type": "application/json",
+  Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY ?? "",
+};
+
 async function genresData() {
-  const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?language=ko`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
-    },
+  const r = await fetch("https://api.themoviedb.org/3/genre/movie/list?language=ko", {
+    headers,
+    next: { revalidate: 3600, tags: ["tmdb:genres"] },
   });
-
-  return res.json();
+  return r.json();
 }
-
 async function popularMoviesData() {
-  const res = await fetch(`https://api.themoviedb.org/3/movie/popular?language=ko`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
-    },
+  const r = await fetch("https://api.themoviedb.org/3/movie/popular?language=ko", {
+    headers,
+    next: { revalidate: 300, tags: ["tmdb:popular"] },
   });
-
-  return res.json();
+  return r.json();
 }
-
 async function nowPlayingMoviesData() {
-  const res = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=ko&region=KR`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
-    },
+  const r = await fetch("https://api.themoviedb.org/3/movie/now_playing?language=ko&region=KR", {
+    headers,
+    next: { revalidate: 120, tags: ["tmdb:nowplaying"] },
   });
-
-  return res.json();
+  return r.json();
 }
-
 async function newMoviesData(today: string) {
-  const res = await fetch(
+  const r = await fetch(
     `https://api.themoviedb.org/3/discover/movie?language=ko&sort_by=primary_release_date.desc&primary_release_date.lte=${today}&with_origin_country=KR`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: process.env.NEXT_PUBLIC_TMDB_API_KEY || "",
-      },
-    },
+    { headers, next: { revalidate: 600, tags: ["tmdb:new"] } }
   );
-
-  return res.json();
+  return r.json();
 }
 
 export default async function HomePage() {
   const today = new Date().toISOString().split("T")[0];
-
-  const genres = await genresData();
-  const popularMoives = await popularMoviesData();
-  const nowPlayingMovies = await nowPlayingMoviesData();
-  const newMovies = await newMoviesData(today);
+  const [genres, popular, nowPlaying, latest] = await Promise.all([
+    genresData(),
+    popularMoviesData(),
+    nowPlayingMoviesData(),
+    newMoviesData(today),
+  ]);
 
   return (
-    <Suspense>
-      <HomeClient
-        genres={genres}
-        popularMoives={popularMoives.results}
-        nowPlayingMovies={nowPlayingMovies.results}
-        newMovies={newMovies.results}
-      />
-    </Suspense>
+    <HomeClient
+      genres={genres}
+      popularMoives={popular.results}
+      nowPlayingMovies={nowPlaying.results}
+      newMovies={latest.results}
+    />
   );
 }
