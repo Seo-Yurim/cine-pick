@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "react-aria-components";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuthStore } from "@/stores/auth.store";
@@ -20,8 +21,24 @@ export function Header({ cookieData }: { cookieData: any }) {
   const { user, logout } = useAuthStore();
   const { modals, closeModal, toggleModal } = useModalStore();
 
+  const [isHydrated, setIsHydrated] = useState<boolean>(false);
+
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    if (cookieData?.value && !user) {
+      try {
+        const parsed = JSON.parse(cookieData.value);
+        useAuthStore.getState().setUser(parsed);
+      } catch (e) {
+        console.error("Invalid cookieData JSON:", e);
+      }
+    }
+    setIsHydrated(true);
+  }, []);
+
+  const isLoggedIn = isHydrated ? !!user : !!cookieData;
 
   const handleLogout = () => {
     closeModal("myMenu");
@@ -37,7 +54,7 @@ export function Header({ cookieData }: { cookieData: any }) {
         </Link>
 
         <nav className="flex w-full items-center justify-between gap-4 text-nowrap">
-          {cookieData && user ? (
+          {isLoggedIn ? (
             <div className="flex w-full items-center justify-end gap-8">
               <div className="relative">
                 <FaUserCircle
