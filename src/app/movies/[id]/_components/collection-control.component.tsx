@@ -1,8 +1,11 @@
 import { CollectionFormModal } from "@/app/mypage/collections/_components/collection-form-modal.component";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { FaFolderPlus } from "react-icons/fa";
 import { CollectionList } from "@/types/collections.type";
 import { MovieItem } from "@/types/movie.type";
+import { useAuthStore } from "@/stores/auth.store";
 import { useModalStore } from "@/stores/modal.store";
 import { usePatchCollectionMovie } from "@/queries/collections.query";
 import { ButtonComponent, TooltipComponent } from "@/components";
@@ -18,12 +21,22 @@ export function CollectionControlComponent({
   movieData,
   collectionList,
 }: CollectionControlProps) {
+  const { user } = useAuthStore();
   const { modals, openModal, closeModal, toggleModal } = useModalStore();
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const addCollectionMovie = usePatchCollectionMovie();
 
   // 컬렉션에 영화 추가 처리 함수
   const handleSelectCollection = (collection: CollectionList) => {
+    if (!user) {
+      toast.error("로그인이 필요한 서비스입니다!");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      return;
+    }
+
     if (!collection) return toast.error("영화를 추가할 컬렉션을 선택해주세요!");
 
     // 중복 검사
