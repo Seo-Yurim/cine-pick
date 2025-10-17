@@ -87,20 +87,22 @@ export function MovieInfoComponent({
           </div>
           <p>{movieData.overview || "아직 등록된 줄거리가 없습니다."}</p>
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <FavoriteControlComponent movieData={movieData} />
+            {userId && (
+              <div className="flex items-center gap-2">
+                <FavoriteControlComponent movieData={movieData} />
 
-              <CollectionControlComponent
-                userId={userId}
-                movieData={movieData}
-                collectionList={collectionList}
-              />
+                <CollectionControlComponent
+                  userId={userId}
+                  movieData={movieData}
+                  collectionList={collectionList}
+                />
 
-              <WatchedControlComponent
-                defaultValue={!userId ? null : watchedMovie}
-                movieId={movieData.id}
-              />
-            </div>
+                <WatchedControlComponent
+                  defaultValue={!userId ? null : watchedMovie}
+                  movieId={movieData.id}
+                />
+              </div>
+            )}
 
             {rating > 0 ? (
               <div className="flex items-center gap-4 rounded-xl border px-6 py-3">
