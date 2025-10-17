@@ -31,7 +31,7 @@ export default function HomeClient({
           <MovieCardComponent movie={movie} genres={genresMatch(genres.genres, movie.genre_ids)} />
         </SwiperSlide>
       )),
-    [popularMoives, genres],
+    [allMovies, genres],
   );
 
   const nowPlayingSlides = useMemo(

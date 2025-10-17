@@ -7,8 +7,8 @@ import { GenresList, MovieItem, MovieParams } from "@/types/movie.type";
 import { useInfinityMovies } from "@/queries/movie.query";
 import { MovieCardComponent } from "@/components";
 import { MovieListComponent } from "@/components/movie-template/movie-list.component";
-import { ScrollToTop } from "./_components/scroll-to-top.component";
 import MoviesHeaderComponent from "./_components/movies-header.component";
+import { ScrollToTop } from "./_components/scroll-to-top.component";
 
 interface MoviesClientProps {
   genres: GenresList;
@@ -32,6 +32,7 @@ export default function MoviesClient({ genres }: MoviesClientProps) {
   const { data, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfinityMovies(params);
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
 
+  // 처음 값은 undefined로 받아오기 때문에 확실하게 useEffect로 처리
   useEffect(() => {
     const viewParam = searchParams.get("view");
     if (viewParam === "grid" || viewParam === "list") {

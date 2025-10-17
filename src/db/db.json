@@ -65,6 +65,12 @@
       "name": "테스트11",
       "username": "test11",
       "password": "test1234"
+    },
+    {
+      "id": "d1e1",
+      "name": "테스트9",
+      "username": "test111",
+      "password": "test1234"
     }
   ],
   "reviews": [
@@ -206,7 +212,7 @@
       "id": "089d",
       "movieId": 1038392,
       "userId": "bad7",
-      "favorite": false
+      "favorite": true
     },
     {
       "id": "b3e9",
@@ -374,6 +380,12 @@
       "id": "58e0",
       "movieId": 1038392,
       "userId": "1",
+      "watched": true
+    },
+    {
+      "id": "87c6",
+      "movieId": 1038392,
+      "userId": "bad7",
       "watched": true
     }
   ]
